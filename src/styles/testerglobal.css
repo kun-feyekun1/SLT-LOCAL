@@ -1,0 +1,148 @@
+/* Custom utility classes */
+@layer components {
+  /* Safe area padding */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Touch target minimum */
+  .touch-target {
+    min-width: 48px;
+    min-height: 48px;
+  }
+  
+  .touch-target-driver {
+    min-width: 56px;
+    min-height: 56px;
+  }
+  
+  .touch-target-emergency {
+    min-width: 64px;
+    min-height: 64px;
+  }
+
+  /* Screen padding */
+  .screen-padding {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Card styles */
+  .card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .card-elevated {
+    @apply card;
+    shadow-color: #000;
+    shadow-offset: 0 2px;
+    shadow-opacity: 0.08;
+    shadow-radius: 4px;
+    elevation: 2;
+  }
+
+  /* Input styles */
+  .input {
+    height: 56px;
+    border-radius: 8px;
+    border-width: 1.5px;
+    border-color: #D4D4D4;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-color: white;
+  }
+
+  .input-focus {
+    border-color: #1A7A3C;
+  }
+
+  .input-error {
+    border-color: #EA4335;
+    background-color: #FCE8E6;
+  }
+
+  .input-success {
+    border-color: #34A853;
+    background-color: #E6F4EA;
+  }
+
+  /* Button styles */
+  .btn-primary {
+    height: 56px;
+    border-radius: 8px;
+    background-color: #1A7A3C;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .btn-primary-text {
+    color: white;
+    font-family: Inter-SemiBold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+  }
+
+  .btn-secondary {
+    height: 48px;
+    border-radius: 8px;
+    border-width: 1.5px;
+    border-color: #1A7A3C;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: transparent;
+  }
+
+  .btn-secondary-text {
+    color: #1A7A3C;
+    font-family: Inter-SemiBold;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.75px;
+  }
+
+  .btn-tertiary {
+    height: 40px;
+    border-radius: 8px;
+    background-color: #F5F3F0;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .btn-tertiary-text {
+    color: #4A4A4A;
+    font-family: Inter-SemiBold;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: #2D2D2D;
+  }
+  
+  .input {
+    background-color: #2D2D2D;
+    border-color: #3D3D3D;
+  }
+}

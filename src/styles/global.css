@@ -1,0 +1,8 @@
+/**
+ * Global Styles - SmartLink Transit
+ * Tailwind directives and base styles
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
