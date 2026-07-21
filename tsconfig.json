@@ -4,12 +4,11 @@
     "strict": true,
     "jsx": "react-native",
     "moduleResolution": "bundler",
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@/assets/*": ["assets/*"],
-      "@/tokens/*": ["src/design-system/tokens/*"],
-      "@/auth/*": ["src/features/auth/*"],
+      "@/*": ["./src/*"],
+      "@/assets/*": ["./assets/*"],
+      "@/tokens/*": ["./src/design-system/tokens/*"],
+      "@/auth/*": ["./src/features/auth/*"],
     }
   },
   "include": [

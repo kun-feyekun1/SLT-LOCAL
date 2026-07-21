@@ -68,7 +68,6 @@ export const RootProviders = ({ children }: { children: ReactNode }) => (
           <ErrorBoundary>
             <LocationProvider>
               <NotificationProvider>
-                {" "}
                 {/* <--- Wraps app context */}
                 <BottomSheetProvider>
                   {children}
