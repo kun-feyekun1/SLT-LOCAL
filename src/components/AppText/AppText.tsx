@@ -1,43 +1,44 @@
-import { Text, type TextProps } from "react-native";
+// src/components/AppText/AppText.tsx
+import React from 'react';
+import { Text, TextProps } from 'react-native';
+import { useAppTheme } from '@/hooks/useAppTheme'; // Adjust path if needed
 
-import { useAppTheme } from "@/hooks/useAppTheme";
-import { typography } from "@/theme";
-
-type Props = TextProps & {
-  variant?: "title" | "subtitle" | "body" | "caption";
+interface AppTextProps extends TextProps {
   muted?: boolean;
-  weight?: "400" | "600" | "700";
-};
+  size?: number;
+  weight?: '400' | '500' | '600' | '700' | 'bold' | 'normal';
+  variant?: string;
+}
 
-export const AppText = ({
-  variant = "body",
+export const AppText: React.FC<AppTextProps> = ({
+  children,
   muted,
-  weight = "400",
+  size = 14,
+  weight = '400',
   style,
   ...props
-}: Props) => {
+}) => {
   const theme = useAppTheme();
-  const size =
-    variant === "title"
-      ? typography.size.xl
-      : variant === "subtitle"
-        ? typography.size.lg
-        : variant === "caption"
-          ? typography.size.sm
-          : typography.size.md;
+
+  // Safe fallback if theme is undefined during error boundary rendering
+  const textColor = muted
+    ? (theme?.colors?.textMuted ?? '#666666')
+    : (theme?.colors?.text ?? '#000000');
 
   return (
     <Text
       {...props}
       style={[
         {
-          color: muted ? theme.colors.textMuted : theme.colors.text,
+          color: textColor,
           fontSize: size,
           lineHeight: size + 6,
           fontWeight: weight,
         },
         style,
       ]}
-    />
+    >
+      {children}
+    </Text>
   );
 };

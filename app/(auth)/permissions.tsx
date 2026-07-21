@@ -1,1 +1,1 @@
-export { PermissionRequestScreen } from "@/features/auth/screens";
+export { PermissionRequestScreen as default } from "@/features/auth/screens";

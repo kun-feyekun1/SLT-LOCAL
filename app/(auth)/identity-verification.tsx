@@ -1,2 +1,2 @@
-export { IdentityVerificationScreen } from "@/features/auth/screens";
+export { IdentityVerificationScreen as default } from "@/features/auth/screens";
     

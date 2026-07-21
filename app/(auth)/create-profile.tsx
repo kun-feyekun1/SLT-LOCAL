@@ -1,1 +1,1 @@
-export { CreateProfileScreen } from "@/features/auth/screens";
+export { CreateProfileScreen as default } from "@/features/auth/screens";

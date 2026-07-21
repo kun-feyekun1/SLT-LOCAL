@@ -1,15 +1,15 @@
 // src/app/(public)/_layout.tsx
 
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
 
 export default function PublicLayout() {
   return (
     <Stack
       screenOptions={{
         headerShown: false,
-        animation: 'slide_from_right',
+        animation: "slide_from_right",
         contentStyle: {
-          backgroundColor: '#F8FAFC',
+          backgroundColor: "#F8FAFC",
         },
       }}
     >

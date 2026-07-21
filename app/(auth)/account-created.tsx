@@ -1,1 +1,1 @@
-export { AccountCreatedScreen } from "@/features/auth/screens";
+export { AccountCreatedScreen as default } from "@/features/auth/screens";

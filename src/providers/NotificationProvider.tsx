@@ -1,6 +1,6 @@
 // src/providers/NotificationProvider.tsx
 import { useAppDispatch } from "@/store/hooks";
-import { showToast } from "@/store/toastSlice"; // If you want to show in-app toasts
+import { showToast } from "@/store/toastSlice";
 import * as Notifications from "expo-notifications";
 import React, {
   createContext,
@@ -23,7 +23,8 @@ const NotificationContext = createContext<NotificationContextType | undefined>(
 // Configure how notifications behave when the app is in the FOREGROUND
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowAlert: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
     shouldPlaySound: true,
     shouldSetBadge: true,
   }),
@@ -47,12 +48,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }
 
     if (finalStatus !== "granted") {
-      dispatch(
-        showToast({
-          message: "Push notification permission denied",
-          type: "warning",
-        })
-      );
+      dispatch(showToast("Push notification permission denied"));
       return false;
     }
 
@@ -73,7 +69,6 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const responseListener =
       Notifications.addNotificationResponseReceivedListener((response) => {
         const data = response.notification.request.content.data;
-        // Navigate to a specific screen based on data (e.g., routing)
         if (data?.route) {
           // e.g., router.push(data.route)
         }
@@ -81,8 +76,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
     // Cleanup event listeners on unmount
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener);
-      Notifications.removeNotificationSubscription(responseListener);
+      notificationListener.remove();
+      responseListener.remove();
     };
   }, []);
 
