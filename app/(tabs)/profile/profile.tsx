@@ -972,7 +972,7 @@ export default function ProfileScreen() {
           accessibilityRole="button"
           onPress={() =>
             router.navigate(
-              "/profile-detail/profile-settings",
+              "/profile/profile-settings",
             )
           }
           style={({ pressed }) => ({
