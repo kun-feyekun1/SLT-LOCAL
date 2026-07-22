@@ -161,6 +161,7 @@ export const darkTheme = {
   // Utility
   white: colors.white,
   black: colors.black,
+  transparent: undefined
 } satisfies Theme;
 
 export type DarkTheme = typeof darkTheme;

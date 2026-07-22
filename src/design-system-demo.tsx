@@ -23,8 +23,13 @@ function Button({
   const { theme } = useTheme();
 
   const backgroundColor =
-    variant === "primary" ? theme.button.primary.background : theme.button.secondary.pressed;
-  const textColor = variant === "primary" ? theme.button.primary.text : theme.button.secondary.text;
+    variant === "primary"
+      ? theme.button.primary.background
+      : theme.button.secondary.pressed;
+  const textColor =
+    variant === "primary"
+      ? theme.button.primary.text
+      : theme.button.secondary.text;
 
   return (
     <Pressable
@@ -48,18 +53,21 @@ function Button({
 }
 
 import { spacing } from "@/design-system/tokens";
-import { ThemeSelector } from "@/features/theme/components/ThemeSelector";
+import { ThemeSelector } from "@/features/theme/components/themeSelector";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 import { TripCard } from "@/features/Trips/components/TripCard";
 import { VehicleStatusCard } from "@/features/vehicles/components/VehicleStatusCard";
 import React from "react";
 import { Pressable } from "react-native";
 import { AppScreen } from "./AppScreen";
+import ScreenWrapper from "@/components/ScreenWrapper";
+
 
 export default function DesignSystemDemoScreen() {
   const { theme, mode, toggleTheme } = useTheme();
 
   return (
+    <ScreenWrapper>
     <AppScreen
       scrollable
       background="primary"
@@ -255,6 +263,7 @@ export default function DesignSystemDemoScreen() {
         />
       </View>
     </AppScreen>
+    </ScreenWrapper>
   );
 }
 

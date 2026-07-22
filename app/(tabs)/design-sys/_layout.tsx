@@ -4,12 +4,12 @@ import { Stack } from "expo-router";
 
 import { useTheme } from "@/features/theme/hooks/useTheme";
 
-export default function ProfileDetailsLayout() {
+export default function systemDesignLayoutDemo() {
   const { theme } = useTheme();
 
   return (
     <Stack
-      initialRouteName="profile"
+      initialRouteName="design-system-demo"
       screenOptions={{
         headerShown: false,
         contentStyle: {
@@ -19,22 +19,22 @@ export default function ProfileDetailsLayout() {
       }}
     >
       <Stack.Screen
-        name="profile"
+        name="design-system-demo"
         options={{
-          title: "Profile",
+          title: "design",
         }}
       />
 
       <Stack.Screen
-        name="profile-settings"
+        name="design-system"
         options={{
-          title: "Profile Settings",
+          title: "design-system",
         }}
       />
       <Stack.Screen
-        name="wallet"
+        name="design-systems"
         options={{
-          title: "Wallet",
+          title: "design-systems",
         }}
       />
     </Stack>

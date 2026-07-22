@@ -511,8 +511,6 @@
 // //   } as TextStyle,
 // // });
 
-
-
 // import { SafeAreaView, View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 // import { colors, radius, spacing, typography, componentRadius, componentElevation, elevation, layout } from "@/design-system/tokens";
 
@@ -822,193 +820,163 @@
 //   );
 // }
 
-
-
 // src/app/(tabs)/profile-details/profile.tsx
 
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import {
-  Pressable,
-  ScrollView,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 
 import { AppText } from "@/components/AppText/AppText";
-import {
-  Card,
-  Divider,
-} from "@/design-system/components";
-import {
-  radius,
-  spacing,
-} from "@/design-system/tokens";
-import { useTheme } from "@/features/theme/hooks/useTheme";
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { Card, Divider } from "@/design-system/components";
+import { radius, spacing } from "@/design-system/tokens";
 import { ProfileScreenHeader } from "@/features/profile/components/ProfileScreenHeader";
 import { ProfileSubNavigation } from "@/features/profile/components/ProfileSubNavigation";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 
 export default function ProfileScreen() {
   const { theme } = useTheme();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor:
-          theme.background.primary,
-      }}
-    >
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentInsetAdjustmentBehavior="automatic"
-        contentContainerStyle={{
-          paddingHorizontal: spacing[16],
-          paddingTop: spacing[16],
-          paddingBottom: spacing[64],
-          gap: spacing[20],
+    <ScreenWrapper>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: theme.background.primary,
         }}
       >
-        <ProfileScreenHeader
-          title="My account"
-          description="Personal details and travel information."
-          icon="person-outline"
-        />
-
-        <ProfileSubNavigation />
-
-        <ProfileIdentityCard />
-
-        <ProfileStatistics />
-
-        <Card variant="elevated">
-          <View style={{ gap: spacing[4] }}>
-            <AppText variant="h3">
-              Personal information
-            </AppText>
-
-            <AppText
-              variant="bodySmall"
-              color="secondary"
-            >
-              Information associated with
-              your SmartLink account.
-            </AppText>
-          </View>
-
-          <Divider spacingVertical={16} />
-
-          <ProfileInformationRow
-            icon="person-outline"
-            label="Full name"
-            value="Abebe Kebede"
-          />
-
-          <Divider spacingVertical={2} />
-
-          <ProfileInformationRow
-            icon="mail-outline"
-            label="Email"
-            value="abebe@example.com"
-          />
-
-          <Divider spacingVertical={2} />
-
-          <ProfileInformationRow
-            icon="call-outline"
-            label="Phone number"
-            value="+251 91 234 5678"
-          />
-
-          <Divider spacingVertical={2} />
-
-          <ProfileInformationRow
-            icon="location-outline"
-            label="Home city"
-            value="Addis Ababa"
-          />
-        </Card>
-
-        <Card variant="elevated">
-          <View style={{ gap: spacing[4] }}>
-            <AppText variant="h3">
-              Travel preferences
-            </AppText>
-
-            <AppText
-              variant="bodySmall"
-              color="secondary"
-            >
-              Used to personalize route
-              recommendations.
-            </AppText>
-          </View>
-
-          <Divider spacingVertical={16} />
-
-          <ProfileInformationRow
-            icon="bus-outline"
-            label="Preferred transport"
-            value="Public bus"
-          />
-
-          <Divider spacingVertical={2} />
-
-          <ProfileInformationRow
-            icon="card-outline"
-            label="Default payment"
-            value="Telebirr"
-          />
-
-          <Divider spacingVertical={2} />
-
-          <ProfileInformationRow
-            icon="language-outline"
-            label="Language"
-            value="English"
-          />
-        </Card>
-
-        <Pressable
-          accessibilityRole="button"
-          onPress={() =>
-            router.navigate(
-              "/profile/profile-settings",
-            )
-          }
-          style={({ pressed }) => ({
-            minHeight: 52,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: spacing[8],
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentInsetAdjustmentBehavior="automatic"
+          contentContainerStyle={{
             paddingHorizontal: spacing[16],
-            borderRadius: radius.md,
-            backgroundColor: pressed
-              ? theme.button.primary.pressed
-              : theme.button.primary
-                  .background,
-          })}
+            paddingTop: spacing[16],
+            paddingBottom: spacing[64],
+            gap: spacing[20],
+          }}
         >
-          <Ionicons
-            name="settings-outline"
-            size={20}
-            color={
-              theme.button.primary.text
-            }
+          <ProfileScreenHeader
+            title="My account"
+            description="Personal details and travel information."
+            icon="person-outline"
           />
 
-          <AppText
-            variant="buttonLarge"
-            style={{
-              color:
-                theme.button.primary.text,
-            }}
+          <ProfileSubNavigation />
+
+          <ProfileIdentityCard />
+
+          <ProfileStatistics />
+
+          <Card variant="elevated">
+            <View style={{ gap: spacing[4] }}>
+              <AppText variant="h3">Personal information</AppText>
+
+              <AppText variant="bodySmall" color="secondary">
+                Information associated with your SmartLink account.
+              </AppText>
+            </View>
+
+            <Divider spacingVertical={16} />
+
+            <ProfileInformationRow
+              icon="person-outline"
+              label="Full name"
+              value="Abebe Kebede"
+            />
+
+            <Divider spacingVertical={2} />
+
+            <ProfileInformationRow
+              icon="mail-outline"
+              label="Email"
+              value="abebe@example.com"
+            />
+
+            <Divider spacingVertical={2} />
+
+            <ProfileInformationRow
+              icon="call-outline"
+              label="Phone number"
+              value="+251 91 234 5678"
+            />
+
+            <Divider spacingVertical={2} />
+
+            <ProfileInformationRow
+              icon="location-outline"
+              label="Home city"
+              value="Addis Ababa"
+            />
+          </Card>
+
+          <Card variant="elevated">
+            <View style={{ gap: spacing[4] }}>
+              <AppText variant="h3">Travel preferences</AppText>
+
+              <AppText variant="bodySmall" color="secondary">
+                Used to personalize route recommendations.
+              </AppText>
+            </View>
+
+            <Divider spacingVertical={16} />
+
+            <ProfileInformationRow
+              icon="bus-outline"
+              label="Preferred transport"
+              value="Public bus"
+            />
+
+            <Divider spacingVertical={2} />
+
+            <ProfileInformationRow
+              icon="card-outline"
+              label="Default payment"
+              value="Telebirr"
+            />
+
+            <Divider spacingVertical={2} />
+
+            <ProfileInformationRow
+              icon="language-outline"
+              label="Language"
+              value="English"
+            />
+          </Card>
+
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => router.navigate("/profile/profile-settings")}
+            style={({ pressed }) => ({
+              minHeight: 52,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: spacing[8],
+              paddingHorizontal: spacing[16],
+              borderRadius: radius.md,
+              backgroundColor: pressed
+                ? theme.button.primary.pressed
+                : theme.button.primary.background,
+            })}
           >
-            Open profile settings
-          </AppText>
-        </Pressable>
-      </ScrollView>
-    </View>
+            <Ionicons
+              name="settings-outline"
+              size={20}
+              color={theme.button.primary.text}
+            />
+
+            <AppText
+              variant="buttonLarge"
+              style={{
+                color: theme.button.primary.text,
+              }}
+            >
+              Open profile settings
+            </AppText>
+          </Pressable>
+        </ScrollView>
+      </View>
+    </ScreenWrapper>
   );
 }
 
@@ -1032,8 +1000,7 @@ function ProfileIdentityCard() {
               alignItems: "center",
               justifyContent: "center",
               borderRadius: radius.full,
-              backgroundColor:
-                theme.primaryLight,
+              backgroundColor: theme.primaryLight,
               borderWidth: 3,
               borderColor: theme.primary,
             }}
@@ -1059,17 +1026,11 @@ function ProfileIdentityCard() {
               justifyContent: "center",
               borderRadius: radius.full,
               borderWidth: 3,
-              borderColor:
-                theme.card.background,
-              backgroundColor:
-                theme.success,
+              borderColor: theme.card.background,
+              backgroundColor: theme.success,
             }}
           >
-            <Ionicons
-              name="checkmark"
-              size={12}
-              color={theme.white}
-            />
+            <Ionicons name="checkmark" size={12} color={theme.white} />
           </View>
         </View>
 
@@ -1079,14 +1040,9 @@ function ProfileIdentityCard() {
             gap: spacing[4],
           }}
         >
-          <AppText variant="h2">
-            Abebe Kebede
-          </AppText>
+          <AppText variant="h2">Abebe Kebede</AppText>
 
-          <AppText
-            variant="bodyMedium"
-            color="secondary"
-          >
+          <AppText variant="bodyMedium" color="secondary">
             SmartLink passenger
           </AppText>
         </View>
@@ -1099,15 +1055,10 @@ function ProfileIdentityCard() {
             paddingHorizontal: spacing[12],
             paddingVertical: spacing[6],
             borderRadius: radius.full,
-            backgroundColor:
-              theme.successLight,
+            backgroundColor: theme.successLight,
           }}
         >
-          <Ionicons
-            name="shield-checkmark"
-            size={16}
-            color={theme.success}
-          />
+          <Ionicons name="shield-checkmark" size={16} color={theme.success} />
 
           <AppText
             variant="labelMedium"
@@ -1131,40 +1082,22 @@ function ProfileStatistics() {
         gap: spacing[12],
       }}
     >
-      <ProfileStat
-        icon="navigate-outline"
-        value="42"
-        label="Trips"
-      />
+      <ProfileStat icon="navigate-outline" value="42" label="Trips" />
 
-      <ProfileStat
-        icon="leaf-outline"
-        value="18 kg"
-        label="CO₂ saved"
-      />
+      <ProfileStat icon="leaf-outline" value="18 kg" label="CO₂ saved" />
 
-      <ProfileStat
-        icon="star-outline"
-        value="4.9"
-        label="Rating"
-      />
+      <ProfileStat icon="star-outline" value="4.9" label="Rating" />
     </View>
   );
 }
 
 interface ProfileStatProps {
-  icon: React.ComponentProps<
-    typeof Ionicons
-  >["name"];
+  icon: React.ComponentProps<typeof Ionicons>["name"];
   value: string;
   label: string;
 }
 
-function ProfileStat({
-  icon,
-  value,
-  label,
-}: ProfileStatProps) {
+function ProfileStat({ icon, value, label }: ProfileStatProps) {
   const { theme } = useTheme();
 
   return (
@@ -1179,19 +1112,12 @@ function ProfileStat({
         borderRadius: radius.md,
         borderWidth: 1,
         borderColor: theme.border.default,
-        backgroundColor:
-          theme.card.background,
+        backgroundColor: theme.card.background,
       }}
     >
-      <Ionicons
-        name={icon}
-        size={22}
-        color={theme.primary}
-      />
+      <Ionicons name={icon} size={22} color={theme.primary} />
 
-      <AppText variant="h3">
-        {value}
-      </AppText>
+      <AppText variant="h3">{value}</AppText>
 
       <AppText
         variant="labelSmall"
@@ -1205,9 +1131,7 @@ function ProfileStat({
 }
 
 interface ProfileInformationRowProps {
-  icon: React.ComponentProps<
-    typeof Ionicons
-  >["name"];
+  icon: React.ComponentProps<typeof Ionicons>["name"];
   label: string;
   value: string;
 }
@@ -1231,33 +1155,23 @@ function ProfileInformationRow({
     >
       <View
         style={{
-          width: 40,
-          height: 40,
+          width: 50,
+          height: 50,
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: radius.sm,
-          backgroundColor:
-            theme.surface.surface,
+          borderRadius: radius.full,
+          backgroundColor: theme.surface.surface,
         }}
       >
-        <Ionicons
-          name={icon}
-          size={20}
-          color={theme.icon.active}
-        />
+        <Ionicons name={icon} size={30} color={theme.icon.active} />
       </View>
 
       <View style={{ flex: 1 }}>
-        <AppText
-          variant="labelSmall"
-          color="secondary"
-        >
+        <AppText variant="labelSmall" color="secondary">
           {label}
         </AppText>
 
-        <AppText variant="bodyMedium">
-          {value}
-        </AppText>
+        <AppText variant="bodyMedium">{value}</AppText>
       </View>
     </View>
   );

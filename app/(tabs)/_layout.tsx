@@ -133,7 +133,7 @@ export default function TabsLayout() {
            * Because the folder has no index.tsx,
            * point this tab to its initial screen.
            */
-          href: "/profile-detail/profile",
+          href: "/profile/profile",
 
           tabBarIcon: ({
             color,
