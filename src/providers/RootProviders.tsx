@@ -53,7 +53,7 @@ import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { ErrorBoundary } from "@/components/index";
-import { ToastMessage } from "@/features/toast/components";
+// import { ToastMessage } from "@/features/toast/components";
 import { BottomSheetProvider } from "@/providers/BottomSheetProvider";
 import { LocationProvider } from "@/providers/LocationProvider";
 import { NotificationProvider } from "@/providers/NotificationProvider"; // <--- Added!
@@ -72,7 +72,7 @@ export const RootProviders = ({ children }: { children: ReactNode }) => (
                 {/* <--- Wraps app context */}
                 <BottomSheetProvider>
                   {children}
-                  <ToastMessage />
+                  {/* <ToastMessage /> */}
                   <StatusBar style="auto" />
                 </BottomSheetProvider>
               </NotificationProvider>

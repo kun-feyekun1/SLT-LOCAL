@@ -4,7 +4,49 @@ import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 
 import { AppText } from "@/components/AppText/AppText";
-import { Button, Card, Divider, Input } from "@/design-system/components";
+import { Card, Divider, Input } from "@/design-system/components";
+
+// Local lightweight Button replacement (design-system doesn't export Button)
+function Button({
+  label,
+  fullWidth,
+  leftIcon,
+  variant = "primary",
+  onPress,
+}: {
+  label: string;
+  fullWidth?: boolean;
+  leftIcon?: React.ReactNode;
+  variant?: "primary" | "secondary";
+  onPress?: () => void;
+}) {
+  const { theme } = useTheme();
+
+  const backgroundColor =
+    variant === "primary" ? theme.button.primary.background : theme.button.secondary.pressed;
+  const textColor = variant === "primary" ? theme.button.primary.text : theme.button.secondary.text;
+
+  return (
+    <Pressable
+      onPress={onPress}
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: spacing[8],
+        backgroundColor,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        width: fullWidth ? "100%" : undefined,
+      }}
+    >
+      {leftIcon}
+      <AppText style={{ color: textColor }}>{label}</AppText>
+    </Pressable>
+  );
+}
+
 import { spacing } from "@/design-system/tokens";
 import { ThemeSelector } from "@/features/theme/components/ThemeSelector";
 import { useTheme } from "@/features/theme/hooks/useTheme";

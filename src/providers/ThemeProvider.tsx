@@ -65,6 +65,7 @@ export function ThemeProvider({
 
   const value = useMemo<ThemeContextType>(
     () => ({
+      colors: theme.brand,
       theme,
       mode,
       preference,

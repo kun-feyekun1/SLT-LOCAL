@@ -25,10 +25,10 @@ export const MapMarkerCard = ({ title, subtitle }: Props) => {
     >
       <Navigation size={16} color={theme.colors.primary} />
       <View style={styles.text}>
-        <AppText variant="caption" weight="700" numberOfLines={1}>
+        <AppText variant="bodyMedium"  numberOfLines={1}>
           {title}
         </AppText>
-        <AppText variant="caption" muted numberOfLines={1}>
+        <AppText variant="bodySmall"  numberOfLines={1}>
           {subtitle}
         </AppText>
       </View>

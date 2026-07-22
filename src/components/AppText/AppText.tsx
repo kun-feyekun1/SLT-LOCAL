@@ -19,12 +19,14 @@ type TextColor =
   | "info";
 
 interface AppTextProps extends TextProps {
+  weight?: 500 | 600 | 700 | 800 | 900;
   variant?: TypographyVariant;
   color?: TextColor;
   align?: TextStyle["textAlign"];
 }
 
 export function AppText({
+  weight,
   variant = "bodyMedium",
   color = "primary",
   align,

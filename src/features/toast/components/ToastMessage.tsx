@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { useTheme } from "@/features/theme/hooks/useTheme";
-import { hideToast } from "@/features/toast/state/toastSlice";
+import { dismissToast } from "@/features/toast/state/toastSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { radii, shadows, spacing } from "@/theme";
 
@@ -17,7 +17,7 @@ export const ToastMessage = () => {
     if (!toast) {
       return;
     }
-    const timer = setTimeout(() => dispatch(hideToast()), 3500);
+    const timer = setTimeout(() => dispatch(dismissToast(toast.id)), 3500);
     return () => clearTimeout(timer);
   }, [dispatch, toast]);
 
@@ -41,7 +41,7 @@ export const ToastMessage = () => {
           { backgroundColor: theme.colors.surface, borderColor: color },
         ]}
       >
-        <AppText weight="700">{toast.message}</AppText>
+        <AppText weight={700}>{toast.message}</AppText>
       </View>
     </View>
   );
