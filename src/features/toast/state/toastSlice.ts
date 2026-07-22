@@ -1,16 +1,8 @@
 // src/features/toast/state/toastSlice.ts
 
-import {
-  createSlice,
-  nanoid,
-  type PayloadAction,
-} from "@reduxjs/toolkit";
+import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 
-import type {
-  ShowToastPayload,
-  Toast,
-  ToastState,
-} from "../types/toast.types";
+import type { ShowToastPayload, Toast, ToastState } from "../types/toast.types";
 
 const DEFAULT_TOAST_DURATION = 4_000;
 const MAXIMUM_QUEUE_LENGTH = 5;
@@ -70,9 +62,7 @@ const toastSlice = createSlice({
      * also makes this reducer safe for queued items.
      */
     dismissToast(state, action: PayloadAction<string>) {
-      state.queue = state.queue.filter(
-        (toast) => toast.id !== action.payload,
-      );
+      state.queue = state.queue.filter((toast) => toast.id !== action.payload);
     },
 
     /**
@@ -91,12 +81,8 @@ const toastSlice = createSlice({
   },
 });
 
-export const {
-  showToast,
-  dismissToast,
-  dismissCurrentToast,
-  clearAllToasts,
-} = toastSlice.actions;
+export const { showToast, dismissToast, dismissCurrentToast, clearAllToasts } =
+  toastSlice.actions;
 
 export const toastReducer = toastSlice.reducer;
 

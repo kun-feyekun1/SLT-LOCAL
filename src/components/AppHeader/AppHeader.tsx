@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import { Bell, Settings } from "lucide-react-native";
 import { Pressable, StyleSheet, View } from "react-native";
 
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 import { radii, spacing } from "@/theme";
 
 import { AppText } from "../AppText/AppText";
@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const AppHeader = ({ title, subtitle, showActions = true }: Props) => {
-  const theme = useAppTheme();
+  const theme = useTheme();
 
   return (
     <View style={styles.row}>

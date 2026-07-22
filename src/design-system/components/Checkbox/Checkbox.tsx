@@ -3,15 +3,15 @@
  * 24px size, 4px radius
  */
 
-import React from 'react';
+import React from "react";
 import {
-    Text,
-    TouchableOpacity,
-    TouchableOpacityProps,
-    View,
-} from 'react-native';
-import { cn } from '../../../lib/cn';
-import { useTheme } from '../../hooks/theme/useTheme';
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View,
+} from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
+import { cn } from "../../../lib/cn";
 
 interface CheckboxProps extends TouchableOpacityProps {
   /** Checked state */
@@ -43,30 +43,30 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   const { theme } = useTheme();
 
   const getCheckboxStyles = () => {
-    const base = 'w-6 h-6 rounded-4 border-2 items-center justify-center';
-    
+    const base = "w-6 h-6 rounded-4 border-2 items-center justify-center";
+
     const states = {
-      unchecked: 'border-neutral-400 dark:border-dark-500 bg-transparent',
-      checked: 'border-primary bg-primary',
-      error: 'border-error bg-error-light dark:bg-error-light/10',
-      disabled: 'opacity-60',
+      unchecked: "border-neutral-400 dark:border-dark-500 bg-transparent",
+      checked: "border-primary bg-primary",
+      error: "border-error bg-error-light dark:bg-error-light/10",
+      disabled: "opacity-60",
     };
 
-    let state = 'unchecked';
-    if (disabled) state = 'disabled';
-    else if (error) state = 'error';
-    else if (checked) state = 'checked';
+    let state = "unchecked";
+    if (disabled) state = "disabled";
+    else if (error) state = "error";
+    else if (checked) state = "checked";
 
     return cn(base, states[state as keyof typeof states], className);
   };
 
   const getLabelStyles = () => {
-    const base = 'text-body-medium ml-3';
-    
-    if (disabled) return cn(base, 'text-neutral-500 dark:text-dark-400');
-    if (error) return cn(base, 'text-error');
-    
-    return cn(base, 'text-neutral-900 dark:text-white', labelClassName);
+    const base = "text-body-medium ml-3";
+
+    if (disabled) return cn(base, "text-neutral-500 dark:text-dark-400");
+    if (error) return cn(base, "text-error");
+
+    return cn(base, "text-neutral-900 dark:text-white", labelClassName);
   };
 
   const handlePress = () => {
@@ -84,13 +84,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       {...props}
     >
       <View className={getCheckboxStyles()}>
-        {checked && (
-          <View className="w-4 h-4 bg-white rounded-1" />
-        )}
+        {checked && <View className="w-4 h-4 bg-white rounded-1" />}
       </View>
-      {label && (
-        <Text className={getLabelStyles()}>{label}</Text>
-      )}
+      {label && <Text className={getLabelStyles()}>{label}</Text>}
     </TouchableOpacity>
   );
 };

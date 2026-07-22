@@ -3,15 +3,15 @@
  * 48px height, 24px radius, with search icon
  */
 
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState } from "react";
 import {
-    TextInput,
-    TextInputProps,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import { cn } from '../../../lib/cn';
-import { useTheme } from '../../hooks/theme/useTheme';
+  TextInput,
+  TextInputProps,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
+import { cn } from "../../../lib/cn";
 
 interface SearchFieldProps extends TextInputProps {
   /** Called when search is submitted */
@@ -30,13 +30,13 @@ export const SearchField = forwardRef<TextInput, SearchFieldProps>(
       className,
       value,
       onChangeText,
-      placeholder = 'Search...',
+      placeholder = "Search...",
       ...props
     },
-    ref
+    ref,
   ) => {
     const { theme } = useTheme();
-    const [searchValue, setSearchValue] = useState(value || '');
+    const [searchValue, setSearchValue] = useState(value || "");
 
     const handleChangeText = (text: string) => {
       setSearchValue(text);
@@ -44,8 +44,8 @@ export const SearchField = forwardRef<TextInput, SearchFieldProps>(
     };
 
     const handleClear = () => {
-      setSearchValue('');
-      onChangeText?.('');
+      setSearchValue("");
+      onChangeText?.("");
       onClear?.();
     };
 
@@ -56,8 +56,8 @@ export const SearchField = forwardRef<TextInput, SearchFieldProps>(
     return (
       <View
         className={cn(
-          'h-12 rounded-3xl bg-white dark:bg-dark-700 flex-row items-center px-4',
-          className
+          "h-12 rounded-3xl bg-white dark:bg-dark-700 flex-row items-center px-4",
+          className,
         )}
       >
         {/* Search Icon */}
@@ -85,9 +85,9 @@ export const SearchField = forwardRef<TextInput, SearchFieldProps>(
         )}
       </View>
     );
-  }
+  },
 );
 
-SearchField.displayName = 'SearchField';
+SearchField.displayName = "SearchField";
 
 export default SearchField;

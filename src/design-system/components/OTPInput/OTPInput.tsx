@@ -3,16 +3,16 @@
  * Auto-advances after each digit
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
-    NativeSyntheticEvent,
-    TextInput,
-    TextInputKeyPressEventData,
-    View
-} from 'react-native';
-import { cn } from '../../../lib/cn';
-import { useTheme } from '../../hooks/theme/useTheme';
-import { typography } from '../../tokens/typography';
+  NativeSyntheticEvent,
+  TextInput,
+  TextInputKeyPressEventData,
+  View,
+} from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
+import { cn } from "../../../lib/cn";
+import { typography } from "../../tokens/typography";
 
 interface OTPInputProps {
   /** Number of OTP digits */
@@ -41,7 +41,7 @@ export const OTPInput: React.FC<OTPInputProps> = ({
   className,
 }) => {
   const { theme } = useTheme();
-  const [otp, setOtp] = useState<string[]>(Array(length).fill(''));
+  const [otp, setOtp] = useState<string[]>(Array(length).fill(""));
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
   const inputRefs = useRef<(TextInput | null)[]>([]);
 
@@ -53,15 +53,15 @@ export const OTPInput: React.FC<OTPInputProps> = ({
 
   const handleChangeText = (text: string, index: number) => {
     if (disabled) return;
-    
+
     // Only allow single digit
     const digit = text.slice(-1);
-    
+
     const newOtp = [...otp];
     newOtp[index] = digit;
     setOtp(newOtp);
 
-    const otpString = newOtp.join('');
+    const otpString = newOtp.join("");
     onChange?.(otpString);
 
     // Auto-advance to next input
@@ -77,24 +77,24 @@ export const OTPInput: React.FC<OTPInputProps> = ({
 
   const handleKeyPress = (
     e: NativeSyntheticEvent<TextInputKeyPressEventData>,
-    index: number
+    index: number,
   ) => {
     if (disabled) return;
-    
+
     // Handle backspace
-    if (e.nativeEvent.key === 'Backspace') {
+    if (e.nativeEvent.key === "Backspace") {
       if (!otp[index] && index > 0) {
         // Move to previous input if current is empty
         inputRefs.current[index - 1]?.focus();
         const newOtp = [...otp];
-        newOtp[index - 1] = '';
+        newOtp[index - 1] = "";
         setOtp(newOtp);
-        onChange?.(newOtp.join(''));
+        onChange?.(newOtp.join(""));
       } else {
         const newOtp = [...otp];
-        newOtp[index] = '';
+        newOtp[index] = "";
         setOtp(newOtp);
-        onChange?.(newOtp.join(''));
+        onChange?.(newOtp.join(""));
       }
     }
   };
@@ -111,27 +111,24 @@ export const OTPInput: React.FC<OTPInputProps> = ({
     const isFocused = focusedIndex === index;
     const hasValue = !!otp[index];
 
-    const base = 'w-12 h-14 rounded-8 border-[1.5px] text-center';
-    
+    const base = "w-12 h-14 rounded-8 border-[1.5px] text-center";
+
     const stateStyles = {
-      default: 'border-neutral-300 dark:border-dark-600',
-      focused: 'border-primary',
-      error: 'border-error bg-error-light dark:bg-error-light/10',
-      disabled: 'bg-neutral-100 dark:bg-dark-700 border-neutral-200 dark:border-dark-600 opacity-60',
-      value: 'border-neutral-400 dark:border-dark-500',
+      default: "border-neutral-300 dark:border-dark-600",
+      focused: "border-primary",
+      error: "border-error bg-error-light dark:bg-error-light/10",
+      disabled:
+        "bg-neutral-100 dark:bg-dark-700 border-neutral-200 dark:border-dark-600 opacity-60",
+      value: "border-neutral-400 dark:border-dark-500",
     };
 
-    let state = 'default';
-    if (disabled) state = 'disabled';
-    else if (error) state = 'error';
-    else if (isFocused) state = 'focused';
-    else if (hasValue) state = 'value';
+    let state = "default";
+    if (disabled) state = "disabled";
+    else if (error) state = "error";
+    else if (isFocused) state = "focused";
+    else if (hasValue) state = "value";
 
-    return cn(
-      base,
-      stateStyles[state as keyof typeof stateStyles],
-      className
-    );
+    return cn(base, stateStyles[state as keyof typeof stateStyles], className);
   };
 
   return (

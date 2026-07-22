@@ -1,9 +1,12 @@
 import { Moon, Smartphone, Sun } from "lucide-react-native";
 import { Pressable, StyleSheet, View } from "react-native";
 
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
+import {
+  setThemePreference,
+  type ThemePreference,
+} from "@/features/theme/state/themeSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setThemePreference, type ThemePreference } from "@/store/themeSlice";
 import { radii, spacing } from "@/theme";
 
 import { AppText } from "../AppText/AppText";
@@ -21,7 +24,7 @@ const options: Array<{
 export const ThemeToggle = () => {
   const dispatch = useAppDispatch();
   const selected = useAppSelector((state: any) => state.theme.preference);
-  const theme = useAppTheme();
+  const theme = useTheme();
 
   return (
     <View style={[styles.wrap, { backgroundColor: theme.colors.surfaceMuted }]}>

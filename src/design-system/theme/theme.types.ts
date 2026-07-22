@@ -1,4 +1,7 @@
+import { ColorValue } from "react-native";
+
 export interface Theme {
+  transparent: ColorValue | undefined;
   primary: string;
   primaryLight: string;
   primaryDark: string;

@@ -1,44 +1,63 @@
-// src/components/AppText/AppText.tsx
-import React from 'react';
-import { Text, TextProps } from 'react-native';
-import { useAppTheme } from '@/hooks/useAppTheme'; // Adjust path if needed
+// src/design-system/components/AppText/AppText.tsx
+
+import { Text, TextProps, TextStyle } from "react-native";
+
+import { typography, TypographyVariant } from "@/design-system/tokens";
+import { useTheme } from "@/features/theme/hooks/useTheme";
+
+type TextColor =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "hint"
+  | "disabled"
+  | "inverse"
+  | "brand"
+  | "success"
+  | "warning"
+  | "error"
+  | "info";
 
 interface AppTextProps extends TextProps {
-  muted?: boolean;
-  size?: number;
-  weight?: '400' | '500' | '600' | '700' | 'bold' | 'normal';
-  variant?: string;
+  variant?: TypographyVariant;
+  color?: TextColor;
+  align?: TextStyle["textAlign"];
 }
 
-export const AppText: React.FC<AppTextProps> = ({
-  children,
-  muted,
-  size = 14,
-  weight = '400',
+export function AppText({
+  variant = "bodyMedium",
+  color = "primary",
+  align,
   style,
   ...props
-}) => {
-  const theme = useAppTheme();
+}: AppTextProps) {
+  const { theme } = useTheme();
 
-  // Safe fallback if theme is undefined during error boundary rendering
-  const textColor = muted
-    ? (theme?.colors?.textMuted ?? '#666666')
-    : (theme?.colors?.text ?? '#000000');
+  const colorMap: Record<TextColor, string> = {
+    primary: theme.text.primary,
+    secondary: theme.text.secondary,
+    tertiary: theme.text.tertiary,
+    hint: theme.text.hint,
+    disabled: theme.text.disabled,
+    inverse: theme.text.inverse,
+    brand: theme.primary,
+    success: theme.success,
+    warning: theme.warning,
+    error: theme.error,
+    info: theme.info,
+  };
 
   return (
     <Text
       {...props}
       style={[
+        typography[variant],
         {
-          color: textColor,
-          fontSize: size,
-          lineHeight: size + 6,
-          fontWeight: weight,
+          color: colorMap[color],
+          textAlign: align,
         },
         style,
       ]}
-    >
-      {children}
-    </Text>
+    />
   );
-};
+}

@@ -1,7 +1,7 @@
 // import type { LucideIcon } from "lucide-react-native";
 // import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
-// import { useAppTheme } from "@/hooks/useAppTheme";
+// import { useTheme } from "@/hooks/useTheme";
 // import { radii, spacing, typography } from "@/theme";
 
 // import { AppText } from "../AppText/AppText";
@@ -23,7 +23,7 @@
 //   variant = "primary",
 //   icon: Icon,
 // }: Props) => {
-//   const theme = useAppTheme();
+//   const theme = useTheme();
 //   const isPrimary = variant === "primary";
 //   const backgroundColor = isPrimary
 //     ? theme.colors.primary
@@ -71,11 +71,10 @@
 //   row: { flexDirection: "row", alignItems: "center", gap: spacing.xs },
 // });
 
-
 import { Pressable, StyleSheet } from "react-native";
 
-import { useTheme } from "@/features/theme/hooks/useTheme";
 import { AppText } from "@/components/AppText/AppText";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 
 interface PrimaryButtonProps {
   label: string;
@@ -100,22 +99,11 @@ export function PrimaryButton({
         : "transparent";
 
   const textColor =
-    variant === "primary"
-      ? theme.button.primary.text
-      : theme.text.primary;
+    variant === "primary" ? theme.button.primary.text : theme.text.primary;
 
   return (
-    <Pressable
-      disabled={disabled}
-      onPress={onPress}
-      style={[
-        styles.button,
-    
-      ]}
-    >
-      <AppText style={{ color: textColor }}>
-        {label}
-      </AppText>
+    <Pressable disabled={disabled} onPress={onPress} style={[styles.button]}>
+      <AppText style={{ color: textColor }}>{label}</AppText>
     </Pressable>
   );
 }

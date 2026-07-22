@@ -52,7 +52,8 @@ import type { ReactNode } from "react";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { ErrorBoundary, ToastMessage } from "@/components/index";
+import { ErrorBoundary } from "@/components/index";
+import { ToastMessage } from "@/features/toast/components";
 import { BottomSheetProvider } from "@/providers/BottomSheetProvider";
 import { LocationProvider } from "@/providers/LocationProvider";
 import { NotificationProvider } from "@/providers/NotificationProvider"; // <--- Added!

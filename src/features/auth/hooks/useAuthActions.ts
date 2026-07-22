@@ -1,15 +1,15 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 
+import { showToast } from "@/features/toast/state/toastSlice";
 import { useAppDispatch } from "@/store/hooks";
-import { showToast } from "@/store/toastSlice";
 import { queryKeys } from "@/utils/queryKeys";
 
 import { authService } from "../services/authService";
 import { clearSession, markBootstrapped, setSession } from "../state/authSlice";
 
 export const useBootstrapAuth = () => {
-  const dispatch = useAppDispatch(); 
+  const dispatch = useAppDispatch();
 
   return useQuery({
     queryKey: queryKeys.me,

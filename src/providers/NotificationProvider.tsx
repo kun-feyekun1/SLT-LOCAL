@@ -1,6 +1,6 @@
 // src/providers/NotificationProvider.tsx
+import { showToast } from "@/features/toast/state/toastSlice";
 import { useAppDispatch } from "@/store/hooks";
-import { showToast } from "@/store/toastSlice";
 import * as Notifications from "expo-notifications";
 import React, {
   createContext,
@@ -17,7 +17,7 @@ interface NotificationContextType {
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(
-  undefined
+  undefined,
 );
 
 // Configure how notifications behave when the app is in the FOREGROUND
@@ -62,7 +62,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const notificationListener = Notifications.addNotificationReceivedListener(
       (incoming) => {
         setNotification(incoming);
-      }
+      },
     );
 
     // 2. Listen for when a user TAPS on a notification
@@ -98,7 +98,7 @@ export const useNotifications = () => {
   const context = useContext(NotificationContext);
   if (!context) {
     throw new Error(
-      "useNotifications must be used within a NotificationProvider"
+      "useNotifications must be used within a NotificationProvider",
     );
   }
   return context;

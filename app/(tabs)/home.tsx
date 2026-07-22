@@ -181,12 +181,12 @@
 // import { TransportCard } from "@/features/transport/components/TransportCard";
 // import { useNearbyTransport } from "@/features/transport/hooks/useNearbyTransport";
 // import type { TransportOption } from "@/features/transport/types/transport.types";
-// import { useAppTheme } from "@/hooks/useAppTheme";
+// import { useTheme } from "@/hooks/useTheme";
 // import { radii, spacing } from "@/theme";
 // import ScreenWrapper from "@/components/ScreenWrapper";
 
 // export default function HomeScreen() {
-//   const theme = useAppTheme();
+//   const theme = useTheme();
 //   const location = useCurrentLocation();
 //   const point =
 //     location.data?.status === "granted" ? location.data.point : null;

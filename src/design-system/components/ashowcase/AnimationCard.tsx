@@ -9,7 +9,7 @@ import { componentElevation } from "@/design-system/tokens/shadows";
 import { spacing } from "@/design-system/tokens/spacing";
 import { typography } from "@/design-system/tokens/typography";
 
-import { useTheme } from "@/design-system/hooks/theme/useTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 
 interface AnimationCardProps {
   title: string;

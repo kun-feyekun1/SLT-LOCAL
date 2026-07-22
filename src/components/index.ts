@@ -11,4 +11,4 @@ export * from "./PrimaryButton/PrimaryButton";
 export * from "./ScreenWrapper/ScreenWrapper";
 export * from "./SearchBar/SearchBar";
 export * from "./ThemeToggle/ThemeToggle";
-export * from "./Toast/ToastMessage";
+

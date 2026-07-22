@@ -3,20 +3,20 @@
  * Variants: Regular, Small, Extended
  */
 
-import React from 'react';
+import React from "react";
 import {
-    Animated,
-    Text,
-    TouchableOpacity,
-    TouchableOpacityProps,
-    View,
-} from 'react-native';
-import { cn } from '../../../lib/cn';
-import { useTheme } from '../../hooks/theme/useTheme';
-import { elevation } from '../../tokens/shadows';
+  Animated,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View,
+} from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
+import { cn } from "../../../lib/cn";
+import { elevation } from "../../tokens/shadows";
 
-export type FABSize = 'regular' | 'small';
-export type FABVariant = 'default' | 'extended';
+export type FABSize = "regular" | "small";
+export type FABVariant = "default" | "extended";
 
 interface FABProps extends TouchableOpacityProps {
   /** FAB size */
@@ -36,8 +36,8 @@ interface FABProps extends TouchableOpacityProps {
 }
 
 export const FAB: React.FC<FABProps> = ({
-  size = 'regular',
-  variant = 'default',
+  size = "regular",
+  variant = "default",
   icon,
   label,
   loading = false,
@@ -66,22 +66,22 @@ export const FAB: React.FC<FABProps> = ({
   };
 
   const getFABStyles = () => {
-    const base = 'bg-primary items-center justify-center';
-    
+    const base = "bg-primary items-center justify-center";
+
     const sizeStyles = {
       regular: {
-        container: 'w-14 h-14 rounded-999',
-        icon: 'w-6 h-6',
+        container: "w-14 h-14 rounded-999",
+        icon: "w-6 h-6",
       },
       small: {
-        container: 'w-10 h-10 rounded-999',
-        icon: 'w-4 h-4',
+        container: "w-10 h-10 rounded-999",
+        icon: "w-4 h-4",
       },
     };
 
     const variantStyles = {
-      default: '',
-      extended: 'rounded-3xl px-4 flex-row gap-2',
+      default: "",
+      extended: "rounded-3xl px-4 flex-row gap-2",
     };
 
     const currentSize = sizeStyles[size];
@@ -94,11 +94,11 @@ export const FAB: React.FC<FABProps> = ({
         base,
         currentSize.container,
         currentVariant,
-        disabled && 'opacity-60',
-        className
+        disabled && "opacity-60",
+        className,
       ),
       icon: cn(currentSize.icon),
-      label: 'text-button-medium text-white font-inter-semi-bold',
+      label: "text-button-medium text-white font-inter-semi-bold",
       shadow: {
         shadowColor: shadowStyles.shadowColor,
         shadowOffset: shadowStyles.shadowOffset,
@@ -111,7 +111,7 @@ export const FAB: React.FC<FABProps> = ({
 
   const styles = getFABStyles();
 
-  if (variant === 'extended') {
+  if (variant === "extended") {
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -146,7 +146,10 @@ export const FAB: React.FC<FABProps> = ({
         {...props}
       >
         {loading ? (
-          <ActivityIndicator color="#FFFFFF" size={size === 'small' ? 'small' : 'large'} />
+          <ActivityIndicator
+            color="#FFFFFF"
+            size={size === "small" ? "small" : "large"}
+          />
         ) : (
           <View className={styles.icon}>{icon}</View>
         )}

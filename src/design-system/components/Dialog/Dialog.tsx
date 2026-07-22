@@ -11,8 +11,8 @@ import {
   View,
   ViewProps,
 } from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
-import { useTheme } from "../../hooks/theme/useTheme";
 import { elevation } from "../../tokens/shadows";
 import { Button } from "../Button";
 import { Typography } from "../Typography";

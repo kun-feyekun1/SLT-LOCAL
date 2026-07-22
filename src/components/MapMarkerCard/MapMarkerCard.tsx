@@ -1,7 +1,7 @@
 import { Navigation } from "lucide-react-native";
 import { StyleSheet, View } from "react-native";
 
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 import { radii, spacing } from "@/theme";
 
 import { AppText } from "../AppText/AppText";
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const MapMarkerCard = ({ title, subtitle }: Props) => {
-  const theme = useAppTheme();
+  const theme = useTheme();
   return (
     <View
       style={[

@@ -3,18 +3,14 @@
  * 8px radius, elevation 3
  */
 
-import React, { useEffect, useRef } from 'react';
-import {
-    Animated,
-    Text,
-    TouchableOpacity,
-    ViewProps
-} from 'react-native';
-import { cn } from '../../../lib/cn';
-import { useTheme } from '../../hooks/theme/useTheme';
-import { elevation } from '../../tokens/shadows';
+import React, { useEffect, useRef } from "react";
+import { Animated, Text, TouchableOpacity, ViewProps } from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
+import { cn } from "../../../lib/cn";
+import { elevation } from "../../tokens/shadows";
 
-export type SnackbarVariant = 'default' | 'success' | 'error' | 'warning' | 'info';
+export type SnackbarVariant =
+  "default" | "success" | "error" | "warning" | "info";
 
 interface SnackbarAction {
   label: string;
@@ -35,7 +31,7 @@ interface SnackbarProps extends ViewProps {
   /** Called when snackbar is dismissed */
   onDismiss?: () => void;
   /** Position of snackbar */
-  position?: 'top' | 'bottom';
+  position?: "top" | "bottom";
   /** Additional className */
   className?: string;
 }
@@ -43,16 +39,18 @@ interface SnackbarProps extends ViewProps {
 export const Snackbar: React.FC<SnackbarProps> = ({
   visible,
   message,
-  variant = 'default',
+  variant = "default",
   action,
   duration = 3000,
   onDismiss,
-  position = 'bottom',
+  position = "bottom",
   className,
   ...props
 }) => {
   const { theme } = useTheme();
-  const translateY = useRef(new Animated.Value(position === 'bottom' ? 100 : -100)).current;
+  const translateY = useRef(
+    new Animated.Value(position === "bottom" ? 100 : -100),
+  ).current;
   const opacity = useRef(new Animated.Value(0)).current;
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -93,7 +91,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   const dismissSnackbar = () => {
     Animated.parallel([
       Animated.timing(translateY, {
-        toValue: position === 'bottom' ? 100 : -100,
+        toValue: position === "bottom" ? 100 : -100,
         duration: 300,
         useNativeDriver: true,
         easing: (t) => t * t * t, // ease-in
@@ -109,27 +107,27 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   };
 
   const variantStyles = {
-    default: 'bg-neutral-900 dark:bg-dark-800',
-    success: 'bg-success',
-    error: 'bg-error',
-    warning: 'bg-warning',
-    info: 'bg-info',
+    default: "bg-neutral-900 dark:bg-dark-800",
+    success: "bg-success",
+    error: "bg-error",
+    warning: "bg-warning",
+    info: "bg-info",
   };
 
   const textColorStyles = {
-    default: 'text-white',
-    success: 'text-white',
-    error: 'text-white',
-    warning: 'text-neutral-900',
-    info: 'text-white',
+    default: "text-white",
+    success: "text-white",
+    error: "text-white",
+    warning: "text-neutral-900",
+    info: "text-white",
   };
 
   const actionColorStyles = {
-    default: 'text-gold',
-    success: 'text-white',
-    error: 'text-white',
-    warning: 'text-neutral-900',
-    info: 'text-white',
+    default: "text-gold",
+    success: "text-white",
+    error: "text-white",
+    warning: "text-neutral-900",
+    info: "text-white",
   };
 
   if (!visible) return null;
@@ -137,12 +135,12 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   return (
     <Animated.View
       className={cn(
-        'absolute left-4 right-4 rounded-8 px-4 py-3 flex-row items-center justify-between',
+        "absolute left-4 right-4 rounded-8 px-4 py-3 flex-row items-center justify-between",
         variantStyles[variant],
-        className
+        className,
       )}
       style={{
-        ...(position === 'bottom' ? { bottom: 80 } : { top: 60 }),
+        ...(position === "bottom" ? { bottom: 80 } : { top: 60 }),
         transform: [{ translateY }],
         opacity,
         shadowColor: elevation[3].shadowColor,
@@ -154,12 +152,12 @@ export const Snackbar: React.FC<SnackbarProps> = ({
       {...props}
     >
       <Text
-        className={cn('text-body-medium flex-1', textColorStyles[variant])}
+        className={cn("text-body-medium flex-1", textColorStyles[variant])}
         numberOfLines={2}
       >
         {message}
       </Text>
-      
+
       {action && (
         <TouchableOpacity
           onPress={() => {
@@ -170,8 +168,8 @@ export const Snackbar: React.FC<SnackbarProps> = ({
         >
           <Text
             className={cn(
-              'text-button-medium font-inter-semi-bold',
-              actionColorStyles[variant]
+              "text-button-medium font-inter-semi-bold",
+              actionColorStyles[variant],
             )}
           >
             {action.label}

@@ -3,21 +3,21 @@
  * 16px top corners, elevation 5
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 import {
-    Animated,
-    Dimensions,
-    Modal,
-    PanResponder,
-    TouchableOpacity,
-    View,
-    ViewProps,
-} from 'react-native';
-import { cn } from '../../../lib/cn';
-import { useTheme } from '../../hooks/theme/useTheme';
-import { elevation } from '../../tokens/shadows';
+  Animated,
+  Dimensions,
+  Modal,
+  PanResponder,
+  TouchableOpacity,
+  View,
+  ViewProps,
+} from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
+import { cn } from "../../../lib/cn";
+import { elevation } from "../../tokens/shadows";
 
-const { height: screenHeight } = Dimensions.get('window');
+const { height: screenHeight } = Dimensions.get("window");
 
 interface BottomSheetProps extends ViewProps {
   /** Visibility state */
@@ -109,7 +109,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
           }).start();
         }
       },
-    })
+    }),
   ).current;
 
   if (!isVisible) return null;
@@ -118,7 +118,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     <Modal transparent visible={visible} animationType="none">
       <Animated.View
         className="flex-1"
-        style={{ opacity, backgroundColor: 'rgba(0,0,0,0.50)' }}
+        style={{ opacity, backgroundColor: "rgba(0,0,0,0.50)" }}
       >
         {dismissOnBackdrop && (
           <TouchableOpacity
@@ -127,11 +127,11 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
             onPress={onClose}
           />
         )}
-        
+
         <Animated.View
           className={cn(
-            'absolute bottom-0 left-0 right-0 bg-white dark:bg-dark-700 rounded-t-16',
-            className
+            "absolute bottom-0 left-0 right-0 bg-white dark:bg-dark-700 rounded-t-16",
+            className,
           )}
           style={{
             height: sheetHeight,

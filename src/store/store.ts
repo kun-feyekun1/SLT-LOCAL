@@ -1,14 +1,12 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
-
-import { authReducer } from '@/features/auth/state/authSlice';
-import { mapReducer } from '@/features/map/state/mapSlice';
-import { routeReducer } from '@/features/routes/state/routeSlice';
-import { transportReducer } from '@/features/transport/state/transportSlice';
-
-import { themeReducer } from './themeSlice';
-import { toastReducer } from './toastSlice';
+import { authReducer } from "@/features/auth/state/authSlice";
+import { mapReducer } from "@/features/map/state/mapSlice";
+import { routeReducer } from "@/features/routes/state/routeSlice";
+import { transportReducer } from "@/features/transport/state/transportSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import { themeReducer } from "../features/theme/state/themeSlice";
+import { toastReducer } from "../features/toast/state/toastSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -16,19 +14,19 @@ const rootReducer = combineReducers({
   toast: toastReducer,
   transport: transportReducer,
   route: routeReducer,
-  map: mapReducer
+  map: mapReducer,
 });
 
 // Only use AsyncStorage on client/native platforms
-const storage = typeof window !== 'undefined' ? AsyncStorage : null;
+const storage = typeof window !== "undefined" ? AsyncStorage : null;
 
 const persistedReducer = persistReducer(
   {
-    key: 'derash-root',
-    storage: storage || require('redux-persist/lib/storage/session').default,
-    whitelist: ['auth', 'theme', 'transport', 'route']
+    key: "derash-root",
+    storage: storage || require("redux-persist/lib/storage/session").default,
+    whitelist: ["auth", "theme", "transport", "route"],
   },
-  rootReducer
+  rootReducer,
 );
 
 export const store = configureStore({
@@ -36,12 +34,11 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE']
-      }
-    })
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
 });
 
 export const persistor = persistStore(store);
-
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

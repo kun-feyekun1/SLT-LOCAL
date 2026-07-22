@@ -6,9 +6,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
+import { ToastMessage } from "../state/ToastMessagex";
 import { selectCurrentToast } from "../state/toastSelectors";
 import { dismissToast } from "../state/toastSlice";
-import { ToastMessage } from "./ToastMessage";
 
 const ENTER_ANIMATION_DURATION = 250;
 const EXIT_ANIMATION_DURATION = 180;
