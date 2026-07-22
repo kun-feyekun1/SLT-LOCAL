@@ -26,7 +26,7 @@ export default function ProfileDetailsLayout() {
       />
 
       <Stack.Screen
-        name="profile-setting"
+        name="profile-settings"
         options={{
           title: "Profile Settings",
         }}
