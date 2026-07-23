@@ -10,5 +10,4 @@ export * from "./MapMarkerCard/MapMarkerCard";
 export * from "./PrimaryButton/PrimaryButton";
 export * from "./ScreenWrapper/ScreenWrapper";
 export * from "./SearchBar/SearchBar";
-export * from "./ThemeToggle/ThemeToggle";
 
