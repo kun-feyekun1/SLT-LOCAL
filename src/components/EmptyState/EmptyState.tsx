@@ -1,7 +1,7 @@
 import type { LucideIcon } from "lucide-react-native";
 import { StyleSheet, View } from "react-native";
 
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 import { spacing } from "@/theme";
 
 import { AppText } from "../AppText/AppText";
@@ -22,7 +22,7 @@ export const EmptyState = ({
   actionLabel,
   onAction,
 }: Props) => {
-  const theme = useAppTheme();
+  const theme = useTheme();
 
   return (
     <View style={styles.wrap}>

@@ -52,27 +52,29 @@ import type { ReactNode } from "react";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { ErrorBoundary, ToastMessage } from "@/components/index";
+import { ErrorBoundary } from "@/components/index";
+// import { ToastMessage } from "@/features/toast/components";
 import { BottomSheetProvider } from "@/providers/BottomSheetProvider";
 import { LocationProvider } from "@/providers/LocationProvider";
 import { NotificationProvider } from "@/providers/NotificationProvider"; // <--- Added!
 import { QueryProvider } from "@/providers/QueryProvider";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { SessionProvider } from "@/features/auth/providers/SessionProvider";
 
 export const RootProviders = ({ children }: { children: ReactNode }) => (
   <GestureHandlerRootView style={styles.root}>
     <ReduxProvider>
+      <SessionProvider>
       <QueryProvider>
         <ThemeProvider>
           <ErrorBoundary>
             <LocationProvider>
               <NotificationProvider>
-                {" "}
                 {/* <--- Wraps app context */}
                 <BottomSheetProvider>
                   {children}
-                  <ToastMessage />
+                  {/* <ToastMessage /> */}
                   <StatusBar style="auto" />
                 </BottomSheetProvider>
               </NotificationProvider>
@@ -80,6 +82,7 @@ export const RootProviders = ({ children }: { children: ReactNode }) => (
           </ErrorBoundary>
         </ThemeProvider>
       </QueryProvider>
+      </SessionProvider>
     </ReduxProvider>
   </GestureHandlerRootView>
 );

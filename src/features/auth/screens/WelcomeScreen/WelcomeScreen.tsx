@@ -2,7 +2,7 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 
 import Screen from "@/components/ScreenWrapper/ScreenWrapper";
-import { useTheme } from "@/design-system/hooks/theme/useTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 
 import { styles } from "./WelcomeScreen.styles";
 

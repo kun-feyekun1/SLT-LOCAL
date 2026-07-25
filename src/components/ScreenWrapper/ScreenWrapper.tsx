@@ -109,7 +109,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { useTheme } from "@/design-system/hooks/theme/useTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 
 import { styles } from "./Screen.styles";
 import { ScreenProps } from "./Screen.types";

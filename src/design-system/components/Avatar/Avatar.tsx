@@ -3,10 +3,10 @@
  * Sizes: 32, 40, 48, 56
  */
 
-import React from 'react';
-import { Image, Text, View, ViewProps } from 'react-native';
-import { cn } from '../../../lib/cn';
-import { useTheme } from '../../hooks/theme/useTheme';
+import React from "react";
+import { Image, Text, View, ViewProps } from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
+import { cn } from "../../../lib/cn";
 
 export type AvatarSize = 32 | 40 | 48 | 56;
 
@@ -33,16 +33,16 @@ export const Avatar: React.FC<AvatarProps> = ({
   const getSizeStyles = () => {
     return {
       container: cn(
-        'rounded-999 overflow-hidden bg-primary-light dark:bg-primary/20',
+        "rounded-999 overflow-hidden bg-primary-light dark:bg-primary/20",
         `w-${size} h-${size}`,
-        className
+        className,
       ),
       text: cn(
-        'text-primary font-inter-medium',
-        size === 32 && 'text-label-medium',
-        size === 40 && 'text-label-large',
-        size === 48 && 'text-h4',
-        size === 56 && 'text-h3'
+        "text-primary font-inter-medium",
+        size === 32 && "text-label-medium",
+        size === 40 && "text-label-large",
+        size === 48 && "text-h4",
+        size === 56 && "text-h3",
       ),
     };
   };
@@ -55,7 +55,7 @@ export const Avatar: React.FC<AvatarProps> = ({
         <Image
           source={source}
           className="w-full h-full"
-          style={{ resizeMode: 'cover' }}
+          style={{ resizeMode: "cover" }}
         />
       </View>
     );

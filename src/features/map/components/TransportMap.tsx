@@ -2,7 +2,7 @@ import { memo, useMemo } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 
 import { LoadingSpinner, MapMarkerCard } from "@/components";
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 import type { GeoPoint } from "@/types/location";
 
 import { mapService } from "../services/mapService";
@@ -30,7 +30,7 @@ type Props = {
 
 export const TransportMap = memo(
   ({ center, vehicles, polyline = [] }: Props) => {
-    const theme = useAppTheme();
+    const theme = useTheme();
     const clusteredVehicles = useMemo(
       () => mapService.clusterVehicles(vehicles),
       [vehicles],
@@ -121,6 +121,11 @@ TransportMap.displayName = "TransportMap";
 const styles = StyleSheet.create({
   map: { flex: 1 },
   fallback: { flex: 1, alignItems: "center", justifyContent: "center" },
-  webContainer: { flex: 1, alignItems: "center", justifyContent: "center", padding: 16 },
+  webContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 16,
+  },
   vehicleList: { marginTop: 16, width: "100%", maxWidth: 400 },
 });

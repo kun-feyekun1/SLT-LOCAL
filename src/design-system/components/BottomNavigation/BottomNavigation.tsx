@@ -3,10 +3,10 @@
  * 4-5 items max, active state with icon and label
  */
 
-import React from 'react';
-import { Text, TouchableOpacity, View, ViewProps } from 'react-native';
-import { cn } from '../../../lib/cn';
-import { useTheme } from '../../hooks/theme/useTheme';
+import React from "react";
+import { Text, TouchableOpacity, View, ViewProps } from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
+import { cn } from "../../../lib/cn";
 
 export interface NavItem {
   key: string;
@@ -38,14 +38,14 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
   return (
     <View
       className={cn(
-        'flex-row h-16 bg-white dark:bg-dark-800 border-t border-neutral-200 dark:border-dark-600',
-        className
+        "flex-row h-16 bg-white dark:bg-dark-800 border-t border-neutral-200 dark:border-dark-600",
+        className,
       )}
       {...props}
     >
       {items.map((item) => {
         const isActive = activeKey === item.key;
-        
+
         return (
           <TouchableOpacity
             key={item.key}
@@ -54,13 +54,13 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
             activeOpacity={0.7}
           >
             <View className="items-center">
-              {isActive ? (item.activeIcon || item.icon) : item.icon}
+              {isActive ? item.activeIcon || item.icon : item.icon}
               <Text
                 className={cn(
-                  'text-navigationLabel font-inter-medium mt-1',
+                  "text-navigationLabel font-inter-medium mt-1",
                   isActive
-                    ? 'text-primary'
-                    : 'text-neutral-500 dark:text-dark-400'
+                    ? "text-primary"
+                    : "text-neutral-500 dark:text-dark-400",
                 )}
               >
                 {item.label}

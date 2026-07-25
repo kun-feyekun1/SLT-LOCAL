@@ -72,7 +72,7 @@ import { Text } from "react-native";
 import Screen from "@/components/ScreenWrapper/ScreenWrapper";
 import AnimationCard from "@/design-system/components/ashowcase/AnimationCard";
 
-import { useTheme } from "@/design-system/hooks/theme/useTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 
 import {
   useFadeAnimation,

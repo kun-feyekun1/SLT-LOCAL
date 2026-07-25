@@ -1,7 +1,7 @@
 import { Navigation } from "lucide-react-native";
 import { StyleSheet, View } from "react-native";
 
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 import { radii, spacing } from "@/theme";
 
 import { AppText } from "../AppText/AppText";
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const MapMarkerCard = ({ title, subtitle }: Props) => {
-  const theme = useAppTheme();
+  const theme = useTheme();
   return (
     <View
       style={[
@@ -25,10 +25,10 @@ export const MapMarkerCard = ({ title, subtitle }: Props) => {
     >
       <Navigation size={16} color={theme.colors.primary} />
       <View style={styles.text}>
-        <AppText variant="caption" weight="700" numberOfLines={1}>
+        <AppText variant="bodyMedium"  numberOfLines={1}>
           {title}
         </AppText>
-        <AppText variant="caption" muted numberOfLines={1}>
+        <AppText variant="bodySmall"  numberOfLines={1}>
           {subtitle}
         </AppText>
       </View>

@@ -1,14 +1,14 @@
 import GorhomBottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useMemo, type PropsWithChildren } from "react";
 
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 
 type Props = PropsWithChildren<{
   snapPoints?: string[];
 }>;
 
 export const BottomSheet = ({ children, snapPoints }: Props) => {
-  const theme = useAppTheme();
+  const theme = useTheme();
   const points = useMemo(() => snapPoints ?? ["24%", "54%"], [snapPoints]);
 
   return (

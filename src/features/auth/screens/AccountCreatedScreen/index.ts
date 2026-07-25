@@ -1,1 +1,1 @@
-export { default } from "./AccountCreatedScreen";
+export { default as AccountCreatedScreen } from "./AccountCreatedScreen";

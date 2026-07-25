@@ -3,19 +3,14 @@ import { StyleSheet, Switch, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
-import {
-  AppHeader,
-  AppText,
-  PrimaryButton,
-  ThemeToggle,
-} from "@/components";
+import { AppHeader, AppText, PrimaryButton, ThemeToggle } from "@/components";
+import ScreenWrapper from "@/components/ScreenWrapper";
 import { appConfig } from "@/config/environment";
-import { useAppTheme } from "@/hooks/useAppTheme";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { clearSession, setSession } from "@/features/auth/state/authSlice";
 import type { User } from "@/features/auth/types/auth.types";
+import { useTheme } from "@/features/theme/hooks/useTheme";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { radii, spacing } from "@/theme";
-import ScreenWrapper from "@/components/ScreenWrapper";
 
 const MOCK_USER: User = {
   id: "dev-user-123",
@@ -26,7 +21,7 @@ const MOCK_USER: User = {
 };
 
 export default function SettingsScreen() {
-  const theme = useAppTheme();
+  const theme = useTheme();
   const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
@@ -103,15 +98,15 @@ export default function SettingsScreen() {
 
       {/* Development Section */}
       <View style={{ marginTop: spacing.lg, gap: spacing.md }}>
-        <AppText
-          weight="700"
-          style={{ color: theme.colors.textMuted }}
-        >
+        <AppText weight="700" style={{ color: theme.colors.textMuted }}>
           Development Tools
         </AppText>
 
         {!isAuthenticated ? (
-          <PrimaryButton label="📱 Mock Login (Dev)" onPress={handleMockLogin} />
+          <PrimaryButton
+            label="📱 Mock Login (Dev)"
+            onPress={handleMockLogin}
+          />
         ) : (
           <PrimaryButton label="🚪 Logout" onPress={handleLogout} />
         )}

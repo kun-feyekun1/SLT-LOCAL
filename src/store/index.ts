@@ -1,8 +1,7 @@
-export * from './hooks';
-export * from './store';
-export * from './themeSlice';
-export * from './toastSlice';
-
+export * from "../features/theme/state/themeSlice";
+export * from "../features/toast/state/toastSlice";
+export * from "./hooks";
+export * from "./store";
 
 // src/store/index.ts
 

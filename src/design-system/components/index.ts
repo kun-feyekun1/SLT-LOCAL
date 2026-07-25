@@ -1,24 +1,21 @@
-/**
- * Design System - Components Index
- * Central export for all components
- */
+import { AnimatedView } from "./Animated";
 
-export * from './Button';
-export * from './Card';
-export * from './Input';
-export * from './Typography';
-export * from './Avatar';
-export * from './Badge';
-export * from './Chip';
-export * from './BottomNavigation';
-export * from './Divider';
-export * from './FAB';
-export * from './OTPInput';
-export * from './Toggle';
-export * from './Checkbox';
-export * from './Radio';
-export * from './BottomSheet';
-export * from './Dialog';
-export * from './Snackbar';
-export * from './Progress';
-export * from './SearchField';
+export * from "./Button/Button";
+export * from "./Card/Card";
+export * from "./Checkbox/Checkbox";
+export * from "./Input";
+export * from "./Radio/Radio";
+export * from "./Typography/Typography";
+export * from "./Avatar/Avatar";
+export * from "./Badge/Badge";
+export * from "./Divider/Divider";
+export * from "./Animated";
+export * from "./BottomSheet/BottomSheet";
+export * from "./IconButton/IconButton";
+export * from "./Chip";
+export * from "./FAB";
+export * from "./Toggle";
+export * from "./Snackbar";
+export * from "./OTPInput";
+export * from "./Progress";
+export * from "./SemanticBanner";

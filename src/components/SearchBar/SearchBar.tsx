@@ -1,7 +1,7 @@
 import { Search } from "lucide-react-native";
 import { Pressable, StyleSheet, TextInput } from "react-native";
 
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 import { radii, spacing, typography } from "@/theme";
 
 type Props = {
@@ -17,7 +17,7 @@ export const SearchBar = ({
   onChangeText,
   onPress,
 }: Props) => {
-  const theme = useAppTheme();
+  const theme = useTheme();
 
   return (
     <Pressable

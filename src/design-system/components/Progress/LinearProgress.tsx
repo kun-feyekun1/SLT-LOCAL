@@ -5,8 +5,8 @@
 
 import React, { useEffect, useRef } from "react";
 import { Animated, View, ViewProps } from "react-native";
+import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
-import { useTheme } from "../../hooks/theme/useTheme";
 
 interface LinearProgressProps extends ViewProps {
   /** Progress value (0-100) */
@@ -53,7 +53,7 @@ export const LinearProgress: React.FC<LinearProgressProps> = ({
           duration: 1000,
           useNativeDriver: false,
         }),
-      ])
+      ]),
     ).start();
   };
 
@@ -78,7 +78,7 @@ export const LinearProgress: React.FC<LinearProgressProps> = ({
     <View
       className={cn(
         "h-1 rounded-2 bg-neutral-200 dark:bg-dark-600 overflow-hidden",
-        className
+        className,
       )}
       {...props}
     >

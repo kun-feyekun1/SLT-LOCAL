@@ -1,38 +1,63 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+// src/features/auth/state/authSlice.ts
 
-import type { User } from '../types/auth.types';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type AuthState = {
-  user: User | null;
+import type { AuthSession, AuthUser } from "../types/auth.types";
+
+interface AuthState {
+  user: AuthUser | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   isAuthenticated: boolean;
-  bootstrapped: boolean;
-};
+  isRestoringSession: boolean;
+}
 
 const initialState: AuthState = {
   user: null,
+  accessToken: null,
+  refreshToken: null,
   isAuthenticated: false,
-  bootstrapped: false
+  isRestoringSession: true,
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    setSession(state, action: PayloadAction<User>) {
-      state.user = action.payload;
+    sessionRestored(state, action: PayloadAction<AuthSession>) {
+      state.user = action.payload.user;
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
       state.isAuthenticated = true;
-      state.bootstrapped = true;
+      state.isRestoringSession = false;
     },
-    clearSession(state) {
+
+    sessionStarted(state, action: PayloadAction<AuthSession>) {
+      state.user = action.payload.user;
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.isAuthenticated = true;
+    },
+
+    sessionRestoreFinished(state) {
+      state.isRestoringSession = false;
+    },
+
+    signedOut(state) {
       state.user = null;
+      state.accessToken = null;
+      state.refreshToken = null;
       state.isAuthenticated = false;
-      state.bootstrapped = true;
+      state.isRestoringSession = false;
     },
-    markBootstrapped(state) {
-      state.bootstrapped = true;
-    }
-  }
+  },
 });
 
-export const { setSession, clearSession, markBootstrapped } = authSlice.actions;
+export const {
+  sessionRestored,
+  sessionStarted,
+  sessionRestoreFinished,
+  signedOut,
+} = authSlice.actions;
+
 export const authReducer = authSlice.reducer;

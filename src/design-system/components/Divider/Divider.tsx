@@ -1,38 +1,24 @@
-/**
- * Divider Component - SmartLink Transit
- */
+// src/design-system/components/AppDivider/AppDivider.tsx
 
-import React from 'react';
-import { View, ViewProps } from 'react-native';
-import { cn } from '../../../lib/cn';
+import { View } from "react-native";
 
-interface DividerProps extends ViewProps {
-  /** Inset margin for divider */
-  inset?: number | 'none';
-  /** Additional className */
-  className?: string;
+import { spacing } from "@/design-system/tokens";
+import { useTheme } from "@/features/theme/hooks/useTheme";
+
+export interface DividerProps {
+  spacingVertical?: keyof typeof spacing;
 }
 
-export const Divider: React.FC<DividerProps> = ({
-  inset = 'none',
-  className,
-  ...props
-}) => {
-  const getInsetStyles = () => {
-    if (inset === 'none') return '';
-    return `mx-${inset}`;
-  };
+export function Divider({ spacingVertical = 8 }: DividerProps) {
+  const { theme } = useTheme();
 
   return (
     <View
-      className={cn(
-        'h-[0.5px] bg-neutral-200 dark:bg-dark-600',
-        getInsetStyles(),
-        className
-      )}
-      {...props}
+      style={{
+        height: 1,
+        marginVertical: spacing[spacingVertical],
+        backgroundColor: theme.divider,
+      }}
     />
   );
-};
-
-export default Divider;
+}

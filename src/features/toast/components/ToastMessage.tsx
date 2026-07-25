@@ -1,23 +1,23 @@
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
+import { dismissToast } from "@/features/toast/state/toastSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { hideToast } from "@/store/toastSlice";
 import { radii, shadows, spacing } from "@/theme";
 
-import { AppText } from "../AppText/AppText";
+import { AppText } from "@/components/AppText/AppText";
 
 export const ToastMessage = () => {
   const dispatch = useAppDispatch();
   const toast = useAppSelector((state: any) => state.toast.active);
-  const theme = useAppTheme();
+  const theme = useTheme();
 
   useEffect(() => {
     if (!toast) {
       return;
     }
-    const timer = setTimeout(() => dispatch(hideToast()), 3500);
+    const timer = setTimeout(() => dispatch(dismissToast(toast.id)), 3500);
     return () => clearTimeout(timer);
   }, [dispatch, toast]);
 
@@ -41,7 +41,7 @@ export const ToastMessage = () => {
           { backgroundColor: theme.colors.surface, borderColor: color },
         ]}
       >
-        <AppText weight="700">{toast.message}</AppText>
+        <AppText weight={700}>{toast.message}</AppText>
       </View>
     </View>
   );

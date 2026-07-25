@@ -1,135 +1,203 @@
-/**
- * Button Component - SmartLink Transit
- * Variants: Primary, Secondary, Tertiary, Text
- * States: Default, Pressed, Disabled, Loading
- */
+// src/design-system/components/AppButton/AppButton.tsx
 
-import React from 'react';
+import { ReactNode } from "react";
 import {
-    ActivityIndicator,
-    Text,
-    TouchableOpacity,
-    TouchableOpacityProps,
-    View,
-} from 'react-native';
-import { cn } from '../../../lib/cn';
-import { useTheme } from '../../hooks/theme/useTheme';
+  ActivityIndicator,
+  Pressable,
+  PressableProps,
+  StyleProp,
+  View,
+  ViewStyle,
+} from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'text';
-export type ButtonSize = 'large' | 'medium' | 'small';
+import { animation, radius, spacing } from "@/design-system/tokens";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 
-interface ButtonProps extends TouchableOpacityProps {
-  /** Button variant */
-  variant?: ButtonVariant;
-  /** Button size */
-  size?: ButtonSize;
-  /** Button label */
+import { AppText } from "@/components/AppText/AppText";
+
+type ButtonVariant = "primary" | "secondary" | "tertiary" | "text";
+
+type ButtonSize = "small" | "medium" | "large";
+
+interface AppButtonProps extends Omit<PressableProps, "style"> {
   label: string;
-  /** Loading state */
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   loading?: boolean;
-  /** Disabled state */
-  disabled?: boolean;
-  /** Icon to display before label */
-  leftIcon?: React.ReactNode;
-  /** Icon to display after label */
-  rightIcon?: React.ReactNode;
-  /** Additional className for styling */
-  className?: string;
+  fullWidth?: boolean;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  variant = 'primary',
-  size = 'large',
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+export function AppButton({
   label,
+  variant = "primary",
+  size = "medium",
   loading = false,
+  fullWidth = false,
   disabled = false,
   leftIcon,
   rightIcon,
-  className,
-  onPress,
+  onPressIn,
+  onPressOut,
+  style,
   ...props
-}) => {
+}: AppButtonProps) {
   const { theme } = useTheme();
+  const scale = useSharedValue(1);
 
-  // Get button styles based on variant and state
-  const getButtonStyles = () => {
-    const base = 'flex-row items-center justify-center rounded-8';
-    const sizes = {
-      large: 'h-14 px-6',
-      medium: 'h-12 px-5',
-      small: 'h-10 px-4',
-    };
+  const isDisabled = disabled || loading;
 
-    const variants = {
-      primary: {
-        background: disabled ? 'bg-neutral-300' : loading ? 'bg-primary' : 'bg-primary',
-        pressed: 'bg-primary-dark',
-        text: disabled ? 'text-neutral-500' : 'text-white',
-      },
-      secondary: {
-        background: disabled ? 'bg-transparent' : 'bg-transparent',
-        pressed: 'bg-primary-light',
-        text: disabled ? 'text-neutral-500' : 'text-primary',
-        border: 'border border-primary border-[1.5px]',
-      },
-      tertiary: {
-        background: disabled ? 'bg-neutral-200' : 'bg-neutral-100',
-        pressed: 'bg-neutral-200',
-        text: disabled ? 'text-neutral-400' : 'text-neutral-700',
-      },
-      text: {
-        background: 'bg-transparent',
-        pressed: 'bg-primary-light',
-        text: disabled ? 'text-neutral-400' : 'text-primary',
-      },
-    };
-
-    const variantStyles = variants[variant];
-    const sizeStyles = sizes[size];
-
-    return {
-      container: cn(
-        base,
-        sizeStyles,
-        variantStyles.background,
-        variantStyles.border,
-        disabled && 'opacity-60',
-        className
-      ),
-      text: cn(
-        variantStyles.text,
-        size === 'large' && 'text-button-large',
-        size === 'medium' && 'text-button-medium',
-        size === 'small' && 'text-button-small',
-        'font-inter-semi-bold'
-      ),
-    };
+  const sizeMap: Record<ButtonSize, ViewStyle> = {
+    small: {
+      minHeight: 36,
+      paddingHorizontal: spacing[12],
+      paddingVertical: spacing[8],
+    },
+    medium: {
+      minHeight: 44,
+      paddingHorizontal: spacing[20],
+      paddingVertical: spacing[12],
+    },
+    large: {
+      minHeight: 52,
+      paddingHorizontal: spacing[24],
+      paddingVertical: spacing[12],
+    },
   };
 
-  const styles = getButtonStyles();
+  const textVariantMap = {
+    small: "buttonSmall",
+    medium: "buttonMedium",
+    large: "buttonLarge",
+  } as const;
+
+  const getContainerColors = (pressed: boolean): ViewStyle => {
+    switch (variant) {
+      case "primary":
+        return {
+          backgroundColor: isDisabled
+            ? theme.button.primary.disabled
+            : pressed
+              ? theme.button.primary.pressed
+              : theme.button.primary.background,
+        };
+
+      case "secondary":
+        return {
+          backgroundColor: pressed ? theme.primaryLight : "transparent",
+          borderWidth: 1,
+          borderColor: isDisabled
+            ? theme.button.secondary.disabled
+            : theme.button.secondary.border,
+        };
+
+      case "tertiary":
+        return {
+          backgroundColor: isDisabled
+            ? theme.button.tertiary.disabled
+            : pressed
+              ? theme.button.tertiary.pressed
+              : theme.button.tertiary.background,
+        };
+
+      case "text":
+        return {
+          backgroundColor: pressed ? theme.overlay.medium : "transparent",
+        };
+    }
+  };
+
+  const getTextColor = (): string => {
+    switch (variant) {
+      case "primary":
+        return isDisabled
+          ? theme.button.primary.disabledText
+          : theme.button.primary.text;
+
+      case "secondary":
+        return isDisabled
+          ? theme.button.secondary.disabledText
+          : theme.button.secondary.text;
+
+      case "tertiary":
+        return isDisabled
+          ? theme.button.tertiary.disabledText
+          : theme.button.tertiary.text;
+
+      case "text":
+        return isDisabled ? theme.button.text.disabled : theme.button.text.text;
+    }
+  };
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      disabled={disabled || loading}
-      activeOpacity={0.7}
-      className={styles.container}
+    <AnimatedPressable
       {...props}
+      disabled={isDisabled}
+      onPressIn={(event) => {
+        scale.value = withTiming(animation.scales.buttonPress, {
+          duration: animation.durations.fast,
+        });
+
+        onPressIn?.(event);
+      }}
+      onPressOut={(event) => {
+        scale.value = withTiming(1, {
+          duration: animation.durations.fast,
+        });
+
+        onPressOut?.(event);
+      }}
+      style={({ pressed }) => [
+        {
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "row",
+          borderRadius: radius.sm,
+          gap: spacing[8],
+          alignSelf: fullWidth ? "stretch" : "flex-start",
+        },
+        sizeMap[size],
+        getContainerColors(pressed),
+        animatedStyle,
+        style,
+      ]}
     >
       {loading ? (
-        <ActivityIndicator
-          color={variant === 'primary' ? '#FFFFFF' : '#1A7A3C'}
-          size="small"
-        />
+        <ActivityIndicator size="small" color={getTextColor()} />
       ) : (
-        <>
-          {leftIcon && <View className="mr-2">{leftIcon}</View>}
-          <Text className={styles.text}>{label}</Text>
-          {rightIcon && <View className="ml-2">{rightIcon}</View>}
-        </>
-      )}
-    </TouchableOpacity>
-  );
-};
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: spacing[8],
+          }}
+        >
+          {leftIcon}
 
-export default Button;
+          <AppText
+            variant={textVariantMap[size]}
+            style={{ color: getTextColor() }}
+          >
+            {label}
+          </AppText>
+
+          {rightIcon}
+        </View>
+      )}
+    </AnimatedPressable>
+  );
+}

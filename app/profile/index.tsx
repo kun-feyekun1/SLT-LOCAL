@@ -5,14 +5,14 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { AppHeader, AppText, PrimaryButton } from "@/components";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { useLogout } from "@/features/auth/hooks/useAuthActions";
-import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTheme } from "@/features/theme/hooks/useTheme";
 import { useAppSelector } from "@/store/hooks";
 import { radii, shadows, spacing } from "@/theme";
 
 export default function ProfileScreen() {
   const user = useAppSelector((state) => state.auth.user);
   const logout = useLogout();
-  const theme = useAppTheme();
+  const theme = useTheme();
 
   return (
     <ScreenWrapper>

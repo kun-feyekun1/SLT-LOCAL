@@ -1,79 +1,94 @@
-/**
- * Theme Provider - SmartLink Transit
- * Provides theme context for the entire application
- */
-
 import { Theme, ThemeMode, darkTheme, lightTheme } from "@/design-system/theme";
 import React, {
   createContext,
+  useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react";
 import { useColorScheme } from "react-native";
 
+export type ThemePreference = "light" | "dark" | "system";
+
 interface ThemeContextType {
+  colors: any;
   theme: Theme;
   mode: ThemeMode;
+  preference: ThemePreference;
+  isDark: boolean;
+  isLight: boolean;
   toggleTheme: () => void;
   setThemeMode: (mode: ThemeMode) => void;
+  setThemePreference: (preference: ThemePreference) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 interface ThemeProviderProps {
   children: React.ReactNode;
-  initialMode?: ThemeMode;
+  initialPreference?: ThemePreference;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
+export function ThemeProvider({
   children,
-  initialMode,
-}) => {
+  initialPreference = "system",
+}: ThemeProviderProps) {
   const systemColorScheme = useColorScheme();
-  const [mode, setMode] = useState<ThemeMode>(
-    initialMode || (systemColorScheme === "dark" ? "dark" : "light"),
+
+  const [preference, setPreference] =
+    useState<ThemePreference>(initialPreference);
+
+  const mode: ThemeMode = useMemo(() => {
+    if (preference === "system") {
+      return systemColorScheme === "dark" ? "dark" : "light";
+    }
+
+    return preference;
+  }, [preference, systemColorScheme]);
+
+  const theme = useMemo(
+    () => (mode === "dark" ? darkTheme : lightTheme) as Theme,
+    [mode],
   );
 
-  const theme = useMemo(() => {
-    return mode === "dark" ? darkTheme : lightTheme;
+  const setThemePreference = useCallback((newPreference: ThemePreference) => {
+    setPreference(newPreference);
+  }, []);
+
+  const setThemeMode = useCallback((newMode: ThemeMode) => {
+    setPreference(newMode);
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    setPreference(mode === "light" ? "dark" : "light");
   }, [mode]);
 
-  const toggleTheme = () => {
-    setMode((prev) => (prev === "light" ? "dark" : "light"));
-  };
-
-  const setThemeMode = (newMode: ThemeMode) => {
-    setMode(newMode);
-  };
-
-  // Listen for system theme changes
-  useEffect(() => {
-    if (!initialMode) {
-      setMode(systemColorScheme === "dark" ? "dark" : "light");
-    }
-  }, [systemColorScheme, initialMode]);
-
-  const value = useMemo(
+  const value = useMemo<ThemeContextType>(
     () => ({
+      colors: theme.brand,
       theme,
       mode,
+      preference,
+      isDark: mode === "dark",
+      isLight: mode === "light",
       toggleTheme,
       setThemeMode,
+      setThemePreference,
     }),
-    [theme, mode],
+    [theme, mode, preference, toggleTheme, setThemeMode, setThemePreference],
   );
 
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
-};
+}
 
-export const useTheme = (): ThemeContextType => {
+export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext);
-  if (context === undefined) {
+
+  if (!context) {
     throw new Error("useTheme must be used within a ThemeProvider");
   }
+
   return context;
-};
+}
