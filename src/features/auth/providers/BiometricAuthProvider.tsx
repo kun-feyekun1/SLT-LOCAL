@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react";
 
-import { biometricService } from "../services/biometric.service";
+import { biometricService } from "../services/biometricService";
 
 interface BiometricAuthContextValue {
   isAvailable: boolean;

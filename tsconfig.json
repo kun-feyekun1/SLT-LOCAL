@@ -17,5 +17,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "nativewind-env.d.ts"
-, "src/providers/ThemeProvider.ts"  ]
+, "src/providers/ThemeProvider.ts", "src/features/profile/screens/profile"  ]
 }

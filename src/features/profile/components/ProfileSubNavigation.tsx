@@ -1,42 +1,31 @@
 // src/features/profile/components/ProfileSubNavigation.tsx
 
 import { Ionicons } from "@expo/vector-icons";
-import {
-  Href,
-  router,
-  usePathname,
-} from "expo-router";
+import { Href, router, usePathname } from "expo-router";
 import { Pressable, View } from "react-native";
 
 import { AppText } from "@/components/AppText/AppText";
-import {
-  radius,
-  spacing,
-} from "@/design-system/tokens";
+import { radius, spacing } from "@/design-system/tokens";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 
 type ProfileSubRoute =
-  | "/profile-details/profile"
-  | "/profile-details/profile-setting";
+  "/profile/profile" | "/profile/profile-settings";
 
 interface ProfileNavigationOption {
   label: string;
   route: ProfileSubRoute;
-  icon: React.ComponentProps<
-    typeof Ionicons
-  >["name"];
+  icon: React.ComponentProps<typeof Ionicons>["name"];
 }
 
 const options: ProfileNavigationOption[] = [
   {
     label: "Profile",
-    route: "/profile-details/profile",
+    route: "/profile/profile",
     icon: "person-outline",
   },
   {
     label: "Settings",
-    route:
-      "/profile-details/profile-setting",
+    route: "/profile/profile-settings",
     icon: "settings-outline",
   },
 ];
@@ -45,9 +34,7 @@ export function ProfileSubNavigation() {
   const pathname = usePathname();
   const { theme } = useTheme();
 
-  const handleNavigate = (
-    route: ProfileSubRoute,
-  ) => {
+  const handleNavigate = (route: ProfileSubRoute) => {
     /*
      * navigate() avoids continuously adding duplicate
      * instances when users switch between these sections.
@@ -61,10 +48,9 @@ export function ProfileSubNavigation() {
       style={{
         flexDirection: "row",
         padding: spacing[4],
-        gap: spacing[4],
-        borderRadius: radius.md,
-        backgroundColor:
-          theme.surface.surface,
+        gap: spacing[64],
+        borderRadius: radius.sm,
+        backgroundColor: theme.background.secondary,
         borderWidth: 1,
         borderColor: theme.border.default,
       }}
@@ -72,24 +58,17 @@ export function ProfileSubNavigation() {
       {options.map((option) => {
         const selected =
           pathname === option.route ||
-          pathname.endsWith(
-            option.route.split("/").at(-1) ??
-              "",
-          );
+          pathname.endsWith(option.route.split("/").at(-1) ?? "");
 
         return (
           <Pressable
             key={option.route}
             accessibilityRole="tab"
-            accessibilityLabel={
-              option.label
-            }
+            accessibilityLabel={option.label}
             accessibilityState={{
               selected,
             }}
-            onPress={() =>
-              handleNavigate(option.route)
-            }
+            onPress={() => handleNavigate(option.route)}
             style={({ pressed }) => ({
               flex: 1,
               minHeight: 44,
@@ -109,11 +88,7 @@ export function ProfileSubNavigation() {
             <Ionicons
               name={option.icon}
               size={18}
-              color={
-                selected
-                  ? theme.button.primary.text
-                  : theme.icon.inactive
-              }
+              color={selected ? theme.button.primary.text : theme.icon.inactive}
             />
 
             <AppText
