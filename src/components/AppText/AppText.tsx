@@ -63,3 +63,63 @@ export function AppText({
     />
   );
 }
+
+
+
+// src/theme/ThemeProvider.tsx
+import React, { createContext, useContext, useMemo } from 'react';
+import { useColorScheme } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectThemeMode, setThemeMode, ThemeMode } from '@/store/slices/themeSlice';
+import { lightColors, darkColors, ColorTokens } from '@/design-system/tokens/colors';
+
+// 1. Define the Context shape
+interface ThemeContextType {
+  colors: ColorTokens;
+  isDark: boolean;
+  mode: ThemeMode;
+  setMode: (mode: ThemeMode) => void; // Bridge to Redux action
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+// 2. The Provider Component
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const dispatch = useDispatch();
+  
+  // GETTER: Consume Redux state via selector
+  const mode = useSelector(selectThemeMode);
+  
+  // Native system preference hook
+  const systemColorScheme = useColorScheme();
+
+  // Resolve whether we should render dark theme or light theme
+  const isDark = mode === 'system' ? systemColorScheme === 'dark' : mode === 'dark';
+
+  // SETTER BRIDGE: Dispatch Redux action
+  const setMode = (newMode: ThemeMode) => {
+    dispatch(setThemeMode(newMode));
+  };
+
+  // Memoize theme value so children only re-render when actual values change
+  const value = useMemo(
+    () => ({
+      colors: isDark ? darkColors : lightColors,
+      isDark,
+      mode,
+      setMode,
+    }),
+    [isDark, mode]
+  );
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+};
+
+// 3. Custom Hook to expose Context
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};

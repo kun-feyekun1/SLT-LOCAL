@@ -60,10 +60,12 @@ import { NotificationProvider } from "@/providers/NotificationProvider"; // <---
 import { QueryProvider } from "@/providers/QueryProvider";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { SessionProvider } from "@/features/auth/providers/SessionProvider";
 
 export const RootProviders = ({ children }: { children: ReactNode }) => (
   <GestureHandlerRootView style={styles.root}>
     <ReduxProvider>
+      <SessionProvider>
       <QueryProvider>
         <ThemeProvider>
           <ErrorBoundary>
@@ -80,6 +82,7 @@ export const RootProviders = ({ children }: { children: ReactNode }) => (
           </ErrorBoundary>
         </ThemeProvider>
       </QueryProvider>
+      </SessionProvider>
     </ReduxProvider>
   </GestureHandlerRootView>
 );
