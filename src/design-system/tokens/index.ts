@@ -1,15 +1,14 @@
-// /**
-//  * Design System - Tokens Index
-//  * Central export for all design tokens
-//  */
+/**
+ * Design System - Tokens Index
+ * Central export for all design tokens
+ */
 
-
-export * from "./colors";
-export * from "./typography";
-export * from "./spacing";
-export * from "./radius";
-export * from "./shadows";
 export * from "./animation";
+export * from "./colors";
 export * from "./layout";
 export * from "./opacity";
+export * from "./radius";
+export * from "./shadows";
+export * from "./spacing";
+export * from "./typography";
 export * from "./zIndex";

@@ -1,11 +1,9 @@
 /**
  * Theme System - SmartLink Transit
- * Provides typed theme context and hooks
+ * Provides, barrel exports
  */
-
 import { darkTheme } from "./darkTheme";
 import { lightTheme } from "./lightTheme";
-
 import type { Theme } from "./theme.types";
 
 export type ThemeMode = "light" | "dark";
@@ -28,5 +26,4 @@ export const isDarkMode = (mode: ThemeMode): boolean => {
 };
 
 export { darkTheme, lightTheme };
-
 export type { Theme };
