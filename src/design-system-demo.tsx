@@ -53,7 +53,7 @@ function Button({
 }
 
 import { spacing } from "@/design-system/tokens";
-import { ThemeSelector } from "@/features/theme/components/themeSelector";
+import { ThemeSelector } from "@/features/theme/components/ThemeSelector";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 import { TripCard } from "@/features/Trips/components/TripCard";
 import { VehicleStatusCard } from "@/features/vehicles/components/VehicleStatusCard";
