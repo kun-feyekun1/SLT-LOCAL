@@ -166,10 +166,6 @@
 
 // export type LightTheme = typeof lightTheme;
 
-
-
-
-
 /**
  * Light Theme - SmartLink Transit
  *
@@ -186,15 +182,11 @@
  * lightTheme
  */
 
-import {
-  createComponentColors,
-  lightColors,
-} from "../tokens/colors/";
+import { createComponentColors, lightColors } from "../tokens/colors";
 
 import type { Theme } from "./theme.types";
 
-const componentColors =
-  createComponentColors(lightColors);
+const componentColors = createComponentColors(lightColors);
 
 export const lightTheme = {
   // ==========================================================================
@@ -225,27 +217,20 @@ export const lightTheme = {
   // BRAND
   // ==========================================================================
 
-  primary:
-    lightColors.interactive.primary.default,
+  primary: lightColors.interactive.primary.default,
 
-  primaryLight:
-    lightColors.background.brandSubtle,
+  primaryLight: lightColors.background.brandSubtle,
 
-  primaryDark:
-    lightColors.interactive.primary.pressed,
+  primaryDark: lightColors.interactive.primary.pressed,
 
-  accent:
-    lightColors.background.accent,
+  accent: lightColors.background.accent,
 
-  accentLight:
-    lightColors.background.accentSubtle,
+  accentLight: lightColors.background.accentSubtle,
 
   brand: {
-    primary:
-      lightColors.background.brand,
+    primary: lightColors.background.brand,
 
-    secondary:
-      lightColors.background.accent,
+    secondary: lightColors.background.accent,
   },
 
   // ==========================================================================
@@ -253,66 +238,49 @@ export const lightTheme = {
   // ==========================================================================
 
   background: {
-    primary:
-      lightColors.background.canvas,
+    primary: lightColors.background.canvas,
 
-    secondary:
-      lightColors.background.canvasSubtle,
+    secondary: lightColors.background.canvasSubtle,
   },
 
   // ==========================================================================
   // STATUS
   // ==========================================================================
 
-  success:
-    lightColors.status.success.backgroundStrong,
+  success: lightColors.status.success.backgroundStrong,
 
-  successLight:
-    lightColors.status.success.background,
+  successLight: lightColors.status.success.background,
 
-  warning:
-    lightColors.status.warning.backgroundStrong,
+  warning: lightColors.status.warning.backgroundStrong,
 
-  warningLight:
-    lightColors.status.warning.background,
+  warningLight: lightColors.status.warning.background,
 
-  error:
-    lightColors.status.error.backgroundStrong,
+  error: lightColors.status.error.backgroundStrong,
 
-  errorLight:
-    lightColors.status.error.background,
+  errorLight: lightColors.status.error.background,
 
-  info:
-    lightColors.status.info.backgroundStrong,
+  info: lightColors.status.info.backgroundStrong,
 
-  infoLight:
-    lightColors.status.info.background,
+  infoLight: lightColors.status.info.background,
 
   // ==========================================================================
   // TEXT
   // ==========================================================================
 
   text: {
-    primary:
-      lightColors.text.primary,
+    primary: lightColors.text.primary,
 
-    secondary:
-      lightColors.text.secondary,
+    secondary: lightColors.text.secondary,
 
-    tertiary:
-      lightColors.text.tertiary,
+    tertiary: lightColors.text.tertiary,
 
-    hint:
-      lightColors.text.tertiary,
+    hint: lightColors.text.tertiary,
 
-    placeholder:
-      lightColors.text.placeholder,
+    placeholder: lightColors.text.placeholder,
 
-    disabled:
-      lightColors.text.disabled,
+    disabled: lightColors.text.disabled,
 
-    inverse:
-      lightColors.text.inverse,
+    inverse: lightColors.text.inverse,
   },
 
   // ==========================================================================
@@ -320,20 +288,15 @@ export const lightTheme = {
   // ==========================================================================
 
   surface: {
-    background:
-      lightColors.background.canvas,
+    background: lightColors.background.canvas,
 
-    surface:
-      lightColors.background.surface,
+    surface: lightColors.background.surface,
 
-    surfaceElevated:
-      lightColors.background.surfaceElevated,
+    surfaceElevated: lightColors.background.surfaceElevated,
 
-    card:
-      componentColors.card.background,
+    card: componentColors.card.background,
 
-    inputBackground:
-      componentColors.input.background,
+    inputBackground: componentColors.input.background,
   },
 
   // ==========================================================================
@@ -341,23 +304,17 @@ export const lightTheme = {
   // ==========================================================================
 
   border: {
-    default:
-      lightColors.border.default,
+    default: lightColors.border.default,
 
-    focus:
-      lightColors.border.focus,
+    focus: lightColors.border.focus,
 
-    error:
-      lightColors.status.error.border,
+    error: lightColors.status.error.border,
 
-    success:
-      lightColors.status.success.border,
+    success: lightColors.status.success.border,
 
-    divider:
-      lightColors.border.subtle,
+    divider: lightColors.border.subtle,
 
-    input:
-      componentColors.input.border,
+    input: componentColors.input.border,
   },
 
   // ==========================================================================
@@ -365,23 +322,17 @@ export const lightTheme = {
   // ==========================================================================
 
   icon: {
-    active:
-      lightColors.icon.brand,
+    active: lightColors.icon.brand,
 
-    inactive:
-      lightColors.icon.tertiary,
+    inactive: lightColors.icon.tertiary,
 
-    error:
-      lightColors.status.error.icon,
+    error: lightColors.status.error.icon,
 
-    success:
-      lightColors.status.success.icon,
+    success: lightColors.status.success.icon,
 
-    warning:
-      lightColors.status.warning.icon,
+    warning: lightColors.status.warning.icon,
 
-    disabled:
-      lightColors.icon.disabled,
+    disabled: lightColors.icon.disabled,
   },
 
   // ==========================================================================
@@ -390,71 +341,50 @@ export const lightTheme = {
 
   button: {
     primary: {
-      background:
-        componentColors.button.primary.background,
+      background: componentColors.button.primary.background,
 
-      text:
-        componentColors.button.primary.text,
+      text: componentColors.button.primary.text,
 
-      pressed:
-        componentColors.button.primary.backgroundPressed,
+      pressed: componentColors.button.primary.backgroundPressed,
 
-      disabled:
-        componentColors.button.primary.backgroundDisabled,
+      disabled: componentColors.button.primary.backgroundDisabled,
 
-      disabledText:
-        componentColors.button.primary.textDisabled,
+      disabledText: componentColors.button.primary.textDisabled,
     },
 
     secondary: {
-      border:
-        componentColors.button.secondary.border,
+      border: componentColors.button.secondary.border,
 
-      text:
-        componentColors.button.secondary.text,
+      text: componentColors.button.secondary.text,
 
-      pressed:
-        componentColors.button.secondary.backgroundPressed,
+      pressed: componentColors.button.secondary.backgroundPressed,
 
-      disabled:
-        componentColors.button.secondary.backgroundDisabled,
+      disabled: componentColors.button.secondary.backgroundDisabled,
 
-      disabledText:
-        componentColors.button.secondary.textDisabled,
+      disabledText: componentColors.button.secondary.textDisabled,
     },
 
     tertiary: {
-      background:
-        lightColors.interactive.tertiary.default,
+      background: lightColors.interactive.tertiary.default,
 
-      text:
-        lightColors.interactive.tertiary.foreground,
+      text: lightColors.interactive.tertiary.foreground,
 
-      pressed:
-        lightColors.interactive.tertiary.pressed,
+      pressed: lightColors.interactive.tertiary.pressed,
 
-      disabled:
-        lightColors.interactive.tertiary.disabled,
+      disabled: lightColors.interactive.tertiary.disabled,
 
-      disabledText:
-        lightColors.interactive.tertiary
-          .foregroundDisabled,
+      disabledText: lightColors.interactive.tertiary.foregroundDisabled,
     },
 
     text: {
-      text:
-        lightColors.interactive.tertiary.foreground,
+      text: lightColors.interactive.tertiary.foreground,
 
-      pressed:
-        lightColors.interactive.tertiary.pressed,
+      pressed: lightColors.interactive.tertiary.pressed,
 
-      disabled:
-        lightColors.interactive.tertiary
-          .foregroundDisabled,
+      disabled: lightColors.interactive.tertiary.foregroundDisabled,
     },
 
-    destructive:
-      componentColors.button.destructive,
+    destructive: componentColors.button.destructive,
   },
 
   // ==========================================================================
@@ -462,35 +392,25 @@ export const lightTheme = {
   // ==========================================================================
 
   input: {
-    border:
-      componentColors.input.border,
+    border: componentColors.input.border,
 
-    borderFocus:
-      componentColors.input.borderFocus,
+    borderFocus: componentColors.input.borderFocus,
 
-    borderError:
-      componentColors.input.borderError,
+    borderError: componentColors.input.borderError,
 
-    borderSuccess:
-      lightColors.status.success.border,
+    borderSuccess: lightColors.status.success.border,
 
-    background:
-      componentColors.input.background,
+    background: componentColors.input.background,
 
-    label:
-      componentColors.input.label,
+    label: componentColors.input.label,
 
-    labelFocus:
-      lightColors.text.brand,
+    labelFocus: lightColors.text.brand,
 
-    labelError:
-      lightColors.status.error.foreground,
+    labelError: lightColors.status.error.foreground,
 
-    labelSuccess:
-      lightColors.status.success.foreground,
+    labelSuccess: lightColors.status.success.foreground,
 
-    placeholder:
-      componentColors.input.placeholder,
+    placeholder: componentColors.input.placeholder,
   },
 
   // ==========================================================================
@@ -498,14 +418,11 @@ export const lightTheme = {
   // ==========================================================================
 
   card: {
-    background:
-      componentColors.card.background,
+    background: componentColors.card.background,
 
-    border:
-      componentColors.card.border,
+    border: componentColors.card.border,
 
-    shadow:
-      lightColors.accessibility.highContrastText,
+    shadow: lightColors.accessibility.highContrastText,
   },
 
   // ==========================================================================
@@ -514,36 +431,27 @@ export const lightTheme = {
 
   navigation: {
     bottomNav: {
-      active:
-        componentColors.tabs.activeText,
+      active: componentColors.tabs.activeText,
 
-      inactive:
-        componentColors.tabs.inactiveText,
+      inactive: componentColors.tabs.inactiveText,
 
-      background:
-        componentColors.tabs.background,
+      background: componentColors.tabs.background,
 
-      border:
-        componentColors.tabs.border,
+      border: componentColors.tabs.border,
     },
 
     topAppBar: {
-      background:
-        lightColors.navigation.backgroundElevated,
+      background: lightColors.navigation.backgroundElevated,
 
-      title:
-        lightColors.text.primary,
+      title: lightColors.text.primary,
 
-      icon:
-        lightColors.icon.primary,
+      icon: lightColors.icon.primary,
     },
 
     drawer: {
-      background:
-        lightColors.navigation.background,
+      background: lightColors.navigation.background,
 
-      divider:
-        lightColors.navigation.border,
+      divider: lightColors.navigation.border,
     },
   },
 
@@ -551,87 +459,63 @@ export const lightTheme = {
   // COMPONENT TOKENS
   // ==========================================================================
 
-  checkbox:
-    componentColors.checkbox,
+  checkbox: componentColors.checkbox,
 
-  switch:
-    componentColors.switch,
+  switch: componentColors.switch,
 
-  tabs:
-    componentColors.tabs,
+  tabs: componentColors.tabs,
 
-  badge:
-    componentColors.badge,
+  badge: componentColors.badge,
 
-  toast:
-    componentColors.toast,
+  toast: componentColors.toast,
 
-  modal:
-    componentColors.modal,
+  modal: componentColors.modal,
 
-  bottomSheet:
-    componentColors.bottomSheet,
+  bottomSheet: componentColors.bottomSheet,
 
   // ==========================================================================
   // SPECIALIZED TOKENS
   // ==========================================================================
 
-  map:
-    lightColors.map,
+  map: lightColors.map,
 
-  skeleton:
-    lightColors.skeleton,
+  skeleton: lightColors.skeleton,
 
-  accessibility:
-    lightColors.accessibility,
+  accessibility: lightColors.accessibility,
 
   // ==========================================================================
   // GENERAL
   // ==========================================================================
 
-  divider:
-    lightColors.border.subtle,
+  divider: lightColors.border.subtle,
 
   overlay: {
-    light:
-      lightColors.overlay.subtle,
+    light: lightColors.overlay.subtle,
 
-    medium:
-      lightColors.overlay.default,
+    medium: lightColors.overlay.default,
 
-    dark:
-      lightColors.overlay.strong,
+    dark: lightColors.overlay.strong,
 
-    scrim:
-      lightColors.overlay.scrim,
+    scrim: lightColors.overlay.scrim,
 
-    scrimHeavy:
-      lightColors.overlay.scrimStrong,
+    scrimHeavy: lightColors.overlay.scrimStrong,
   },
 
   // ==========================================================================
   // SYSTEM
   // ==========================================================================
 
-  statusBar:
-    "dark-content" as const,
+  statusBar: "dark-content" as const,
 
   // ==========================================================================
   // UTILITY
   // ==========================================================================
 
-  white:
-    lightColors.accessibility
-      .highContrastBackground,
+  white: lightColors.accessibility.highContrastBackground,
 
-  black:
-    lightColors.accessibility
-      .highContrastText,
+  black: lightColors.accessibility.highContrastText,
 
-  transparent:
-    "transparent",
+  transparent: "transparent",
 } satisfies Theme;
 
-export type LightTheme =
-  typeof lightTheme;
-
+export type LightTheme = typeof lightTheme;

@@ -166,12 +166,6 @@
 
 // export type DarkTheme = typeof darkTheme;
 
-
-
-
-
-
-
 /**
  * Dark Theme - SmartLink Transit
  *
@@ -188,15 +182,11 @@
  * darkTheme
  */
 
-import {
-  createComponentColors,
-  darkColors,
-} from "../tokens/colors/";
+import { createComponentColors, darkColors } from "../tokens/colors";
 
 import type { Theme } from "./theme.types";
 
-const componentColors =
-  createComponentColors(darkColors);
+const componentColors = createComponentColors(darkColors);
 
 export const darkTheme = {
   // ==========================================================================
@@ -217,27 +207,20 @@ export const darkTheme = {
   // BRAND
   // ==========================================================================
 
-  primary:
-    darkColors.interactive.primary.default,
+  primary: darkColors.interactive.primary.default,
 
-  primaryLight:
-    darkColors.text.brand,
+  primaryLight: darkColors.text.brand,
 
-  primaryDark:
-    darkColors.interactive.primary.pressed,
+  primaryDark: darkColors.interactive.primary.pressed,
 
-  accent:
-    darkColors.background.accent,
+  accent: darkColors.background.accent,
 
-  accentLight:
-    darkColors.background.accentSubtle,
+  accentLight: darkColors.background.accentSubtle,
 
   brand: {
-    primary:
-      darkColors.background.brand,
+    primary: darkColors.background.brand,
 
-    secondary:
-      darkColors.background.accent,
+    secondary: darkColors.background.accent,
   },
 
   // ==========================================================================
@@ -245,66 +228,49 @@ export const darkTheme = {
   // ==========================================================================
 
   background: {
-    primary:
-      darkColors.background.canvas,
+    primary: darkColors.background.canvas,
 
-    secondary:
-      darkColors.background.canvasSubtle,
+    secondary: darkColors.background.canvasSubtle,
   },
 
   // ==========================================================================
   // STATUS
   // ==========================================================================
 
-  success:
-    darkColors.status.success.backgroundStrong,
+  success: darkColors.status.success.backgroundStrong,
 
-  successLight:
-    darkColors.status.success.background,
+  successLight: darkColors.status.success.background,
 
-  warning:
-    darkColors.status.warning.backgroundStrong,
+  warning: darkColors.status.warning.backgroundStrong,
 
-  warningLight:
-    darkColors.status.warning.background,
+  warningLight: darkColors.status.warning.background,
 
-  error:
-    darkColors.status.error.backgroundStrong,
+  error: darkColors.status.error.backgroundStrong,
 
-  errorLight:
-    darkColors.status.error.background,
+  errorLight: darkColors.status.error.background,
 
-  info:
-    darkColors.status.info.backgroundStrong,
+  info: darkColors.status.info.backgroundStrong,
 
-  infoLight:
-    darkColors.status.info.background,
+  infoLight: darkColors.status.info.background,
 
   // ==========================================================================
   // TEXT
   // ==========================================================================
 
   text: {
-    primary:
-      darkColors.text.primary,
+    primary: darkColors.text.primary,
 
-    secondary:
-      darkColors.text.secondary,
+    secondary: darkColors.text.secondary,
 
-    tertiary:
-      darkColors.text.tertiary,
+    tertiary: darkColors.text.tertiary,
 
-    hint:
-      darkColors.text.tertiary,
+    hint: darkColors.text.tertiary,
 
-    placeholder:
-      darkColors.text.placeholder,
+    placeholder: darkColors.text.placeholder,
 
-    disabled:
-      darkColors.text.disabled,
+    disabled: darkColors.text.disabled,
 
-    inverse:
-      darkColors.text.inverse,
+    inverse: darkColors.text.inverse,
   },
 
   // ==========================================================================
@@ -312,20 +278,15 @@ export const darkTheme = {
   // ==========================================================================
 
   surface: {
-    background:
-      darkColors.background.canvas,
+    background: darkColors.background.canvas,
 
-    surface:
-      darkColors.background.surface,
+    surface: darkColors.background.surface,
 
-    surfaceElevated:
-      darkColors.background.surfaceElevated,
+    surfaceElevated: darkColors.background.surfaceElevated,
 
-    card:
-      componentColors.card.background,
+    card: componentColors.card.background,
 
-    inputBackground:
-      componentColors.input.background,
+    inputBackground: componentColors.input.background,
   },
 
   // ==========================================================================
@@ -333,23 +294,17 @@ export const darkTheme = {
   // ==========================================================================
 
   border: {
-    default:
-      darkColors.border.default,
+    default: darkColors.border.default,
 
-    focus:
-      darkColors.border.focus,
+    focus: darkColors.border.focus,
 
-    error:
-      darkColors.status.error.border,
+    error: darkColors.status.error.border,
 
-    success:
-      darkColors.status.success.border,
+    success: darkColors.status.success.border,
 
-    divider:
-      darkColors.border.subtle,
+    divider: darkColors.border.subtle,
 
-    input:
-      componentColors.input.border,
+    input: componentColors.input.border,
   },
 
   // ==========================================================================
@@ -357,23 +312,17 @@ export const darkTheme = {
   // ==========================================================================
 
   icon: {
-    active:
-      darkColors.icon.brand,
+    active: darkColors.icon.brand,
 
-    inactive:
-      darkColors.icon.tertiary,
+    inactive: darkColors.icon.tertiary,
 
-    error:
-      darkColors.status.error.icon,
+    error: darkColors.status.error.icon,
 
-    success:
-      darkColors.status.success.icon,
+    success: darkColors.status.success.icon,
 
-    warning:
-      darkColors.status.warning.icon,
+    warning: darkColors.status.warning.icon,
 
-    disabled:
-      darkColors.icon.disabled,
+    disabled: darkColors.icon.disabled,
   },
 
   // ==========================================================================
@@ -382,71 +331,50 @@ export const darkTheme = {
 
   button: {
     primary: {
-      background:
-        componentColors.button.primary.background,
+      background: componentColors.button.primary.background,
 
-      text:
-        componentColors.button.primary.text,
+      text: componentColors.button.primary.text,
 
-      pressed:
-        componentColors.button.primary.backgroundPressed,
+      pressed: componentColors.button.primary.backgroundPressed,
 
-      disabled:
-        componentColors.button.primary.backgroundDisabled,
+      disabled: componentColors.button.primary.backgroundDisabled,
 
-      disabledText:
-        componentColors.button.primary.textDisabled,
+      disabledText: componentColors.button.primary.textDisabled,
     },
 
     secondary: {
-      border:
-        componentColors.button.secondary.border,
+      border: componentColors.button.secondary.border,
 
-      text:
-        componentColors.button.secondary.text,
+      text: componentColors.button.secondary.text,
 
-      pressed:
-        componentColors.button.secondary.backgroundPressed,
+      pressed: componentColors.button.secondary.backgroundPressed,
 
-      disabled:
-        componentColors.button.secondary.backgroundDisabled,
+      disabled: componentColors.button.secondary.backgroundDisabled,
 
-      disabledText:
-        componentColors.button.secondary.textDisabled,
+      disabledText: componentColors.button.secondary.textDisabled,
     },
 
     tertiary: {
-      background:
-        darkColors.interactive.tertiary.default,
+      background: darkColors.interactive.tertiary.default,
 
-      text:
-        darkColors.interactive.tertiary.foreground,
+      text: darkColors.interactive.tertiary.foreground,
 
-      pressed:
-        darkColors.interactive.tertiary.pressed,
+      pressed: darkColors.interactive.tertiary.pressed,
 
-      disabled:
-        darkColors.interactive.tertiary.disabled,
+      disabled: darkColors.interactive.tertiary.disabled,
 
-      disabledText:
-        darkColors.interactive.tertiary
-          .foregroundDisabled,
+      disabledText: darkColors.interactive.tertiary.foregroundDisabled,
     },
 
     text: {
-      text:
-        darkColors.interactive.tertiary.foreground,
+      text: darkColors.interactive.tertiary.foreground,
 
-      pressed:
-        darkColors.interactive.tertiary.pressed,
+      pressed: darkColors.interactive.tertiary.pressed,
 
-      disabled:
-        darkColors.interactive.tertiary
-          .foregroundDisabled,
+      disabled: darkColors.interactive.tertiary.foregroundDisabled,
     },
 
-    destructive:
-      componentColors.button.destructive,
+    destructive: componentColors.button.destructive,
   },
 
   // ==========================================================================
@@ -454,35 +382,25 @@ export const darkTheme = {
   // ==========================================================================
 
   input: {
-    border:
-      componentColors.input.border,
+    border: componentColors.input.border,
 
-    borderFocus:
-      componentColors.input.borderFocus,
+    borderFocus: componentColors.input.borderFocus,
 
-    borderError:
-      componentColors.input.borderError,
+    borderError: componentColors.input.borderError,
 
-    borderSuccess:
-      darkColors.status.success.border,
+    borderSuccess: darkColors.status.success.border,
 
-    background:
-      componentColors.input.background,
+    background: componentColors.input.background,
 
-    label:
-      componentColors.input.label,
+    label: componentColors.input.label,
 
-    labelFocus:
-      darkColors.text.brand,
+    labelFocus: darkColors.text.brand,
 
-    labelError:
-      darkColors.status.error.foreground,
+    labelError: darkColors.status.error.foreground,
 
-    labelSuccess:
-      darkColors.status.success.foreground,
+    labelSuccess: darkColors.status.success.foreground,
 
-    placeholder:
-      componentColors.input.placeholder,
+    placeholder: componentColors.input.placeholder,
   },
 
   // ==========================================================================
@@ -490,14 +408,11 @@ export const darkTheme = {
   // ==========================================================================
 
   card: {
-    background:
-      componentColors.card.background,
+    background: componentColors.card.background,
 
-    border:
-      componentColors.card.border,
+    border: componentColors.card.border,
 
-    shadow:
-      darkColors.accessibility.highContrastBackground,
+    shadow: darkColors.accessibility.highContrastBackground,
   },
 
   // ==========================================================================
@@ -506,36 +421,27 @@ export const darkTheme = {
 
   navigation: {
     bottomNav: {
-      active:
-        componentColors.tabs.activeText,
+      active: componentColors.tabs.activeText,
 
-      inactive:
-        componentColors.tabs.inactiveText,
+      inactive: componentColors.tabs.inactiveText,
 
-      background:
-        componentColors.tabs.background,
+      background: componentColors.tabs.background,
 
-      border:
-        componentColors.tabs.border,
+      border: componentColors.tabs.border,
     },
 
     topAppBar: {
-      background:
-        darkColors.navigation.backgroundElevated,
+      background: darkColors.navigation.backgroundElevated,
 
-      title:
-        darkColors.text.primary,
+      title: darkColors.text.primary,
 
-      icon:
-        darkColors.icon.primary,
+      icon: darkColors.icon.primary,
     },
 
     drawer: {
-      background:
-        darkColors.navigation.background,
+      background: darkColors.navigation.background,
 
-      divider:
-        darkColors.navigation.border,
+      divider: darkColors.navigation.border,
     },
   },
 
@@ -543,87 +449,63 @@ export const darkTheme = {
   // COMPONENT TOKENS
   // ==========================================================================
 
-  checkbox:
-    componentColors.checkbox,
+  checkbox: componentColors.checkbox,
 
-  switch:
-    componentColors.switch,
+  switch: componentColors.switch,
 
-  tabs:
-    componentColors.tabs,
+  tabs: componentColors.tabs,
 
-  badge:
-    componentColors.badge,
+  badge: componentColors.badge,
 
-  toast:
-    componentColors.toast,
+  toast: componentColors.toast,
 
-  modal:
-    componentColors.modal,
+  modal: componentColors.modal,
 
-  bottomSheet:
-    componentColors.bottomSheet,
+  bottomSheet: componentColors.bottomSheet,
 
   // ==========================================================================
   // SPECIALIZED TOKENS
   // ==========================================================================
 
-  map:
-    darkColors.map,
+  map: darkColors.map,
 
-  skeleton:
-    darkColors.skeleton,
+  skeleton: darkColors.skeleton,
 
-  accessibility:
-    darkColors.accessibility,
+  accessibility: darkColors.accessibility,
 
   // ==========================================================================
   // GENERAL
   // ==========================================================================
 
-  divider:
-    darkColors.border.subtle,
+  divider: darkColors.border.subtle,
 
   overlay: {
-    light:
-      darkColors.overlay.subtle,
+    light: darkColors.overlay.subtle,
 
-    medium:
-      darkColors.overlay.default,
+    medium: darkColors.overlay.default,
 
-    dark:
-      darkColors.overlay.strong,
+    dark: darkColors.overlay.strong,
 
-    scrim:
-      darkColors.overlay.scrim,
+    scrim: darkColors.overlay.scrim,
 
-    scrimHeavy:
-      darkColors.overlay.scrimStrong,
+    scrimHeavy: darkColors.overlay.scrimStrong,
   },
 
   // ==========================================================================
   // SYSTEM
   // ==========================================================================
 
-  statusBar:
-    "light-content" as const,
+  statusBar: "light-content" as const,
 
   // ==========================================================================
   // UTILITY
   // ==========================================================================
 
-  white:
-    darkColors.accessibility
-      .highContrastText,
+  white: darkColors.accessibility.highContrastText,
 
-  black:
-    darkColors.accessibility
-      .highContrastBackground,
+  black: darkColors.accessibility.highContrastBackground,
 
-  transparent:
-    "transparent",
+  transparent: "transparent",
 } satisfies Theme;
 
-export type DarkTheme =
-  typeof darkTheme;
-
+export type DarkTheme = typeof darkTheme;

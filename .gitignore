@@ -3,6 +3,10 @@
 # dependencies
 node_modules/
 
+# Accidental archives / dependency archives
+node_modules.rar
+node_modules.zip
+
 # Expo
 .expo/
 dist/
@@ -31,7 +35,11 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
+.env.*
 .env*.local
+
+!.env.example
 
 # typescript
 *.tsbuildinfo
