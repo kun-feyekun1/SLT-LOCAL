@@ -3,8 +3,8 @@
  * Provides typed theme context and hooks
  */
 
-import { darkTheme } from "./dark";
-import { lightTheme } from "./light";
+import { darkTheme } from "./darkTheme";
+import { lightTheme } from "./lightTheme";
 
 import type { Theme } from "./theme.types";
 
