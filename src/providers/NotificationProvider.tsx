@@ -48,7 +48,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }
 
     if (finalStatus !== "granted") {
-      dispatch(showToast("Push notification permission denied"));
+      dispatch(showToast({ message: "Push notification permission denied" }));
       return false;
     }
 
