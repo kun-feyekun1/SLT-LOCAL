@@ -1,6 +1,6 @@
 // src/features/toast/state/toastSelectors.ts
 
-import type { RootState } from "@/store/store";
+import type { RootState } from "@/store";
 
 /**
  * Selects only the currently displayed toast.
