@@ -5,6 +5,7 @@
 
 import React, { forwardRef, useState } from "react";
 import {
+  Text,
   TextInput,
   TextInputProps,
   TouchableOpacity,
