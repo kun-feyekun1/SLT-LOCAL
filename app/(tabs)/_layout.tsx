@@ -91,7 +91,7 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Home",
           tabBarIcon: ({
@@ -108,9 +108,26 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
-        name="trips"
+        name="search"
         options={{
-          title: "Trips",
+          title: "Search",
+          tabBarIcon: ({
+            color,
+            size,
+          }) => (
+            <Ionicons
+              name="search-outline"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="routes"
+        options={{
+          title: "Routes",
           tabBarIcon: ({
             color,
             size,
@@ -125,7 +142,24 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
-        name="profile-details"
+        name="wallet"
+        options={{
+          title: "Wallet",
+          tabBarIcon: ({
+            color,
+            size,
+          }) => (
+            <Ionicons
+              name="wallet-outline"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
         options={{
           title: "Profile",
 
