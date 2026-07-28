@@ -1,35 +1,65 @@
+
+
+
 // src/features/auth/providers/SessionProvider.tsx
 
-import React, { useEffect, useRef } from "react";
+import {
+  type PropsWithChildren,
+  useEffect,
+  useRef,
+} from "react";
+import { useDispatch } from "react-redux";
 
-import { useAppDispatch } from "@/store/hooks";
-
-import { sessionService } from "../services/sessionService";
 import {
   sessionRestored,
   sessionRestoreFinished,
-} from "../state/authSlice";
+} from "@/features/auth/state/authSlice";
+import type { AuthSession } from "@/features/auth/types/auth.types";
+import { useAppSelector } from "@/store/hooks";
+import type { AppDispatch } from "@/store/store";
 
-interface SessionProviderProps {
-  children: React.ReactNode;
+import { selectIsRestoringSession } from "../state/authSelectors";
+
+/**
+ * Replace these functions with your real secure-session service.
+ */
+async function restoreStoredSession(): Promise<AuthSession | null> {
+  /*
+   * Eventually:
+   *
+   * const refreshToken = await SecureStore.getItemAsync("refreshToken");
+   *
+   * if (!refreshToken) {
+   *   return null;
+   * }
+   *
+   * return authApi.refreshSession(refreshToken);
+   */
+
+  return null;
 }
 
 export function SessionProvider({
   children,
-}: SessionProviderProps) {
-  const dispatch = useAppDispatch();
-  const hasRestoredSession = useRef(false);
+}: PropsWithChildren) {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const isRestoringSession = useAppSelector(
+    selectIsRestoringSession,
+  );
+
+  const restorationStartedRef = useRef(false);
 
   useEffect(() => {
-    if (hasRestoredSession.current) {
+    if (restorationStartedRef.current) {
       return;
     }
 
-    hasRestoredSession.current = true;
+    restorationStartedRef.current = true;
 
-    async function restoreSession() {
+    const restoreSession = async () => {
       try {
-        const session = await sessionService.read();
+        const session = await restoreStoredSession();
 
         if (session) {
           dispatch(sessionRestored(session));
@@ -37,13 +67,25 @@ export function SessionProvider({
         }
 
         dispatch(sessionRestoreFinished());
-      } catch {
+      } catch (error) {
+        console.error(
+          "[SessionProvider] Session restoration failed:",
+          error,
+        );
+
         dispatch(sessionRestoreFinished());
       }
-    }
+    };
 
     void restoreSession();
   }, [dispatch]);
 
-  return <>{children}</>;
+  /*
+   * app/index.tsx handles the session loading UI.
+   * The provider should continue rendering children so routing
+   * logic can read isRestoringSession.
+   */
+  void isRestoringSession;
+
+  return children;
 }

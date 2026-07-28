@@ -1,189 +1,210 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
-import Animated, { FadeInDown } from "react-native-reanimated";
-import { Car, MapPin, Shield, Award, Users } from "lucide-react-native";
+// import { Redirect } from "expo-router";
 
-const { width } = Dimensions.get("window");
+// import { FullScreenLoading } from "@/components/FullScreenLoading";
+// import {
+//   selectAuthRole,
+//   selectAuthStatus,
+// } from "@/features/auth/state/authSelectors";
+// import { useAppSelector } from "@/store/hooks";
 
-export default function WelcomeScreen() {
-  const router = useRouter();
+// // Replace this import with the selector from your onboarding/app-preferences state.
+// import { selectHasCompletedOnboarding } from "@/features/onboarding/state/onboardingSelectors";
 
-  return (
-    <ScrollView className="flex-1 bg-black">
-      {/* Hero Section */}
-      <View className="relative h-[100vh] justify-center items-center">
-        <LinearGradient
-          colors={["#000000", "#1a1a2e", "#16213e"]}
-          className="absolute inset-0"
-        />
-
-        {/* Background Image / Illustration */}
-        <LinearGradient
-          colors={["#0f172a", "#1e2937", "#334155"]}
-          className="absolute inset-0"
-        />
-
-        <View className="items-center z-10 px-6">
-          <Animated.Text
-            entering={FadeInDown.delay(200)}
-            className="text-6xl font-bold text-white text-center mb-4"
-          >
-            Derash
-          </Animated.Text>
-
-          <Text className="text-3xl text-primary font-semibold text-center mb-6">
-            Move Smarter • Travel Safer
-          </Text>
-
-          <Text className="text-lg text-gray-300 text-center max-w-[280px] mb-12">
-            Ethiopia's most advanced transport network — rides, routes, delivery
-            & more.
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => router.push("/(auth)/login")}
-            className="bg-primary w-full py-4 rounded-2xl mb-4 active:opacity-90"
-          >
-            <Text className="text-black font-semibold text-center text-lg">
-              Get Started
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => router.push("/(auth)/signup")}
-            className="border border-white/50 w-full py-4 rounded-2xl"
-          >
-            <Text className="text-white font-medium text-center text-lg">
-              Create Accounttttt
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Features Section */}
-      <View className="px-6 pb-12">
-        <Text className="text-3xl font-bold text-white mb-8 text-center">
-          Why Choose Derash?
-        </Text>
-
-        <View className="space-y-8">
-          {features.map((feature, index) => (
-            <Animated.View
-              key={index}
-              entering={FadeInDown.delay(index * 100)}
-              className="bg-zinc-900/70 p-6 rounded-3xl"
-            >
-              <View className="flex-row items-center gap-4">
-                <View className="bg-primary/10 p-4 rounded-2xl">
-                  {feature.icon}
-                </View>
-                <View>
-                  <Text className="text-xl font-semibold text-white">
-                    {feature.title}
-                  </Text>
-                  <Text className="text-gray-400 mt-1">{feature.desc}</Text>
-                </View>
-              </View>
-            </Animated.View>
-          ))}
-        </View>
-      </View>
-
-      {/* Stats */}
-      <View className="bg-zinc-950 py-12 px-6">
-        <View className="flex-row justify-around">
-          {stats.map((stat, i) => (
-            <View key={i} className="items-center">
-              <Text className="text-4xl font-bold text-primary">
-                {stat.value}
-              </Text>
-              <Text className="text-gray-400 mt-1">{stat.label}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      {/* Final CTA */}
-      <View className="px-6 py-16 bg-gradient-to-b from-transparent to-black">
-        <Text className="text-4xl font-bold text-white text-center mb-6">
-          Ready to ride with confidence?
-        </Text>
-        <TouchableOpacity
-          onPress={() => router.push("/(auth)/login")}
-          className="bg-white py-5 rounded-3xl"
-        >
-          <Text className="text-black text-center font-bold text-xl">
-            Join Derash Now
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
-}
-
-const features = [
-  {
-    icon: <Car color="#00ff9f" size={32} />,
-    title: "Instant Rides",
-    desc: "Book a ride in seconds with real-time tracking",
-  },
-  {
-    icon: <MapPin color="#00ff9f" size={32} />,
-    title: "Smart Routes",
-    desc: "Best routes, traffic updates & estimated time",
-  },
-  {
-    icon: <Shield color="#00ff9f" size={32} />,
-    title: "Safe & Secure",
-    desc: "Verified drivers and emergency SOS feature",
-  },
-  {
-    icon: <Award color="#00ff9f" size={32} />,
-    title: "Best Prices",
-    desc: "Transparent pricing with no hidden charges",
-  },
-];
-
-const stats = [
-  { value: "50K+", label: "Happy Riders" },
-  { value: "1,200", label: "Active Drivers" },
-  { value: "98%", label: "Satisfaction Rate" },
-];
-
-// src/app/index.tsx
-
-// import { Redirect } from 'expo-router';
-
-// import { useAuthActions } from '@/features/auth/hooks/useAuthActions';
-// import { useAppBootstrap } from '@/features/bootstrap/hooks/useAppBootstrap';
-
+// /**
+//  * Root application entry route.
+//  *
+//  * Responsibilities:
+//  * - Wait for application/auth state restoration.
+//  * - Route first-time users to onboarding.
+//  * - Route unauthenticated returning users to login.
+//  * - Route authenticated users according to their role.
+//  *
+//  * This file should NOT contain feature UI or business logic.
+//  */
 // export default function IndexRoute() {
-//   const { isReady, hasSeenWelcome } = useAppBootstrap();
-//   const { session, user } = useAuthActions();
+//   const authStatus = useAppSelector(selectAuthStatus);
+//   const role = useAppSelector(selectAuthRole);
+//   const hasCompletedOnboarding = useAppSelector(selectHasCompletedOnboarding);
 
-//   if (!isReady) {
-//     return null;
+//   /**
+//    * Do not redirect until persisted authentication/application
+//    * state has finished restoring.
+//    *
+//    * Without this guard, the app can briefly redirect to login or
+//    * onboarding before Redux Persist/session restoration finishes.
+//    */
+//   if (authStatus === "bootstrapping") {
+//     return <FullScreenLoading />;
 //   }
 
-//   if (!hasSeenWelcome) {
-//     return <Redirect href="/welcome" />;
+//   /**
+//    * First application launch.
+//    *
+//    * This check intentionally happens before authentication.
+//    */
+//   if (!hasCompletedOnboarding) {
+//     return <Redirect href="/(public)/welcome" />;
 //   }
 
-//   if (!session) {
-//     return <Redirect href="/sign-in" />;
+//   /**
+//    * Returning user who is not authenticated.
+//    */
+//   if (authStatus !== "authenticated") {
+//     return <Redirect href="/(auth)/login" />;
 //   }
 
-//   if (!user?.onboardingCompleted) {
-//     return <Redirect href="/select-role" />;
+//   /**
+//    * An authenticated session should normally always have a role.
+//    *
+//    * If it does not, sending the user back to login is safer than
+//    * guessing which protected application they should enter.
+//    */
+//   if (!role) {
+//     return <Redirect href="/(auth)/login" />;
 //   }
 
-//   return <Redirect href="/home" />;
+//   /**
+//    * Role-based application routing.
+//    */
+//   switch (role) {
+//     case "driver":
+//       return <Redirect href="/(protected)/driver/index" />;
+
+//     case "operator":
+//       return <Redirect href="/(protected)/operator/index" />;
+
+//     case "passenger":
+//       return <Redirect href="/(tabs)/home" />;
+
+//     default:
+//       return <Redirect href="/(auth)/login" />;
+//   }
 // }
+
+// // src/app/index.tsx
+
+// // import { Redirect } from 'expo-router';
+
+// // import { useAuthActions } from '@/features/auth/hooks/useAuthActions';
+// // import { useAppBootstrap } from '@/features/bootstrap/hooks/useAppBootstrap';
+
+// // export default function IndexRoute() {
+// //   const { isReady, hasSeenWelcome } = useAppBootstrap();
+// //   const { session, user } = useAuthActions();
+
+// //   if (!isReady) {
+// //     return null;
+// //   }
+
+// //   if (!hasSeenWelcome) {
+// //     return <Redirect href="/welcome" />;
+// //   }
+
+// //   if (!session) {
+// //     return <Redirect href="/sign-in" />;
+// //   }
+
+// //   if (!user?.onboardingCompleted) {
+// //     return <Redirect href="/select-role" />;
+// //   }
+
+// //   return <Redirect href="/home" />;
+// // }
+
+// import {
+//   selectAuthRole,
+//   selectAuthStatus,
+// } from "@/features/auth/state/authSelectors";
+// import { selectRequiresOnboarding } from "@/features/onboarding/state/onboardingSelectors";
+// import { ReduxHydrationLoading } from "@/providers/components/ReduxHydrationLoading";
+// import { useAppSelector } from "@/store/hooks";
+// import { Redirect } from "expo-router";
+// export default function RootIndexRoute() {
+//   const authStatus = useAppSelector(selectAuthStatus);
+//   const authRole = useAppSelector(selectAuthRole);
+//   const requiresOnboarding = useAppSelector(selectRequiresOnboarding);
+//   if (authStatus === "restoring") {
+//     return <ReduxHydrationLoading />;
+//   }
+//   if (requiresOnboarding) {
+//     return <Redirect href="/(public)/welcome" />;
+//   }
+//   if (authStatus === "unauthenticated") {
+//     return <Redirect href="/(auth)/login" />;
+//   }
+//   switch (authRole) {
+//     case "driver":
+//       return <Redirect href="/(protected)/driver" />;
+//     case "operator":
+//       return <Redirect href="/(protected)/operator" />;
+//     case "passenger":
+//     default:
+//       return <Redirect href="/(auth)/login" />;
+//   }
+// }
+
+// app/index.tsx
+
+import { Redirect } from "expo-router";
+
+import {
+  selectAuthRole,
+  selectAuthStatus,
+} from "@/features/auth/state/authSelectors";
+import { selectRequiresOnboarding } from "@/features/onboarding/state/onboardingSelectors";
+import { ReduxHydrationLoading } from "@/providers/components/ReduxHydrationLoading";
+import { useAppSelector } from "@/store/hooks";
+
+export default function RootIndexRoute() {
+  const authStatus = useAppSelector(selectAuthStatus);
+  const authRole = useAppSelector(selectAuthRole);
+  const requiresOnboarding = useAppSelector(selectRequiresOnboarding);
+
+  /**
+   * SessionProvider has not finished checking SecureStore/API.
+   */
+  if (authStatus === "restoring") {
+    return <ReduxHydrationLoading />;
+  }
+
+  /**
+   * First-time application experience.
+   *
+   * This runs before login because onboarding belongs to the
+   * application lifecycle, not authentication.
+   */
+  if (requiresOnboarding) {
+    return <Redirect href="/(public)/welcome" />;
+  }
+
+  /**
+   * Returning user with no valid authenticated session.
+   */
+  if (authStatus === "unauthenticated") {
+    return <Redirect href="/(auth)/login" />;
+  }
+
+  /**
+   * Authenticated role-based routing.
+   */
+  switch (authRole) {
+    case "driver":
+      return <Redirect href="/(protected)/driver" />;
+
+    case "operator":
+      return <Redirect href="/(protected)/operator" />;
+
+    // case "admin":
+    //   return <Redirect href="/(protected)/admin" />;
+
+    case "passenger":
+      return <Redirect href="/(tabs)/home" />;
+
+    /**
+     * An authenticated session without a valid role is an
+     * inconsistent state. Do not silently treat it as passenger.
+     */
+    default:
+      return <Redirect href="/(auth)/login" />;
+  }
+}

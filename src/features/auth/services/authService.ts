@@ -57,3 +57,40 @@ export const authService = {
     await tokenStorage.clearTokens();
   },
 };
+
+
+
+// // src/features/auth/services/authService.ts
+
+// import type {
+//   AuthSession,
+//   LoginRequest,
+//   SignupRequest,
+//   VerifyOtpRequest,
+// } from "../types/auth.types";
+
+// export const authService = {
+//   async login(payload: LoginRequest): Promise<AuthSession> {
+//     // API request
+//     throw new Error("Not implemented");
+//   },
+
+//   async signup(payload: SignupRequest): Promise<AuthSession> {
+//     // API request
+//     throw new Error("Not implemented");
+//   },
+
+//   async verifyOtp(payload: VerifyOtpRequest): Promise<AuthSession> {
+//     // API request
+//     throw new Error("Not implemented");
+//   },
+
+//   async me() {
+//     // API request
+//     throw new Error("Not implemented");
+//   },
+
+//   async logout(): Promise<void> {
+//     // API request or local token removal
+//   },
+// };
