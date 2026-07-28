@@ -1,14 +1,81 @@
 import Screen from "@/components/ScreenWrapper/ScreenWrapper";
+import { router } from "expo-router";
+import { useState } from "react";
+import { Button, TextInput, View } from "react-native";
+
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useBiometricAuth } from "@/features/auth/hooks/useBiometricAuth";
+import { useOTP } from "@/features/auth/hooks/useOTP";
 
 export default function LoginScreen() {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { signIn } = useAuth();
+
+  const { requestOTP, isSending } = useOTP();
+
+  const { isAvailable, isAuthenticating, authenticate } = useBiometricAuth();
+
+  const handlePasswordLogin = async () => {
+    await signIn({
+      phoneNumber,
+      password,
+    });
+
+    router.replace("/(tabs)/home");
+  };
+
+  const handleOTPLogin = async () => {
+    await requestOTP({
+      phoneNumber,
+      purpose: "login",
+    });
+
+    router.push("/(auth)/otp");
+  };
+
+  const handleBiometricLogin = async () => {
+    const authenticated = await authenticate();
+
+    if (authenticated) {
+      router.replace("/(tabs)/home");
+    }
+  };
+
   return (
     <Screen>
-      {/* <Logo />
+      <View>
+        <TextInput
+          value={phoneNumber}
+          onChangeText={setPhoneNumber}
+          placeholder="Phone number"
+          keyboardType="phone-pad"
+        />
 
-            <LoginForm />
+        <TextInput
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password"
+          secureTextEntry
+        />
 
-            <SocialLoginButtons /> */}
-      {/* <Footer /> */} */
+        <Button title="Sign in" onPress={handlePasswordLogin} />
+
+        <Button
+          title={isSending ? "Sending..." : "Sign in with OTP"}
+          disabled={isSending}
+          onPress={handleOTPLogin}
+        />
+
+        {isAvailable && (
+          <Button
+            title={isAuthenticating ? "Authenticating..." : "Use biometrics"}
+            disabled={isAuthenticating}
+            onPress={handleBiometricLogin}
+          />
+        )}
+      </View>
     </Screen>
   );
 }

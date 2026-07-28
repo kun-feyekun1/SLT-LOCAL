@@ -7,6 +7,7 @@ export interface AuthUser {
   phoneNumber: string;
   email?: string;
   preferredLanguage: "en" | "am";
+  role: "passenger" | "driver" | "operator" | "admin";
 }
 
 export type AuthTokens = {

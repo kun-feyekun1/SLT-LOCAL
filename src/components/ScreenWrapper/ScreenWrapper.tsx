@@ -97,7 +97,8 @@
 //   );
 // }
 
-// export default memo(Screen);
+// src/components/ScreenWrapper/Screen.tsx
+
 import React, { memo } from "react";
 import {
   KeyboardAvoidingView,
@@ -112,13 +113,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 
 import { styles } from "./Screen.styles";
-import { ScreenProps } from "./Screen.types";
+import type { ScreenProps } from "./Screen.types";
 
-function Screen({
+function ScreenWrapper({
   children,
   scrollable = true,
   padded = true,
   keyboard = true,
+  keyboardVerticalOffset = 30,
   safeAreaEdges = ["top", "bottom"],
   backgroundColor,
   style,
@@ -128,6 +130,8 @@ function Screen({
   onRefresh,
 }: ScreenProps) {
   const { theme } = useTheme();
+
+  const screenBackgroundColor = backgroundColor ?? theme.background.primary;
 
   const content = (
     <View style={[styles.content, padded && styles.padded, contentStyle]}>
@@ -139,7 +143,7 @@ function Screen({
     <>
       <StatusBar
         translucent={false}
-        backgroundColor={backgroundColor ?? theme.background.primary}
+        backgroundColor={screenBackgroundColor}
         barStyle={theme.statusBar}
       />
 
@@ -148,7 +152,7 @@ function Screen({
         style={[
           styles.safeArea,
           {
-            backgroundColor: backgroundColor ?? theme.background.primary,
+            backgroundColor: screenBackgroundColor,
           },
           style,
         ]}
@@ -156,15 +160,34 @@ function Screen({
         <KeyboardAvoidingView
           enabled={keyboard}
           style={styles.flex}
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          behavior={
+            keyboard
+              ? Platform.OS === "ios"
+                ? "padding"
+                : "height"
+              : undefined
+          }
+          keyboardVerticalOffset={keyboardVerticalOffset}
         >
           {scrollable ? (
             <ScrollView
-              keyboardShouldPersistTaps="handled"
-              keyboardDismissMode="on-drag"
-              automaticallyAdjustKeyboardInsets
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.scrollContent}
+              {...scrollViewProps}
+              style={[styles.scrollView, scrollViewProps?.style]}
+              contentContainerStyle={[
+                styles.scrollContent,
+                scrollViewProps?.contentContainerStyle,
+              ]}
+              keyboardShouldPersistTaps={
+                scrollViewProps?.keyboardShouldPersistTaps ?? "handled"
+              }
+              keyboardDismissMode={
+                scrollViewProps?.keyboardDismissMode ??
+                (Platform.OS === "ios" ? "interactive" : "on-drag")
+              }
+              automaticallyAdjustKeyboardInsets={Platform.OS === "ios"}
+              showsVerticalScrollIndicator={
+                scrollViewProps?.showsVerticalScrollIndicator ?? false
+              }
               refreshControl={
                 onRefresh ? (
                   <RefreshControl
@@ -175,7 +198,6 @@ function Screen({
                   />
                 ) : undefined
               }
-              {...scrollViewProps}
             >
               {content}
             </ScrollView>
@@ -188,4 +210,4 @@ function Screen({
   );
 }
 
-export default memo(Screen);
+export default memo(ScreenWrapper);

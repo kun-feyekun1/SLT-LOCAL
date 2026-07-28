@@ -1,3 +1,3 @@
 // src/app/(public)/terms-of-service.tsx
 
-export { TermsOfServiceScreen as default } from '@/features/public';
+export { TermsOfServiceScreen as default } from '@/features/legal/screens';

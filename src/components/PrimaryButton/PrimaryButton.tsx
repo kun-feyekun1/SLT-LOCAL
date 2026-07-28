@@ -81,6 +81,7 @@ interface PrimaryButtonProps {
   onPress: () => void;
   variant?: "primary" | "secondary" | "ghost";
   disabled?: boolean;
+  loading?: boolean;
 }
 
 export function PrimaryButton({
@@ -88,6 +89,7 @@ export function PrimaryButton({
   onPress,
   variant = "primary",
   disabled = false,
+  loading = false
 }: PrimaryButtonProps) {
   const { theme } = useTheme();
 

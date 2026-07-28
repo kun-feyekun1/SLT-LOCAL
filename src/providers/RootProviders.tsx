@@ -54,35 +54,35 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { ErrorBoundary } from "@/components/index";
 // import { ToastMessage } from "@/features/toast/components";
+import { SessionProvider } from "@/features/auth/providers/SessionProvider";
 import { BottomSheetProvider } from "@/providers/BottomSheetProvider";
 import { LocationProvider } from "@/providers/LocationProvider";
 import { NotificationProvider } from "@/providers/NotificationProvider"; // <--- Added!
 import { QueryProvider } from "@/providers/QueryProvider";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-import { SessionProvider } from "@/features/auth/providers/SessionProvider";
 
 export const RootProviders = ({ children }: { children: ReactNode }) => (
   <GestureHandlerRootView style={styles.root}>
     <ReduxProvider>
-      <SessionProvider>
       <QueryProvider>
-        <ThemeProvider>
-          <ErrorBoundary>
-            <LocationProvider>
-              <NotificationProvider>
-                {/* <--- Wraps app context */}
-                <BottomSheetProvider>
-                  {children}
-                  {/* <ToastMessage /> */}
-                  <StatusBar style="auto" />
-                </BottomSheetProvider>
-              </NotificationProvider>
-            </LocationProvider>
-          </ErrorBoundary>
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider>
+            <ErrorBoundary>
+              <LocationProvider>
+                <NotificationProvider>
+                  {/* <--- Wraps app context */}
+                  <BottomSheetProvider>
+                    {children}
+                    {/* <ToastMessage /> */}
+                    <StatusBar style="auto" />
+                  </BottomSheetProvider>
+                </NotificationProvider>
+              </LocationProvider>
+            </ErrorBoundary>
+          </ThemeProvider>
+        </SessionProvider>
       </QueryProvider>
-      </SessionProvider>
     </ReduxProvider>
   </GestureHandlerRootView>
 );
