@@ -1,86 +1,3 @@
-// import Screen from "@/components/ScreenWrapper/ScreenWrapper";
-// import { router } from "expo-router";
-// import { useState } from "react";
-// import { Button, TextInput, View } from "react-native";
-
-// import { useAuth } from "@/features/auth/hooks/useAuth";
-// import { useBiometricAuth } from "@/features/auth/hooks/useBiometricAuth";
-// import { useOTP } from "@/features/auth/hooks/useOTP";
-
-// export default function LoginScreen() {
-//   const [phoneNumber, setPhoneNumber] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const { signIn } = useAuth();
-
-//   const { requestOTP, isSending } = useOTP();
-
-//   const { isAvailable, isAuthenticating, authenticate } = useBiometricAuth();
-
-//   const handlePasswordLogin = async () => {
-//     await signIn({
-//       phoneNumber,
-//       password,
-//     });
-
-//     router.replace("/(tabs)/home");
-//   };
-
-//   const handleOTPLogin = async () => {
-//     await requestOTP({
-//       phoneNumber,
-//       purpose: "login",
-//     });
-
-//     router.push("/(auth)/otp");
-//   };
-
-//   const handleBiometricLogin = async () => {
-//     const authenticated = await authenticate();
-
-//     if (authenticated) {
-//       router.replace("/(tabs)/home");
-//     }
-//   };
-
-//   return (
-//     <Screen>
-//       <View>
-//         <TextInput
-//           value={phoneNumber}
-//           onChangeText={setPhoneNumber}
-//           placeholder="Phone number"
-//           keyboardType="phone-pad"
-//         />
-
-//         <TextInput
-//           value={password}
-//           onChangeText={setPassword}
-//           placeholder="Password"
-//           secureTextEntry
-//         />
-
-//         <Button title="Sign in" onPress={handlePasswordLogin} />
-
-//         <Button
-//           title={isSending ? "Sending..." : "Sign in with OTP"}
-//           disabled={isSending}
-//           onPress={handleOTPLogin}
-//         />
-
-//         {isAvailable && (
-//           <Button
-//             title={isAuthenticating ? "Authenticating..." : "Use biometrics"}
-//             disabled={isAuthenticating}
-//             onPress={handleBiometricLogin}
-//           />
-//         )}
-//       </View>
-//     </Screen>
-//   );
-// }
-
-
 // src/features/auth/screens/LoginScreen/LoginScreen.tsx
 
 import { Ionicons } from "@expo/vector-icons";
@@ -126,11 +43,7 @@ export default function LoginScreen() {
   const { signIn } = useAuth();
   const { requestOTP, isSending } = useOTP();
 
-  const {
-    isAvailable,
-    isAuthenticating,
-    authenticate,
-  } = useBiometricAuth();
+  const { isAvailable, isAuthenticating, authenticate } = useBiometricAuth();
 
   const isLargeScreen = width >= 768;
 
@@ -544,9 +457,7 @@ export default function LoginScreen() {
                     <Pressable
                       accessibilityRole="button"
                       accessibilityLabel={
-                        passwordVisible
-                          ? "Hide password"
-                          : "Show password"
+                        passwordVisible ? "Hide password" : "Show password"
                       }
                       hitSlop={10}
                       onPress={() => {
@@ -562,9 +473,7 @@ export default function LoginScreen() {
                     >
                       <Ionicons
                         name={
-                          passwordVisible
-                            ? "eye-off-outline"
-                            : "eye-outline"
+                          passwordVisible ? "eye-off-outline" : "eye-outline"
                         }
                         size={20}
                         color={theme.text.secondary}
@@ -748,11 +657,7 @@ export default function LoginScreen() {
                       borderColor: theme.border.default,
                       borderRadius: radius.md,
                       backgroundColor: theme.background.primary,
-                      opacity: isAuthenticating
-                        ? 0.6
-                        : pressed
-                          ? 0.72
-                          : 1,
+                      opacity: isAuthenticating ? 0.6 : pressed ? 0.72 : 1,
                     })}
                   >
                     {isAuthenticating ? (
