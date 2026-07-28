@@ -1,7 +1,7 @@
 // export { default as WelcomeScreen } from "./WelcomeScreen";
 export { default as OnboardingScreen } from "./OnboardingScreen";
 export { default as LoginScreen } from "./LoginScreen";
-export { default as RegisterScreen } from "./SignupScreen";
+export { default as SignupScreen } from "./SignupScreen";
 export { default as PhoneLoginScreen } from "./PhoneLoginScreen";
 export { default as OTPVerificationScreen } from "./OTPVerificationScreen";
 export { default as CreateProfileScreen } from "./CreateProfileScreen";
