@@ -1,78 +1,158 @@
-// import { useMutation, useQuery } from "@tanstack/react-query";
-// import { router } from "expo-router";
+// src/features/auth/hooks/useAuthActions.ts
 
-// import { showToast } from "@/features/toast/state/toastSlice";
-// import { useAppDispatch } from "@/store/hooks";
-// import { queryKeys } from "@/utils/queryKeys";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { router } from "expo-router";
+import { useEffect } from "react";
 
-// import { authService } from "../services/authService";
-// import { clearSession, markBootstrapped, setSession } from "../state/authSlice";
+import { showToast } from "@/features/toast/state/toastSlice";
+import { useAppDispatch } from "@/store/hooks";
+import { queryKeys } from "@/utils/queryKeys";
 
-// export const useBootstrapAuth = () => {
-//   const dispatch = useAppDispatch();
+import { authService } from "../services/authService";
+import {
+  currentUserUpdated,
+  sessionRestoreFinished,
+  sessionStarted,
+  signedOut,
+} from "../state/authSlice";
+import type {
+  AuthSession,
+  AuthUser,
+} from "../types/auth.types";
 
-//   return useQuery({
-//     queryKey: queryKeys.me,
-//     queryFn: authService.me,
-//     retry: false,
-//     gcTime: 0,
-//     staleTime: 0,
-//     enabled: false,
-//     meta: {
-//       onSuccess: (user: unknown) =>
-//         dispatch(setSession(user as Parameters<typeof setSession>[0])),
-//       onError: () => dispatch(markBootstrapped()),
-//     },
-//   });
-// };
+/**
+ * Checks whether the currently stored authentication session is valid.
+ *
+ * This assumes authService.me() returns the currently authenticated user.
+ */
+export function useBootstrapAuth() {
+  const dispatch = useAppDispatch();
 
-// export const useLogin = () => {
-//   const dispatch = useAppDispatch();
-//   return useMutation({
-//     mutationFn: authService.login,
-//     onSuccess: (session) => {
-//       dispatch(setSession(session.user));
-//       router.replace("/home");
-//     },
-//     onError: () =>
-//       dispatch(
-//         showToast("Login failed. Check your details and try again.", "error"),
-//       ),
-//   });
-// };
+  const query = useQuery<AuthUser, Error>({
+    queryKey: queryKeys.me,
+    queryFn: authService.me,
+    retry: false,
+    gcTime: 0,
+    staleTime: 0,
+    enabled: false,
+  });
 
-// export const useSignup = () => {
-//   const dispatch = useAppDispatch();
-//   return useMutation({
-//     mutationFn: authService.signup,
-//     onSuccess: (session) => {
-//       dispatch(setSession(session.user));
-//       router.replace("/otp");
-//     },
-//     onError: () =>
-//       dispatch(showToast("Signup failed. Please try again.", "error")),
-//   });
-// };
+  useEffect(() => {
+    if (query.isSuccess && query.data) {
+      dispatch(currentUserUpdated(query.data));
+      dispatch(sessionRestoreFinished());
+    }
+  }, [dispatch, query.data, query.isSuccess]);
 
-// export const useVerifyOtp = () => {
-//   const dispatch = useAppDispatch();
-//   return useMutation({
-//     mutationFn: authService.verifyOtp,
-//     onSuccess: (session) => {
-//       dispatch(setSession(session.user));
-//       router.replace("/home");
-//     },
-//     onError: () => dispatch(showToast("Invalid verification code.", "error")),
-//   });
-// };
+  useEffect(() => {
+    if (query.isError) {
+      dispatch(sessionRestoreFinished());
+    }
+  }, [dispatch, query.isError]);
 
-// export const useLogout = () => {
-//   const dispatch = useAppDispatch();
-//   return useMutation({
-//     mutationFn: authService.logout,
-//     onSuccess: () => {
-//       dispatch(clearSession());
-//       router.replace("/login");
-//     },
-//   });
-// };
+  return query;
+}
+
+/**
+ * Logs the user in and stores the complete session in Redux.
+ */
+export function useLogin() {
+  const dispatch = useAppDispatch();
+
+  return useMutation<
+    AuthSession,
+    Error,
+    Parameters<typeof authService.login>[0]
+  >({
+    mutationFn: authService.login,
+
+    onSuccess: (session) => {
+      dispatch(sessionStarted(session));
+
+      router.replace("/(tabs)/home");
+    },
+
+    onError: () => {
+      dispatch(
+        showToast({ message: "Login failed. Check your details and try again." }),
+      );
+    },
+  });
+}
+
+/**
+ * Registers a new user and stores the returned authentication session.
+ */
+export function useSignup() {
+  const dispatch = useAppDispatch();
+
+  return useMutation<
+    AuthSession,
+    Error,
+    Parameters<typeof authService.signup>[0]
+  >({
+    mutationFn: authService.signup,
+
+    onSuccess: (session) => {
+      dispatch(sessionStarted(session));
+
+      router.replace("/(auth)/otp");
+    },
+
+    onError: () => {
+      dispatch(
+        showToast({ message: "Signup failed. Please try again." }),
+      );
+    },
+  });
+}
+
+/**
+ * Verifies an OTP and stores the verified authentication session.
+ */
+export function useVerifyOtp() {
+  const dispatch = useAppDispatch();
+
+  return useMutation<
+    AuthSession,
+    Error,
+    Parameters<typeof authService.verifyOtp>[0]
+  >({
+    mutationFn: authService.verifyOtp,
+
+    onSuccess: (session) => {
+      dispatch(sessionStarted(session));
+
+      router.replace("/(tabs)/home");
+    },
+
+    onError: () => {
+      dispatch(
+        showToast({ message: "Invalid verification code." }),
+      );
+    },
+  });
+}
+
+/**
+ * Logs the user out and clears the Redux authentication state.
+ */
+export function useLogout() {
+  const dispatch = useAppDispatch();
+
+  return useMutation<void, Error, void>({
+    mutationFn: authService.logout,
+
+    onSuccess: () => {
+      dispatch(signedOut());
+
+      router.replace("/(auth)/login");
+    },
+
+    onError: () => {
+      dispatch(
+        showToast({ message: "Logout failed. Please try again." }),
+      );
+    },
+  });
+}
