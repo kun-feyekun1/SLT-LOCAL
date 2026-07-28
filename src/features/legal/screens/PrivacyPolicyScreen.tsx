@@ -1,17 +1,17 @@
 // src/features/public/screens/PrivacyPolicyScreen.tsx
 
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { Linking, StyleSheet, Text, View } from "react-native";
 
-import LegalSection from '../components/LegalSection';
-import PrimaryButton from '../components/PrimaryButton';
-import PublicHeader from '../components/PublicHeader';
-import PublicScreen from '../components/PublicScreen';
-import { PRIVACY_POLICY_SECTIONS } from '../constants/privacy-policy';
-import { PUBLIC_CONFIG } from '../constants/public.constants';
+import PublicHeader from "../../about/components/PublicHeader";
+import PrimaryButton from "../../onboarding/components/PrimaryButton";
+import PublicScreen from "../../onboarding/components/PublicScreen";
+import LegalSection from "../constants/LegalSection";
+import { PRIVACY_POLICY_SECTIONS } from "../constants/privacy-policy";
+import { PUBLIC_CONFIG } from "../constants/public.constants";
 
 export default function PrivacyPolicyScreen() {
   function contactPrivacyTeam() {
-    const subject = encodeURIComponent('Privacy request');
+    const subject = encodeURIComponent("Privacy request");
     const url = `mailto:${PUBLIC_CONFIG.privacyEmail}?subject=${subject}`;
 
     void Linking.openURL(url);
@@ -26,16 +26,14 @@ export default function PrivacyPolicyScreen() {
 
       <View style={styles.metadataCard}>
         <Text style={styles.metadataLabel}>LAST UPDATED</Text>
-        <Text style={styles.metadataValue}>
-          {PUBLIC_CONFIG.lastUpdated}
-        </Text>
+        <Text style={styles.metadataValue}>{PUBLIC_CONFIG.lastUpdated}</Text>
       </View>
 
       <View style={styles.introduction}>
         <Text style={styles.introductionText}>
           Please read this policy carefully. The data practices described here
-          should be updated whenever Smart Link Transit introduces new
-          features, providers, tracking technologies, or markets.
+          should be updated whenever Smart Link Transit introduces new features,
+          providers, tracking technologies, or markets.
         </Text>
       </View>
 
@@ -75,34 +73,34 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: "#E2E8F0",
     borderRadius: 15,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
 
   metadataLabel: {
-    color: '#94A3B8',
+    color: "#94A3B8",
     fontSize: 10,
-    fontWeight: '800',
+    fontWeight: "800",
     letterSpacing: 1,
   },
 
   metadataValue: {
     marginTop: 4,
-    color: '#0F172A',
+    color: "#0F172A",
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 
   introduction: {
     marginBottom: 30,
     padding: 18,
     borderRadius: 16,
-    backgroundColor: '#F0FDFA',
+    backgroundColor: "#F0FDFA",
   },
 
   introductionText: {
-    color: '#0F766E',
+    color: "#0F766E",
     fontSize: 14,
     lineHeight: 22,
   },
@@ -110,18 +108,18 @@ const styles = StyleSheet.create({
   contactCard: {
     padding: 22,
     borderRadius: 20,
-    backgroundColor: '#0F172A',
+    backgroundColor: "#0F172A",
   },
 
   contactTitle: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 20,
-    fontWeight: '800',
+    fontWeight: "800",
   },
 
   contactDescription: {
     marginTop: 8,
-    color: '#CBD5E1',
+    color: "#CBD5E1",
     fontSize: 14,
     lineHeight: 22,
   },
@@ -132,8 +130,8 @@ const styles = StyleSheet.create({
 
   email: {
     marginTop: 14,
-    color: '#94A3B8',
+    color: "#94A3B8",
     fontSize: 13,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

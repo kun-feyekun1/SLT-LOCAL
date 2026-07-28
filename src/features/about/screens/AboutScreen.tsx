@@ -1,10 +1,10 @@
-// src/features/public/screens/AboutScreen.tsx
+// src/features/about/screens/AboutScreen.tsx
 
 import { StyleSheet, Text, View } from "react-native";
 
+import { PUBLIC_CONFIG } from "../../legal/constants/public.constants";
+import PublicScreen from "../../onboarding/components/PublicScreen";
 import PublicHeader from "../components/PublicHeader";
-import PublicScreen from "../components/PublicScreen";
-import { PUBLIC_CONFIG } from "../constants/public.constants";
 
 const VALUES = [
   {

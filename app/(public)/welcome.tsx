@@ -1,3 +1,1 @@
-// src/app/(public)/welcome.tsx
-
-export { WelcomeScreen as default } from '@/features/public';
+export {WelcomeScreen as default} from '@/features/onboarding/screens';

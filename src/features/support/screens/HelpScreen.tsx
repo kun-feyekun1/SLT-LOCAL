@@ -1,6 +1,6 @@
 // src/features/public/screens/HelpScreen.tsx
 
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Alert,
   Linking,
@@ -8,67 +8,67 @@ import {
   Text,
   TextInput,
   View,
-} from 'react-native';
+} from "react-native";
 
-import HelpItem from '../components/HelpItem';
-import PrimaryButton from '../components/PrimaryButton';
-import PublicHeader from '../components/PublicHeader';
-import PublicScreen from '../components/PublicScreen';
-import { PUBLIC_CONFIG } from '../constants/public.constants';
+import PublicHeader from "../../about/components/PublicHeader";
+import { PUBLIC_CONFIG } from "../../legal/constants/public.constants";
+import PrimaryButton from "../../onboarding/components/PrimaryButton";
+import PublicScreen from "../../onboarding/components/PublicScreen";
+import HelpItem from "../../public/components/HelpItem";
 
 const FAQS = [
   {
-    id: 'create-account',
-    question: 'How do I create an account?',
+    id: "create-account",
+    question: "How do I create an account?",
     answer:
-      'Open the welcome screen, select “Create an account,” and follow the registration process. You may be asked to verify your phone number or email address.',
+      "Open the welcome screen, select “Create an account,” and follow the registration process. You may be asked to verify your phone number or email address.",
   },
   {
-    id: 'reset-password',
-    question: 'I forgot my password. What should I do?',
+    id: "reset-password",
+    question: "I forgot my password. What should I do?",
     answer:
-      'Open the sign-in screen and select “Forgot password.” Follow the verification steps to create a new password.',
+      "Open the sign-in screen and select “Forgot password.” Follow the verification steps to create a new password.",
   },
   {
-    id: 'location',
-    question: 'Why does Smart Link Transit request my location?',
+    id: "location",
+    question: "Why does Smart Link Transit request my location?",
     answer:
-      'Location access helps identify nearby transport options, select pickup points, estimate arrival times, provide navigation, and support active-trip safety features.',
+      "Location access helps identify nearby transport options, select pickup points, estimate arrival times, provide navigation, and support active-trip safety features.",
   },
   {
-    id: 'booking',
-    question: 'How do I request or book transportation?',
+    id: "booking",
+    question: "How do I request or book transportation?",
     answer:
-      'After signing in, choose your destination or available service, review the route and price information, and confirm the request. Available options may vary by location.',
+      "After signing in, choose your destination or available service, review the route and price information, and confirm the request. Available options may vary by location.",
   },
   {
-    id: 'driver',
-    question: 'How do I join as a driver?',
+    id: "driver",
+    question: "How do I join as a driver?",
     answer:
-      'Create an account, choose the driver role, and complete driver onboarding. You may need to submit identity, license, vehicle, insurance, and compliance documents.',
+      "Create an account, choose the driver role, and complete driver onboarding. You may need to submit identity, license, vehicle, insurance, and compliance documents.",
   },
   {
-    id: 'payment',
-    question: 'What payment methods are supported?',
+    id: "payment",
+    question: "What payment methods are supported?",
     answer:
-      'Available payment methods depend on your market and service provider. Supported methods will be shown before you confirm an eligible trip or transaction.',
+      "Available payment methods depend on your market and service provider. Supported methods will be shown before you confirm an eligible trip or transaction.",
   },
   {
-    id: 'cancel',
-    question: 'Can I cancel a trip?',
+    id: "cancel",
+    question: "Can I cancel a trip?",
     answer:
-      'Eligible trips can be cancelled from the trip screen. A cancellation fee may apply depending on timing, provider rules, and the status of the trip.',
+      "Eligible trips can be cancelled from the trip screen. A cancellation fee may apply depending on timing, provider rules, and the status of the trip.",
   },
   {
-    id: 'emergency',
-    question: 'What should I do during an emergency?',
+    id: "emergency",
+    question: "What should I do during an emergency?",
     answer:
-      'Contact the appropriate local emergency service immediately. Application support is not a replacement for police, medical, fire, or other emergency responders.',
+      "Contact the appropriate local emergency service immediately. Application support is not a replacement for police, medical, fire, or other emergency responders.",
   },
 ] as const;
 
 export default function HelpScreen() {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   const normalizedSearch = search.trim().toLowerCase();
 
@@ -84,14 +84,14 @@ export default function HelpScreen() {
   });
 
   async function contactSupport() {
-    const subject = encodeURIComponent('Smart Link Transit support request');
+    const subject = encodeURIComponent("Smart Link Transit support request");
     const url = `mailto:${PUBLIC_CONFIG.supportEmail}?subject=${subject}`;
 
     const supported = await Linking.canOpenURL(url);
 
     if (!supported) {
       Alert.alert(
-        'Email unavailable',
+        "Email unavailable",
         `Please contact us at ${PUBLIC_CONFIG.supportEmail}.`,
       );
 
@@ -129,18 +129,14 @@ export default function HelpScreen() {
         </Text>
 
         <Text style={styles.resultCount}>
-          {filteredFaqs.length}{' '}
-          {filteredFaqs.length === 1 ? 'result' : 'results'}
+          {filteredFaqs.length}{" "}
+          {filteredFaqs.length === 1 ? "result" : "results"}
         </Text>
       </View>
 
       {filteredFaqs.length > 0 ? (
         filteredFaqs.map((faq) => (
-          <HelpItem
-            key={faq.id}
-            question={faq.question}
-            answer={faq.answer}
-          />
+          <HelpItem key={faq.id} question={faq.question} answer={faq.answer} />
         ))
       ) : (
         <View style={styles.emptyState}>
@@ -159,15 +155,12 @@ export default function HelpScreen() {
         </Text>
 
         <Text style={styles.supportDescription}>
-          Describe the issue, the trip or transaction involved, and any
-          relevant details. Never send passwords or verification codes.
+          Describe the issue, the trip or transaction involved, and any relevant
+          details. Never send passwords or verification codes.
         </Text>
 
         <View style={styles.supportButton}>
-          <PrimaryButton
-            label="Email support"
-            onPress={contactSupport}
-          />
+          <PrimaryButton label="Email support" onPress={contactSupport} />
         </View>
 
         <Text selectable style={styles.supportEmail}>
@@ -197,84 +190,84 @@ const styles = StyleSheet.create({
     minHeight: 54,
     paddingHorizontal: 17,
     borderWidth: 1,
-    borderColor: '#CBD5E1',
+    borderColor: "#CBD5E1",
     borderRadius: 16,
-    backgroundColor: '#FFFFFF',
-    color: '#0F172A',
+    backgroundColor: "#FFFFFF",
+    color: "#0F172A",
     fontSize: 16,
   },
 
   sectionHeader: {
     marginBottom: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: 12,
   },
 
   sectionTitle: {
     flex: 1,
-    color: '#0F172A',
+    color: "#0F172A",
     fontSize: 20,
     lineHeight: 27,
-    fontWeight: '800',
+    fontWeight: "800",
   },
 
   resultCount: {
-    color: '#94A3B8',
+    color: "#94A3B8",
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 
   emptyState: {
     marginBottom: 20,
     padding: 24,
-    alignItems: 'center',
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: "#E2E8F0",
     borderRadius: 18,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
 
   emptyTitle: {
-    color: '#0F172A',
+    color: "#0F172A",
     fontSize: 17,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 
   emptyDescription: {
     marginTop: 6,
-    color: '#64748B',
+    color: "#64748B",
     fontSize: 14,
     lineHeight: 21,
-    textAlign: 'center',
+    textAlign: "center",
   },
 
   supportCard: {
     marginTop: 26,
     padding: 22,
     borderRadius: 21,
-    backgroundColor: '#0F766E',
+    backgroundColor: "#0F766E",
   },
 
   supportEyebrow: {
     marginBottom: 8,
-    color: '#99F6E4',
+    color: "#99F6E4",
     fontSize: 10,
-    fontWeight: '800',
+    fontWeight: "800",
     letterSpacing: 1.1,
   },
 
   supportTitle: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 21,
     lineHeight: 28,
-    fontWeight: '800',
+    fontWeight: "800",
   },
 
   supportDescription: {
     marginTop: 9,
-    color: '#CCFBF1',
+    color: "#CCFBF1",
     fontSize: 14,
     lineHeight: 22,
   },
@@ -285,29 +278,29 @@ const styles = StyleSheet.create({
 
   supportEmail: {
     marginTop: 15,
-    color: '#CCFBF1',
+    color: "#CCFBF1",
     fontSize: 13,
-    textAlign: 'center',
+    textAlign: "center",
   },
 
   emergencyNotice: {
     marginTop: 18,
     padding: 18,
     borderWidth: 1,
-    borderColor: '#FED7AA',
+    borderColor: "#FED7AA",
     borderRadius: 17,
-    backgroundColor: '#FFF7ED',
+    backgroundColor: "#FFF7ED",
   },
 
   emergencyTitle: {
-    color: '#9A3412',
+    color: "#9A3412",
     fontSize: 15,
-    fontWeight: '800',
+    fontWeight: "800",
   },
 
   emergencyText: {
     marginTop: 6,
-    color: '#C2410C',
+    color: "#C2410C",
     fontSize: 13,
     lineHeight: 20,
   },
