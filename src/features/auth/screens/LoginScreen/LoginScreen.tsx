@@ -20,7 +20,7 @@ import { useBiometricAuth } from "@/features/auth/hooks/useBiometricAuth";
 import { useOTP } from "@/features/auth/hooks/useOTP";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 
-function getErrorMessage(error: unknown, fallbackMessage: string) {
+function getErrorMessage(error: unknown, fallbackMessage: string): string {
   if (error instanceof Error && error.message.trim()) {
     return error.message;
   }
@@ -70,7 +70,13 @@ export default function LoginScreen() {
         password,
       });
 
-      router.replace("/(tabs)/home");
+      /**
+       * Do not navigate here.
+       *
+       * The authentication hook owns successful-login navigation.
+       * It stores the session and redirects the authenticated user
+       * to the correct dashboard according to their role.
+       */
     } catch (error) {
       setErrorMessage(
         getErrorMessage(
@@ -148,7 +154,7 @@ export default function LoginScreen() {
           backgroundColor: theme.background.primary,
         }}
       >
-        {/* Decorative background elements */}
+        {/* Decorative background */}
         <View
           pointerEvents="none"
           style={{
@@ -483,7 +489,7 @@ export default function LoginScreen() {
                 />
               </View>
 
-              {/* Password login */}
+              {/* Password login button */}
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel="Sign in with password"
