@@ -8,6 +8,8 @@ node_modules.rar
 node_modules.zip
 
 .env
+.env.*
+!.env.example
 
 # Expo
 .expo/
