@@ -4,8 +4,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useRef, useState } from "react";
 import {
-  ActivityIndicator,
   Pressable,
+  StyleSheet,
   TextInput,
   View,
   useWindowDimensions,
@@ -13,11 +13,10 @@ import {
 
 import { AppInput } from "@/components/AppInput/AppInput";
 import { AppText } from "@/components/AppText/AppText";
-import Screen from "@/components/ScreenWrapper/ScreenWrapper";
+import { PrimaryButton } from "@/components/PrimaryButton/PrimaryButton";
+import ScreenWrapper from "@/components/ScreenWrapper/ScreenWrapper";
 import { radius, spacing } from "@/design-system/tokens";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useBiometricAuth } from "@/features/auth/hooks/useBiometricAuth";
-import { useOTP } from "@/features/auth/hooks/useOTP";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 
 function getErrorMessage(error: unknown, fallbackMessage: string): string {
@@ -28,9 +27,14 @@ function getErrorMessage(error: unknown, fallbackMessage: string): string {
   return fallbackMessage;
 }
 
+function isValidEthiopianPhone(phoneNumber: string): boolean {
+  return /^0(9|7)\d{8}$/.test(phoneNumber);
+}
+
 export default function LoginScreen() {
   const { theme } = useTheme();
   const { width } = useWindowDimensions();
+  const { signIn } = useAuth();
 
   const passwordInputRef = useRef<TextInput>(null);
 
@@ -39,11 +43,6 @@ export default function LoginScreen() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const { signIn } = useAuth();
-  const { requestOTP, isSending } = useOTP();
-
-  const { isAvailable, isAuthenticating, authenticate } = useBiometricAuth();
 
   const isLargeScreen = width >= 768;
 
@@ -56,170 +55,127 @@ export default function LoginScreen() {
     router.replace("/(public)/welcome");
   };
 
+  const clearError = () => {
+    if (errorMessage) {
+      setErrorMessage(null);
+    }
+  };
+
   const handlePasswordLogin = async () => {
     if (isSigningIn) {
       return;
     }
 
+    const normalizedPhone = phoneNumber.replace(/\s+/g, "").trim();
+
     setErrorMessage(null);
+
+    if (!normalizedPhone) {
+      setErrorMessage("Enter your phone number.");
+      return;
+    }
+
+    if (!isValidEthiopianPhone(normalizedPhone)) {
+      setErrorMessage(
+        "Enter a valid Ethiopian phone number, such as 0912345678."
+      );
+      return;
+    }
+
+    if (!password) {
+      setErrorMessage("Enter your password.");
+      return;
+    }
+
     setIsSigningIn(true);
 
     try {
       await signIn({
-        phoneNumber,
+        phoneNumber: normalizedPhone,
         password,
       });
 
-      /**
-       * Do not navigate here.
-       *
-       * The authentication hook owns successful-login navigation.
-       * It stores the session and redirects the authenticated user
-       * to the correct dashboard according to their role.
+      /*
+       * Successful navigation should be handled by useAuth/signIn
+       * after saving the authenticated session.
        */
     } catch (error) {
       setErrorMessage(
         getErrorMessage(
           error,
-          "We could not sign you in. Check your phone number and password.",
-        ),
+          "We could not sign you in. Check your phone number and password."
+        )
       );
     } finally {
       setIsSigningIn(false);
     }
   };
 
-  const handleOTPLogin = async () => {
-    if (isSending) {
-      return;
-    }
-
-    setErrorMessage(null);
-
-    try {
-      await requestOTP({
-        phoneNumber,
-        purpose: "login",
-      });
-
-      router.push("/(auth)/otp");
-    } catch (error) {
-      setErrorMessage(
-        getErrorMessage(
-          error,
-          "We could not send the verification code. Please try again.",
-        ),
-      );
-    }
-  };
-
-  const handleBiometricLogin = async () => {
-    if (isAuthenticating) {
-      return;
-    }
-
-    setErrorMessage(null);
-
-    try {
-      const authenticated = await authenticate();
-
-      if (authenticated) {
-        router.replace("/(tabs)/home");
-      }
-    } catch (error) {
-      setErrorMessage(
-        getErrorMessage(
-          error,
-          "Biometric authentication was unsuccessful. Please try again.",
-        ),
-      );
-    }
-  };
-
   return (
-    <Screen
+    <ScreenWrapper
       padded={false}
       keyboard
-      keyboardVerticalOffset={30}
+      keyboardVerticalOffset={0}
       scrollViewProps={{
-        contentContainerStyle: {
-          flexGrow: 1,
-        },
+        keyboardDismissMode: "none",
+        keyboardShouldPersistTaps: "handled",
+        contentContainerStyle: styles.scrollContent,
       }}
     >
       <View
-        style={{
-          flex: 1,
-          overflow: "hidden",
-          backgroundColor: theme.background.primary,
-        }}
+        style={[
+          styles.screen,
+          {
+            backgroundColor: theme.background.primary,
+          },
+        ]}
       >
-        {/* Decorative background */}
         <View
           pointerEvents="none"
-          style={{
-            position: "absolute",
-            top: -110,
-            right: -90,
-            width: 260,
-            height: 260,
-            borderRadius: radius.full,
-            backgroundColor: theme.brand.primary,
-            opacity: 0.07,
-          }}
+          style={[
+            styles.topDecoration,
+            {
+              backgroundColor: theme.brand.primary,
+            },
+          ]}
         />
 
         <View
           pointerEvents="none"
-          style={{
-            position: "absolute",
-            bottom: -130,
-            left: -100,
-            width: 300,
-            height: 300,
-            borderRadius: radius.full,
-            backgroundColor: theme.brand.primary,
-            opacity: 0.05,
-          }}
+          style={[
+            styles.bottomDecoration,
+            {
+              backgroundColor: theme.brand.primary,
+            },
+          ]}
         />
 
         <View
-          style={{
-            flex: 1,
-            width: "100%",
-            maxWidth: isLargeScreen ? 520 : undefined,
-            alignSelf: "center",
-            paddingHorizontal: spacing[20],
-            paddingTop: spacing[12],
-            paddingBottom: spacing[32],
-          }}
+          style={[
+            styles.container,
+            {
+              maxWidth: isLargeScreen ? 520 : undefined,
+            },
+          ]}
         >
-          {/* Top navigation */}
-          <View
-            style={{
-              minHeight: 52,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
+          <View style={styles.topNavigation}>
             <Pressable
               accessibilityRole="button"
               accessibilityLabel="Go back"
               accessibilityHint="Returns to the previous screen"
               hitSlop={10}
               onPress={handleBack}
-              style={({ pressed }) => ({
-                width: 44,
-                height: 44,
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 1,
-                borderColor: theme.border.default,
-                borderRadius: radius.full,
-                backgroundColor: theme.surface.card,
-                opacity: pressed ? 0.65 : 1,
-              })}
+              android_ripple={{
+                color: theme.border.default,
+                borderless: true,
+              }}
+              style={[
+                styles.backButton,
+                {
+                  borderColor: theme.border.default,
+                  backgroundColor: theme.surface.card,
+                },
+              ]}
             >
               <Ionicons
                 name="arrow-back"
@@ -228,22 +184,14 @@ export default function LoginScreen() {
               />
             </Pressable>
 
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: spacing[8],
-              }}
-            >
+            <View style={styles.brand}>
               <View
-                style={{
-                  width: 34,
-                  height: 34,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: radius.md,
-                  backgroundColor: theme.brand.primary,
-                }}
+                style={[
+                  styles.brandIcon,
+                  {
+                    backgroundColor: theme.brand.primary,
+                  },
+                ]}
               >
                 <Ionicons
                   name="bus-outline"
@@ -263,42 +211,19 @@ export default function LoginScreen() {
               </AppText>
             </View>
 
-            <View
-              style={{
-                width: 44,
-                height: 44,
-              }}
-            />
+            <View style={styles.navigationPlaceholder} />
           </View>
 
-          {/* Main content */}
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              paddingVertical: spacing[24],
-            }}
-          >
-            {/* Heading */}
-            <View
-              style={{
-                marginBottom: spacing[28],
-              }}
-            >
+          <View style={styles.mainContent}>
+            <View style={styles.heading}>
               <View
-                style={{
-                  alignSelf: "flex-start",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: spacing[6],
-                  paddingHorizontal: spacing[12],
-                  paddingVertical: spacing[6],
-                  borderWidth: 1,
-                  borderColor: theme.brand.primary,
-                  borderRadius: radius.full,
-                  backgroundColor: theme.surface.card,
-                  marginBottom: spacing[16],
-                }}
+                style={[
+                  styles.securityBadge,
+                  {
+                    borderColor: theme.brand.primary,
+                    backgroundColor: theme.surface.card,
+                  },
+                ]}
               >
                 <Ionicons
                   name="shield-checkmark-outline"
@@ -309,10 +234,12 @@ export default function LoginScreen() {
                 <AppText
                   variant="labelSmall"
                   weight={700}
-                  style={{
-                    color: theme.brand.primary,
-                    letterSpacing: 0.8,
-                  }}
+                  style={[
+                    styles.securityBadgeText,
+                    {
+                      color: theme.brand.primary,
+                    },
+                  ]}
                 >
                   SECURE ACCESS
                 </AppText>
@@ -330,41 +257,37 @@ export default function LoginScreen() {
 
               <AppText
                 variant="bodyLarge"
-                style={{
-                  color: theme.text.secondary,
-                  marginTop: spacing[8],
-                }}
+                style={[
+                  styles.subtitle,
+                  {
+                    color: theme.text.secondary,
+                  },
+                ]}
               >
                 Sign in to manage your journeys, saved routes, transport
                 updates, and account.
               </AppText>
             </View>
 
-            {/* Authentication card */}
             <View
-              style={{
-                gap: spacing[20],
-                padding: spacing[20],
-                borderWidth: 1,
-                borderColor: theme.border.default,
-                borderRadius: radius.xl,
-                backgroundColor: theme.surface.card,
-              }}
+              style={[
+                styles.authCard,
+                {
+                  borderColor: theme.border.default,
+                  backgroundColor: theme.surface.card,
+                },
+              ]}
             >
-              {/* Error message */}
               {errorMessage ? (
                 <View
                   accessibilityRole="alert"
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "flex-start",
-                    gap: spacing[10],
-                    padding: spacing[12],
-                    borderWidth: 1,
-                    borderColor: theme.error,
-                    borderRadius: radius.md,
-                    backgroundColor: theme.background.primary,
-                  }}
+                  style={[
+                    styles.errorContainer,
+                    {
+                      borderColor: theme.error,
+                      backgroundColor: theme.background.primary,
+                    },
+                  ]}
                 >
                   <Ionicons
                     name="alert-circle-outline"
@@ -375,9 +298,7 @@ export default function LoginScreen() {
                   <AppText
                     variant="bodySmall"
                     color="error"
-                    style={{
-                      flex: 1,
-                    }}
+                    style={styles.errorText}
                   >
                     {errorMessage}
                   </AppText>
@@ -387,6 +308,7 @@ export default function LoginScreen() {
                     accessibilityLabel="Dismiss error"
                     hitSlop={8}
                     onPress={() => setErrorMessage(null)}
+                    style={styles.dismissButton}
                   >
                     <Ionicons
                       name="close"
@@ -397,23 +319,15 @@ export default function LoginScreen() {
                 </View>
               ) : null}
 
-              {/* Form */}
-              <View
-                style={{
-                  gap: spacing[16],
-                }}
-              >
+              <View style={styles.form}>
                 <AppInput
                   label="Phone number"
                   value={phoneNumber}
                   onChangeText={(value) => {
                     setPhoneNumber(value);
-
-                    if (errorMessage) {
-                      setErrorMessage(null);
-                    }
+                    clearError();
                   }}
-                  placeholder="Enter your phone number"
+                  placeholder="0912345678"
                   keyboardType="phone-pad"
                   autoCapitalize="none"
                   autoCorrect={false}
@@ -439,10 +353,7 @@ export default function LoginScreen() {
                   value={password}
                   onChangeText={(value) => {
                     setPassword(value);
-
-                    if (errorMessage) {
-                      setErrorMessage(null);
-                    }
+                    clearError();
                   }}
                   placeholder="Enter your password"
                   secureTextEntry={!passwordVisible}
@@ -465,17 +376,14 @@ export default function LoginScreen() {
                       accessibilityLabel={
                         passwordVisible ? "Hide password" : "Show password"
                       }
+                      accessibilityState={{
+                        expanded: passwordVisible,
+                      }}
                       hitSlop={10}
                       onPress={() => {
                         setPasswordVisible((current) => !current);
                       }}
-                      style={({ pressed }) => ({
-                        width: 36,
-                        height: 36,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        opacity: pressed ? 0.6 : 1,
-                      })}
+                      style={styles.passwordVisibilityButton}
                     >
                       <Ionicons
                         name={
@@ -489,222 +397,43 @@ export default function LoginScreen() {
                 />
               </View>
 
-              {/* Password login button */}
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Sign in with password"
-                accessibilityState={{
-                  disabled: isSigningIn,
-                  busy: isSigningIn,
-                }}
+              <PrimaryButton
+                label="Sign in"
+                loading={isSigningIn}
                 disabled={isSigningIn}
                 onPress={handlePasswordLogin}
-                style={({ pressed }) => ({
-                  minHeight: 54,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: spacing[8],
-                  paddingHorizontal: spacing[20],
-                  borderRadius: radius.md,
-                  backgroundColor: pressed
-                    ? theme.button.primary.pressed
-                    : theme.button.primary.background,
-                  opacity: isSigningIn ? 0.65 : pressed ? 0.95 : 1,
-                })}
-              >
-                {isSigningIn ? (
-                  <>
-                    <ActivityIndicator
-                      size="small"
-                      color={theme.button.primary.text}
-                    />
+              />
 
-                    <AppText
-                      variant="buttonLarge"
-                      weight={600}
-                      style={{
-                        color: theme.button.primary.text,
-                      }}
-                    >
-                      Signing in...
-                    </AppText>
-                  </>
-                ) : (
-                  <>
-                    <AppText
-                      variant="buttonLarge"
-                      weight={600}
-                      style={{
-                        color: theme.button.primary.text,
-                      }}
-                    >
-                      Sign in
-                    </AppText>
-
-                    <Ionicons
-                      name="arrow-forward"
-                      size={19}
-                      color={theme.button.primary.text}
-                    />
-                  </>
-                )}
-              </Pressable>
-
-              {/* Divider */}
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: spacing[12],
-                }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    height: 1,
-                    backgroundColor: theme.border.default,
-                  }}
-                />
-
+              <View style={styles.signupPrompt}>
                 <AppText
-                  variant="labelSmall"
-                  weight={600}
+                  variant="bodySmall"
                   style={{
-                    color: theme.text.tertiary,
-                    letterSpacing: 0.5,
+                    color: theme.text.secondary,
                   }}
                 >
-                  OR CONTINUE WITH
+                  Don&apos;t have an account?
                 </AppText>
 
-                <View
-                  style={{
-                    flex: 1,
-                    height: 1,
-                    backgroundColor: theme.border.default,
-                  }}
-                />
-              </View>
-
-              {/* Alternative login methods */}
-              <View
-                style={{
-                  gap: spacing[12],
-                }}
-              >
                 <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Sign in with a verification code"
-                  accessibilityState={{
-                    disabled: isSending,
-                    busy: isSending,
-                  }}
-                  disabled={isSending}
-                  onPress={handleOTPLogin}
-                  style={({ pressed }) => ({
-                    minHeight: 52,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: spacing[10],
-                    paddingHorizontal: spacing[16],
-                    borderWidth: 1,
-                    borderColor: theme.brand.primary,
-                    borderRadius: radius.md,
-                    backgroundColor: theme.surface.card,
-                    opacity: isSending ? 0.6 : pressed ? 0.72 : 1,
-                  })}
+                  accessibilityRole="link"
+                  accessibilityLabel="Create a new account"
+                  hitSlop={8}
+                  onPress={() => router.push("/(auth)/signup")}
                 >
-                  {isSending ? (
-                    <ActivityIndicator
-                      size="small"
-                      color={theme.brand.primary}
-                    />
-                  ) : (
-                    <Ionicons
-                      name="chatbubble-ellipses-outline"
-                      size={20}
-                      color={theme.brand.primary}
-                    />
-                  )}
-
                   <AppText
-                    variant="buttonMedium"
+                    variant="buttonSmall"
                     weight={600}
                     style={{
                       color: theme.brand.primary,
                     }}
                   >
-                    {isSending
-                      ? "Sending verification code..."
-                      : "Sign in with OTP"}
+                    Create account
                   </AppText>
                 </Pressable>
-
-                {isAvailable ? (
-                  <Pressable
-                    accessibilityRole="button"
-                    accessibilityLabel="Sign in using biometrics"
-                    accessibilityState={{
-                      disabled: isAuthenticating,
-                      busy: isAuthenticating,
-                    }}
-                    disabled={isAuthenticating}
-                    onPress={handleBiometricLogin}
-                    style={({ pressed }) => ({
-                      minHeight: 52,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: spacing[10],
-                      paddingHorizontal: spacing[16],
-                      borderWidth: 1,
-                      borderColor: theme.border.default,
-                      borderRadius: radius.md,
-                      backgroundColor: theme.background.primary,
-                      opacity: isAuthenticating ? 0.6 : pressed ? 0.72 : 1,
-                    })}
-                  >
-                    {isAuthenticating ? (
-                      <ActivityIndicator
-                        size="small"
-                        color={theme.text.primary}
-                      />
-                    ) : (
-                      <Ionicons
-                        name="finger-print-outline"
-                        size={22}
-                        color={theme.text.primary}
-                      />
-                    )}
-
-                    <AppText
-                      variant="buttonMedium"
-                      weight={600}
-                      style={{
-                        color: theme.text.primary,
-                      }}
-                    >
-                      {isAuthenticating
-                        ? "Authenticating..."
-                        : "Use biometrics"}
-                    </AppText>
-                  </Pressable>
-                ) : null}
               </View>
             </View>
 
-            {/* Security information */}
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: spacing[6],
-                marginTop: spacing[20],
-              }}
-            >
+            <View style={styles.securityInformation}>
               <Ionicons
                 name="lock-closed-outline"
                 size={14}
@@ -724,6 +453,166 @@ export default function LoginScreen() {
           </View>
         </View>
       </View>
-    </Screen>
+    </ScreenWrapper>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollContent: {
+    flexGrow: 1,
+  },
+
+  screen: {
+    flex: 1,
+    overflow: "hidden",
+  },
+
+  topDecoration: {
+    position: "absolute",
+    top: -110,
+    right: -90,
+    width: 260,
+    height: 260,
+    borderRadius: radius.full,
+    opacity: 0.07,
+  },
+
+  bottomDecoration: {
+    position: "absolute",
+    bottom: -130,
+    left: -100,
+    width: 300,
+    height: 300,
+    borderRadius: radius.full,
+    opacity: 0.05,
+  },
+
+  container: {
+    flex: 1,
+    width: "100%",
+    alignSelf: "center",
+    paddingHorizontal: spacing[20],
+    paddingTop: spacing[12],
+    paddingBottom: spacing[32],
+  },
+
+  topNavigation: {
+    minHeight: 52,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  backButton: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderRadius: radius.full,
+    overflow: "hidden",
+  },
+
+  brand: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing[8],
+  },
+
+  brandIcon: {
+    width: 34,
+    height: 34,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: radius.md,
+  },
+
+  navigationPlaceholder: {
+    width: 44,
+    height: 44,
+  },
+
+  mainContent: {
+    flex: 1,
+    justifyContent: "center",
+    paddingVertical: spacing[24],
+  },
+
+  heading: {
+    marginBottom: spacing[28],
+  },
+
+  securityBadge: {
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing[6],
+    paddingHorizontal: spacing[12],
+    paddingVertical: spacing[6],
+    borderWidth: 1,
+    borderRadius: radius.full,
+    marginBottom: spacing[16],
+  },
+
+  securityBadgeText: {
+    letterSpacing: 0.8,
+  },
+
+  subtitle: {
+    marginTop: spacing[8],
+  },
+
+  authCard: {
+    gap: spacing[20],
+    padding: spacing[20],
+    borderWidth: 1,
+    borderRadius: radius.xl,
+  },
+
+  errorContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: spacing[10],
+    padding: spacing[12],
+    borderWidth: 1,
+    borderRadius: radius.md,
+  },
+
+  errorText: {
+    flex: 1,
+  },
+
+  dismissButton: {
+    width: 28,
+    height: 28,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  form: {
+    gap: spacing[16],
+  },
+
+  passwordVisibilityButton: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  signupPrompt: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    gap: spacing[6],
+  },
+
+  securityInformation: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing[6],
+    marginTop: spacing[20],
+  },
+});
