@@ -6,6 +6,7 @@ node_modules/
 # Accidental archives / dependency archives
 node_modules.rar
 node_modules.zip
+SLT_LOCAL.rar
 
 .env
 .env.*
