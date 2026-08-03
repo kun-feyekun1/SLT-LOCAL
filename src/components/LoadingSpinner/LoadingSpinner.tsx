@@ -1,7 +1,7 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 import { useTheme } from "@/features/theme/hooks/useTheme";
-import { spacing } from "@/theme";
+import { spacing } from "@/design-system/tokens";
 
 export const LoadingSpinner = () => {
   const theme = useTheme();

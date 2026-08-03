@@ -2,7 +2,7 @@ import { Navigation } from "lucide-react-native";
 import { StyleSheet, View } from "react-native";
 
 import { useTheme } from "@/features/theme/hooks/useTheme";
-import { radii, spacing } from "@/theme";
+import { radius, spacing } from "@/design-system/tokens";
 
 import { AppText } from "../AppText/AppText";
 
@@ -40,10 +40,10 @@ const styles = StyleSheet.create({
   card: {
     minWidth: 150,
     borderWidth: 1,
-    borderRadius: radii.md,
-    padding: spacing.xs,
+    borderRadius: radius.md,
+    padding: spacing[2],
     flexDirection: "row",
-    gap: spacing.xs,
+    gap: spacing[2],
     alignItems: "center",
   },
   text: { flex: 1 },
