@@ -9,10 +9,17 @@ import {
   PrimaryButton,
 } from "@/components";
 import ScreenWrapper from "@/components/ScreenWrapper";
+import { radius, shadows, spacing } from "@/design-system/tokens/";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 import { useWallet } from "@/features/wallet/hooks/useWallet";
-import { radii, shadows, spacing } from "@/theme";
 import { formatCurrency } from "@/utils/formatters";
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+} from "react";
 
 export default function WalletScreen() {
   const wallet = useWallet();
@@ -39,7 +46,7 @@ export default function WalletScreen() {
           <View
             style={[
               styles.balance,
-              shadows.card,
+              shadows.level1,
               { backgroundColor: theme.colors.surface },
             ]}
           >
@@ -49,26 +56,52 @@ export default function WalletScreen() {
             </AppText>
             <PrimaryButton label="Add money" onPress={() => undefined} />
           </View>
-          {wallet.data.paymentMethods.map((method) => (
-            <View
-              key={method.id}
-              style={[
-                styles.method,
-                {
-                  backgroundColor: theme.colors.surface,
-                  borderColor: theme.colors.border,
-                },
-              ]}
-            >
-              <CreditCard size={22} color={theme.colors.primary} />
-              <View style={styles.methodText}>
-                <AppText weight={700}>{method.label}</AppText>
-                <AppText variant="caption">
-                  {method.enabled ? "Enabled" : "Coming soon"}
-                </AppText>
+          {wallet.data.paymentMethods.map(
+            (method: {
+              id: Key | null | undefined;
+              label:
+                | string
+                | number
+                | bigint
+                | boolean
+                | ReactElement<unknown, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | Promise<
+                    | string
+                    | number
+                    | bigint
+                    | boolean
+                    | ReactPortal
+                    | ReactElement<unknown, string | JSXElementConstructor<any>>
+                    | Iterable<ReactNode>
+                    | null
+                    | undefined
+                  >
+                | null
+                | undefined;
+              enabled: any;
+            }) => (
+              <View
+                key={method.id}
+                style={[
+                  styles.method,
+                  {
+                    backgroundColor: theme.colors.surface,
+                    borderColor: theme.colors.border,
+                  },
+                ]}
+              >
+                <CreditCard size={22} color={theme.colors.primary} />
+                <View style={styles.methodText}>
+                  <AppText weight={700}>{method.label}</AppText>
+                  <AppText variant="caption">
+                    {method.enabled ? "Enabled" : "Coming soon"}
+                  </AppText>
+                </View>
               </View>
-            </View>
-          ))}
+            ),
+          )}
         </View>
       ) : null}
     </ScreenWrapper>
@@ -76,15 +109,15 @@ export default function WalletScreen() {
 }
 
 const styles = StyleSheet.create({
-  stack: { gap: spacing.md },
-  balance: { borderRadius: radii.lg, padding: spacing.lg, gap: spacing.md },
+  stack: { gap: spacing[4] },
+  balance: { borderRadius: radius.lg, padding: spacing[8], gap: spacing[4] },
   method: {
     borderWidth: 1,
-    borderRadius: radii.lg,
-    padding: spacing.md,
+    borderRadius: radius.lg,
+    padding: spacing[4],
     flexDirection: "row",
     alignItems: "center",
-    gap: spacing.md,
+    gap: spacing[4],
   },
   methodText: { flex: 1 },
 });
