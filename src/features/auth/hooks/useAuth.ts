@@ -1,5 +1,3 @@
-// src/features/auth/hooks/useAuth.ts
-
 import { router } from "expo-router";
 import { useCallback } from "react";
 
@@ -24,33 +22,28 @@ export function useAuth() {
       });
 
       if (__DEV__) {
-        console.log("Authenticated session:", {
+        console.log("[AUTH] Login succeeded", {
           tokenType: response.token_type,
           hasAccessToken: Boolean(response.access_token),
         });
       }
 
-      /*
-       * This is the passenger login endpoint, so the
-       * authenticated role is passenger.
-       *
-       * Dispatch before navigation because TabsLayout
-       * immediately checks Redux authentication state.
-       */
       dispatch(
         sessionStarted({
           accessToken: response.access_token,
           refreshToken: null,
           role: "passenger",
           user: null,
-        })
+        }),
       );
 
-      router.replace("/(tabs)/home");
+      // router.replace(
+      //   "/(protected)/(passenger)/(tabs)/home",
+      // );
 
       return response;
     },
-    [dispatch]
+    [dispatch],
   );
 
   const signOut = useCallback(async () => {
