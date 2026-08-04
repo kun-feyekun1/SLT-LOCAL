@@ -9,7 +9,7 @@ import {
   PrimaryButton,
 } from "@/components";
 import ScreenWrapper from "@/components/ScreenWrapper";
-import { radius, shadows, spacing } from "@/design-system/tokens";
+import { radius, shadows, spacing } from "@/design-system/tokens/";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 import { useWallet } from "@/features/wallet/hooks/useWallet";
 import { formatCurrency } from "@/utils/formatters";
@@ -46,7 +46,7 @@ export default function WalletScreen() {
           <View
             style={[
               styles.balance,
-              shadows.level2,
+              shadows.level1,
               { backgroundColor: theme.colors.surface },
             ]}
           >
@@ -109,12 +109,12 @@ export default function WalletScreen() {
 }
 
 const styles = StyleSheet.create({
-  stack: { gap: spacing[8] },
-  balance: { borderRadius: radius.lg, padding: spacing[8], gap: spacing[8] },
+  stack: { gap: spacing[4] },
+  balance: { borderRadius: radius.lg, padding: spacing[8], gap: spacing[4] },
   method: {
     borderWidth: 1,
     borderRadius: radius.lg,
-    padding: spacing[8],
+    padding: spacing[4],
     flexDirection: "row",
     alignItems: "center",
     gap: spacing[4],
