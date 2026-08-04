@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { AppText, PrimaryButton } from "@/components";
 import { transportModes } from "@/constants/transport";
 import { useTheme } from "@/features/theme/hooks/useTheme";
-import { radii, shadows, spacing } from "@/theme";
+import { radius, shadows, spacing } from "@/design-system/tokens";
 import { formatCurrency, formatDistance, formatEta } from "@/utils/formatters";
 
 import type { RouteRecommendation } from "../types/route.types";
@@ -69,17 +69,17 @@ RouteCard.displayName = "RouteCard";
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderRadius: radii.lg,
-    padding: spacing.md,
-    gap: spacing.md,
+    borderRadius: radius.lg,
+    padding: spacing[4],
+    gap: spacing[4],
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: spacing.md,
+    gap: spacing[4],
   },
-  score: { flexDirection: "row", alignItems: "center", gap: spacing.xs },
-  leg: { flexDirection: "row", gap: spacing.sm, alignItems: "center" },
+  score: { flexDirection: "row", alignItems: "center", gap: spacing[2] },
+  leg: { flexDirection: "row", gap: spacing[3], alignItems: "center" },
   legText: { flex: 1 },
 });

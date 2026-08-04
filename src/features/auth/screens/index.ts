@@ -4,7 +4,6 @@ export { default as CreateProfileScreen } from "./CreateProfileScreen";
 export { default as ForgotPasswordScreen } from "./ForgotPasswordScreen";
 export { default as IdentityVerificationScreen } from "./IdentityVerificationScreen";
 export { default as LoginScreen } from "./LoginScreen";
-export { default as OnboardingScreen } from "./OnboardingScreen";
 export { default as OTPVerificationScreen } from "./OTPVerificationScreen";
 export { default as PermissionRequestScreen } from "./PermissionRequestScreen";
 export { default as PhoneLoginScreen } from "./PhoneLoginScreen";

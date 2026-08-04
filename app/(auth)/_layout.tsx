@@ -15,7 +15,7 @@ export default function AuthLayout() {
   }
 
   if (authStatus === "authenticated") {
-    return <Redirect href="/" />;
+    return <Redirect href="/(tabs)/home" />;
   }
 
   return (
@@ -61,8 +61,6 @@ export default function AuthLayout() {
         <Stack.Screen name="identity-verification" />
         <Stack.Screen name="permissions" />
         <Stack.Screen name="account-created" />
-        <Stack.Screen name="onboarding" />
-        <Stack.Screen name="settings" />
       </Stack>
     </AuthFlowProvider>
   );

@@ -1,3 +1,23 @@
-export * from './httpClient';
-export * from './queryClient';
-export * from './tokenStorage';
+export {
+  apiConfig,
+  type ApiConfig,
+  type ApiRequestConfig,
+  type InternalApiRequestConfig,
+} from "./config";
+
+export {
+  configureHttpClient,
+  ejectHttpClientInterceptors,
+  httpClient,
+  type HttpClientConfiguration,
+} from "./httpClient";
+
+export {
+  configureApiErrorReporter,
+  queryClient,
+  queryPersister,
+  setupQueryClientLifecycle,
+  type ApiErrorContext,
+  type ApiErrorReporter,
+  type ApiErrorSource,
+} from "./queryClient";

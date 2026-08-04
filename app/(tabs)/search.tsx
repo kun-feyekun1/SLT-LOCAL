@@ -12,11 +12,11 @@ import {
   SearchBar,
 } from "@/components";
 import ScreenWrapper from "@/components/ScreenWrapper";
+import { spacing } from "@/design-system/tokens";
 import { useCurrentLocation } from "@/features/map/hooks/useCurrentLocation";
 import { useDestinationSearch } from "@/features/routes/hooks/useDestinationSearch";
 import { setDestination } from "@/features/routes/state/routeSlice";
 import { useAppDispatch } from "@/store/hooks";
-import { spacing } from "@/theme";
 import type { NamedLocation } from "@/types/location";
 
 export default function SearchScreen() {
@@ -99,13 +99,13 @@ export default function SearchScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  header: { padding: spacing.md, gap: spacing.md },
-  list: { padding: spacing.md },
+  header: { padding: spacing[4], gap: spacing[4] },
+  list: { padding: spacing[4] },
   row: {
     minHeight: 72,
     flexDirection: "row",
     alignItems: "center",
-    gap: spacing.md,
+    gap: spacing[4],
   },
   rowText: { flex: 1 },
 });

@@ -12,9 +12,9 @@ import {
 
 import PublicHeader from "../../about/components/PublicHeader";
 import { PUBLIC_CONFIG } from "../../legal/constants/public.constants";
-import PrimaryButton from "../../onboarding/components/PrimaryButton";
-import PublicScreen from "../../onboarding/components/PublicScreen";
 import HelpItem from "../../public/components/HelpItem";
+import PrimaryButton from "../components/PrimaryButton";
+import PublicScreen from "../components/PublicScreen";
 
 const FAQS = [
   {

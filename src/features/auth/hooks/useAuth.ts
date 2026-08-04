@@ -1,90 +1,61 @@
-// import { useCallback } from "react";
-
-// import { useAppDispatch, useAppSelector } from "@/store/hooks";
-// import {
-//   selectAuthStatus,
-//   selectCurrentUser,
-//   selectIsAuthenticated,
-// } from "@/features/auth/state/authSelectors";
-// import {
-//   clearSession,
-//   setSession,
-// } from "@/features/auth/state/authSlice";
-
-// import type { User } from "@/features/auth/types/auth.types";
-
-// export function useAuth() {
-//   const dispatch = useAppDispatch();
-
-//   const user = useAppSelector(selectCurrentUser);
-//   const isAuthenticated = useAppSelector(selectIsAuthenticated);
-//   const status = useAppSelector(selectAuthStatus);
-
-//   const login = useCallback(
-//     (userData: User) => {
-//       dispatch(setSession(userData));
-//     },
-//     [dispatch],
-//   );
-
-//   const logout = useCallback(() => {
-//     dispatch(clearSession());
-//   }, [dispatch]);
-
-//   return {
-//     user,
-//     status,
-//     isAuthenticated,
-//     isLoading: status === "loading",
-//     login,
-//     logout,
-//   };
-// }
-
-// src/features/auth/hooks/useAuth.ts
-
+import { router } from "expo-router";
 import { useCallback } from "react";
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 
 import { authService } from "../services/authService";
-import {
-  sessionStarted,
-  signedOut,
-} from "../state/authSlice";
-import {
-  selectCurrentUser,
-  selectIsAuthenticated,
-  selectIsRestoringSession,
-} from "../state/authSelectors";
-import type { LoginCredentials } from "../types/auth.types";
+import { sessionStarted, signedOut } from "../state/authSlice";
+
+interface SignInValues {
+  phoneNumber: string;
+  password: string;
+}
 
 export function useAuth() {
   const dispatch = useAppDispatch();
 
-  const user = useAppSelector(selectCurrentUser);
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  const isRestoringSession = useAppSelector(selectIsRestoringSession);
-
   const signIn = useCallback(
-    async (credentials: LoginCredentials) => {
-      const session = await authService.login(credentials);
+    async ({ phoneNumber, password }: SignInValues) => {
+      const response = await authService.login({
+        phone: phoneNumber.trim(),
+        password,
+      });
 
-      dispatch(sessionStarted(session));
+      if (__DEV__) {
+        console.log("[AUTH] Login succeeded", {
+          tokenType: response.token_type,
+          hasAccessToken: Boolean(response.access_token),
+        });
+      }
 
-      return session;
+      dispatch(
+        sessionStarted({
+          accessToken: response.access_token,
+          refreshToken: null,
+          role: "passenger",
+          user: null,
+        }),
+      );
+
+      // router.replace(
+      //   "/(protected)/(passenger)/(tabs)/home",
+      // );
+
+      return response;
     },
     [dispatch],
   );
 
   const signOut = useCallback(async () => {
-    dispatch(signedOut());
+    try {
+      await authService.logout();
+    } finally {
+      dispatch(signedOut());
+      router.replace("/(auth)/login");
+    }
   }, [dispatch]);
 
   return {
-    user,
-    isAuthenticated,
-    isRestoringSession,
     signIn,
     signOut,
   };

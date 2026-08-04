@@ -6,7 +6,7 @@ import { AppText } from "@/components";
 import { transportModes } from "@/constants/transport";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { radii, shadows, spacing } from "@/theme";
+import { radius, shadows, spacing } from "@/design-system/tokens";
 import { formatCurrency, formatEta } from "@/utils/formatters";
 
 import { toggleFavoriteRoute } from "../state/transportSlice";
@@ -100,25 +100,25 @@ TransportCard.displayName = "TransportCard";
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderRadius: radii.lg,
-    padding: spacing.md,
+    borderRadius: radius.lg,
+    padding: spacing[4],
     flexDirection: "row",
-    gap: spacing.md,
+    gap: spacing[4],
   },
   icon: {
     width: 48,
     height: 48,
-    borderRadius: radii.lg,
+    borderRadius: radius.lg,
     alignItems: "center",
     justifyContent: "center",
   },
-  body: { flex: 1, gap: spacing.xs },
+  body: { flex: 1, gap: spacing[2] },
   topRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: spacing.sm,
+    gap: spacing[3],
   },
-  metaRow: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
-  favorite: { padding: spacing.xs },
+  metaRow: { flexDirection: "row", flexWrap: "wrap", gap: spacing[3] },
+  favorite: { padding: spacing[2] },
 });

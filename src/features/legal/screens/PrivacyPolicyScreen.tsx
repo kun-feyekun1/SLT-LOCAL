@@ -3,8 +3,8 @@
 import { Linking, StyleSheet, Text, View } from "react-native";
 
 import PublicHeader from "../../about/components/PublicHeader";
-import PrimaryButton from "../../onboarding/components/PrimaryButton";
-import PublicScreen from "../../onboarding/components/PublicScreen";
+import PrimaryButton from "../../support/components/PrimaryButton";
+import PublicScreen from "../../support/components/PublicScreen";
 import LegalSection from "../constants/LegalSection";
 import { PRIVACY_POLICY_SECTIONS } from "../constants/privacy-policy";
 import { PUBLIC_CONFIG } from "../constants/public.constants";
