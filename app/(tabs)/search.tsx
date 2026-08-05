@@ -14,8 +14,8 @@ import {
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { spacing } from "@/design-system/tokens";
 import { useCurrentLocation } from "@/features/map/hooks/useCurrentLocation";
-import { useDestinationSearch } from "@/features/routes/hooks/useDestinationSearch";
-import { setDestination } from "@/features/routes/state/routeSlice";
+import { useDestinationSearch } from "@/features/routing/hooks/useDestinationSearch";
+import { setDestination } from "@/features/routing/state/routeSlice";
 import { useAppDispatch } from "@/store/hooks";
 import type { NamedLocation } from "@/types/location";
 

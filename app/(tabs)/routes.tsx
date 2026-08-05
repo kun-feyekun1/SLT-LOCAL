@@ -1,30 +1,46 @@
-import { FlashList } from '@shopify/flash-list';
-import { router } from 'expo-router';
-import { Route as RouteIcon } from 'lucide-react-native';
-import { StyleSheet, View } from 'react-native';
+import { FlashList } from "@shopify/flash-list";
+import { router } from "expo-router";
+import { Route as RouteIcon } from "lucide-react-native";
+import { StyleSheet, View } from "react-native";
 
-import { AppHeader, EmptyState, LoadingSpinner, PrimaryButton } from '@/components';
-import { RouteCard } from '@/features/routes/components/RouteCard';
-import { useRouteRecommendations } from '@/features/routes/hooks/useRouteRecommendations';
-import type { RouteRecommendation } from '@/features/routes/types/route.types';
-import { spacing } from '@/design-system/tokens/spacing';
-import ScreenWrapper from '@/components/ScreenWrapper';
+import {
+  AppHeader,
+  EmptyState,
+  LoadingSpinner,
+  PrimaryButton,
+} from "@/components";
+import ScreenWrapper from "@/components/ScreenWrapper";
+import { spacing } from "@/design-system/tokens/spacing";
+import { RouteCard } from "@/features/routing/components/RouteCard";
+import { useRouteRecommendations } from "@/features/routing/hooks/useRouteRecommendations";
+import type { RouteRecommendation } from "@/features/routing/types/route.types";
 
 export default function RoutesScreen() {
   const routes = useRouteRecommendations();
 
-  const renderItem = ({ item }: { item: RouteRecommendation }) => <RouteCard route={item} />;
+  const renderItem = ({ item }: { item: RouteRecommendation }) => (
+    <RouteCard route={item} />
+  );
 
   return (
     <ScreenWrapper>
       <View style={styles.container}>
         <View style={styles.header}>
-          <AppHeader title="Recommended routes" subtitle="Balanced by speed, walking time, fare, and reliability." />
+          <AppHeader
+            title="Recommended routes"
+            subtitle="Balanced by speed, walking time, fare, and reliability."
+          />
         </View>
         {routes.isLoading ? (
           <LoadingSpinner />
         ) : routes.isError ? (
-          <EmptyState title="Could not load routes" message="Route planning is offline. Retry when your connection improves." icon={RouteIcon} actionLabel="Retry" onAction={() => routes.refetch()} />
+          <EmptyState
+            title="Could not load routes"
+            message="Route planning is offline. Retry when your connection improves."
+            icon={RouteIcon}
+            actionLabel="Retry"
+            onAction={() => routes.refetch()}
+          />
         ) : (
           <FlashList
             data={routes.data ?? []}
@@ -38,13 +54,17 @@ export default function RoutesScreen() {
                 message="Search for where you want to go and Derash will recommend route combinations."
                 icon={RouteIcon}
                 actionLabel="Search destination"
-                onAction={() => router.push('/search')}
+                onAction={() => router.push("/search")}
               />
             }
           />
         )}
         <View style={styles.footer}>
-          <PrimaryButton label="Search another destination" variant="secondary" onPress={() => router.push('/search')} />
+          <PrimaryButton
+            label="Search another destination"
+            variant="secondary"
+            onPress={() => router.push("/search")}
+          />
         </View>
       </View>
     </ScreenWrapper>
@@ -55,9 +75,8 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   header: { padding: spacing[4] },
   list: { padding: spacing[4] },
-  footer: { padding: spacing[4] }
+  footer: { padding: spacing[4] },
 });
-
 
 // import "@/styles/global.css";
 // import {

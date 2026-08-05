@@ -233,7 +233,7 @@ export default function SatelliteRoadMapScreen() {
           defaultSettings={{
             centerCoordinate: INITIAL_COORDINATE,
             zoomLevel: 13.8,
-            pitch: 35,
+            pitch: 0,
             heading: 0,
           }}
           minZoomLevel={3}
