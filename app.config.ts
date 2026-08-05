@@ -1,6 +1,24 @@
-// app.config.ts
-
 import type { ExpoConfig } from "expo/config";
+
+type AppVariant = "development" | "preview" | "production";
+
+const appVariant = (process.env.APP_VARIANT ?? "development") as AppVariant;
+
+const getAndroidPackage = (): string => {
+  switch (appVariant) {
+    case "development":
+      return "com.orient.smartgo.dev";
+
+    case "preview":
+      return "com.orient.smartgo.preview";
+
+    case "production":
+      return "com.orient.smartgo";
+
+    default:
+      return "com.orient.smartgo.dev";
+  }
+};
 
 const config: ExpoConfig = {
   name: "Smart Go",
@@ -8,27 +26,32 @@ const config: ExpoConfig = {
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
-  scheme: "Smart-Link",
+  scheme: "smart-go",
   userInterfaceStyle: "automatic",
 
   ios: {
     icon: "./assets/expo.icon",
   },
+
   android: {
+    package: getAndroidPackage(),
+
     adaptiveIcon: {
       backgroundColor: "#E6F4FE",
       foregroundImage: "./assets/images/android-icon-foreground.png",
-      backgroundImage:"./assets/images/android-icon-background.png",
+      backgroundImage: "./assets/images/android-icon-background.png",
       monochromeImage: "./assets/images/android-icon-monochrome.png",
     },
+
     softwareKeyboardLayoutMode: "resize",
     predictiveBackGestureEnabled: false,
-    package: "com.darash_x.myapp",
   },
+
   web: {
     output: "static",
     favicon: "./assets/images/favicon.png",
   },
+
   plugins: [
     "expo-router",
     "expo-notifications",
@@ -39,7 +62,6 @@ const config: ExpoConfig = {
         imageWidth: 180,
         resizeMode: "contain",
         backgroundColor: "#208AEF",
-
         dark: {
           image: "./assets/images/splash-icon-dark.png",
           backgroundColor: "#208AEF",
