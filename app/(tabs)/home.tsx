@@ -110,12 +110,12 @@ export default function HomeScreen() {
             vehicles={vehicles}
             zoomLevel={13.5}
             onVehiclePress={(vehicle) => {
-              // router.push({
-              //   pathname: "/transport/[id]",
-              //   params: {
-              //     id: vehicle.id,
-              //   },
-              // });
+              router.push({
+                pathname: "/transport/[id]",
+                params: {
+                  id: vehicle.id,
+                },
+              });
             }}
           />
         </View>
