@@ -1,4 +1,4 @@
-// src/design-system/components/AppButton/AppButton.tsx
+// src/design-system/components/Button/Button.tsx
 
 import { ReactNode } from "react";
 import {
@@ -20,11 +20,11 @@ import { useTheme } from "@/features/theme/hooks/useTheme";
 
 import { AppText } from "@/components/AppText/AppText";
 
-type ButtonVariant = "primary" | "secondary" | "tertiary" | "text";
+export type ButtonVariant = "primary" | "secondary" | "tertiary" | "text";
 
-type ButtonSize = "small" | "medium" | "large";
+export type ButtonSize = "small" | "medium" | "large";
 
-interface AppButtonProps extends Omit<PressableProps, "style"> {
+export interface ButtonProps extends Omit<PressableProps, "style"> {
   label: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -37,7 +37,7 @@ interface AppButtonProps extends Omit<PressableProps, "style"> {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export function AppButton({
+export function Button({
   label,
   variant = "primary",
   size = "medium",
@@ -50,7 +50,7 @@ export function AppButton({
   onPressOut,
   style,
   ...props
-}: AppButtonProps) {
+}: ButtonProps) {
   const { theme } = useTheme();
   const scale = useSharedValue(1);
 
@@ -110,6 +110,7 @@ export function AppButton({
         };
 
       case "text":
+      default:
         return {
           backgroundColor: pressed ? theme.overlay.medium : "transparent",
         };
@@ -134,6 +135,7 @@ export function AppButton({
           : theme.button.tertiary.text;
 
       case "text":
+      default:
         return isDisabled ? theme.button.text.disabled : theme.button.text.text;
     }
   };

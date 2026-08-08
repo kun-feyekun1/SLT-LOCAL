@@ -12,7 +12,7 @@ import {
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
 
-interface ToggleProps extends TouchableOpacityProps {
+export interface ToggleProps extends TouchableOpacityProps {
   /** Toggle value */
   value: boolean;
   /** Called when toggle changes */

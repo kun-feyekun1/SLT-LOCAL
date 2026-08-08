@@ -14,7 +14,7 @@ import {
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
 
-interface SearchFieldProps extends TextInputProps {
+export interface SearchFieldProps extends TextInputProps {
   /** Called when search is submitted */
   onSearch?: (query: string) => void;
   /** Called when clear is pressed */

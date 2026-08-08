@@ -10,7 +10,7 @@ import { cn } from "../../../lib/cn";
 
 export type AvatarSize = 32 | 40 | 48 | 56;
 
-interface AvatarProps extends ViewProps {
+export interface AvatarProps extends ViewProps {
   /** Avatar size */
   size?: AvatarSize;
   /** Image source */

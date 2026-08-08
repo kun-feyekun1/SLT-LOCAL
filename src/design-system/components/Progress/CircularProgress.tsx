@@ -8,7 +8,7 @@ import { Animated, View, ViewProps } from "react-native";
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
 
-interface CircularProgressProps extends ViewProps {
+export interface CircularProgressProps extends ViewProps {
   /** Size of the progress indicator */
   size?: number;
   /** Progress value (0-100) */
@@ -120,6 +120,11 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
                 transform: [{ rotate: "-90deg" }],
               }}
             >
+              {/**
+               * React Native's ViewStyle has no SVG dash properties.
+               * The determinate arc is approximated with a dashed border
+               * until this is migrated to react-native-svg.
+               */}
               <View
                 style={{
                   width: size,
@@ -128,8 +133,6 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
                   borderWidth: strokeWidth,
                   borderColor: "#1A7A3C",
                   borderStyle: "dashed",
-                  borderDasharray: [circumference],
-                  borderDashoffset: strokeDashoffset,
                 }}
               />
             </View>

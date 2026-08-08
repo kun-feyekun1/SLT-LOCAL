@@ -15,11 +15,11 @@ import {
 } from "react-native";
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
-import { elevation } from "../../tokens/shadows";
+import { getComponentShadow } from "../../tokens/shadows";
 
 const { height: screenHeight } = Dimensions.get("window");
 
-interface BottomSheetProps extends ViewProps {
+export interface BottomSheetProps extends ViewProps {
   /** Visibility state */
   visible: boolean;
   /** Called when sheet is closed */
@@ -136,11 +136,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
           style={{
             height: sheetHeight,
             transform: [{ translateY }],
-            shadowColor: elevation[5].shadowColor,
-            shadowOffset: elevation[5].shadowOffset,
-            shadowOpacity: elevation[5].shadowOpacity,
-            shadowRadius: elevation[5].shadowRadius,
-            elevation: elevation[5].elevation,
+            ...getComponentShadow("bottomSheet"),
           }}
           {...panResponder.panHandlers}
           {...props}

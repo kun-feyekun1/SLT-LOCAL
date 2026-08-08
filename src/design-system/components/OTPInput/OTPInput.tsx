@@ -14,7 +14,7 @@ import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
 import { typography } from "../../tokens/typography";
 
-interface OTPInputProps {
+export interface OTPInputProps {
   /** Number of OTP digits */
   length?: number;
   /** Called when OTP is complete */
@@ -136,7 +136,9 @@ export const OTPInput: React.FC<OTPInputProps> = ({
       {Array.from({ length }, (_, index) => (
         <TextInput
           key={index}
-          ref={(ref) => (inputRefs.current[index] = ref)}
+          ref={(ref) => {
+            inputRefs.current[index] = ref;
+          }}
           className={getInputStyles(index)}
           value={otp[index]}
           onChangeText={(text) => handleChangeText(text, index)}

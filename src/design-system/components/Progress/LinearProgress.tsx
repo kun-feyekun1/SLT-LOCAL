@@ -8,7 +8,7 @@ import { Animated, View, ViewProps } from "react-native";
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
 
-interface LinearProgressProps extends ViewProps {
+export interface LinearProgressProps extends ViewProps {
   /** Progress value (0-100) */
   value: number;
   /** Determinate or indeterminate */
