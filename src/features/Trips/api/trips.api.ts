@@ -1,22 +1,20 @@
-import { apiRequest } from "@/lib/api/httpClient";
+import { httpClient } from "@/services/api";
 import type { Trip } from "@/features/trips/types/trip.types";
 
-export function startTrip(): Promise<Trip> {
-  return apiRequest<Trip>("/api/drivers/trip/start", {
-    method: "POST",
-    auth: true,
-  });
+export async function startTrip(): Promise<Trip> {
+  const response = await httpClient.post<Trip>("/api/drivers/trip/start");
+
+  return response.data;
 }
 
-export function endTrip(): Promise<Trip> {
-  return apiRequest<Trip>("/api/drivers/trip/end", {
-    method: "POST",
-    auth: true,
-  });
+export async function endTrip(): Promise<Trip> {
+  const response = await httpClient.post<Trip>("/api/drivers/trip/end");
+
+  return response.data;
 }
 
-export function getMyTrips(): Promise<Trip[]> {
-  return apiRequest<Trip[]>("/api/drivers/me/trips", {
-    auth: true,
-  });
+export async function getMyTrips(): Promise<Trip[]> {
+  const response = await httpClient.get<Trip[]>("/api/drivers/me/trips");
+
+  return response.data;
 }

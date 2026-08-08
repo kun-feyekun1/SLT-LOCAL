@@ -1,4 +1,4 @@
-import { apiRequest } from "@/lib/api/httpClient";
+import { httpClient } from "@/services/api";
 import type { Operator } from "@/features/operators/types/operator.types";
 import type {
   AssignRouteRequest,
@@ -7,60 +7,57 @@ import type {
   RouteStopCreateRequest,
 } from "@/features/routes/types/route.types";
 
-export function getOperatorMe(): Promise<Operator> {
-  return apiRequest<Operator>("/api/operator/me", {
-    auth: true,
-  });
+export async function getOperatorMe(): Promise<Operator> {
+  const response = await httpClient.get<Operator>("/api/operator/me");
+
+  return response.data;
 }
 
-export function getOperatorRoutes(): Promise<RouteListItem[]> {
-  return apiRequest<RouteListItem[]>(
+export async function getOperatorRoutes(): Promise<RouteListItem[]> {
+  const response = await httpClient.get<RouteListItem[]>(
     "/api/operator/routes",
-    { auth: true },
   );
+
+  return response.data;
 }
 
-export function createOperatorRoute(
+export async function createOperatorRoute(
   payload: RouteCreateRequest,
 ): Promise<unknown> {
-  return apiRequest<unknown, RouteCreateRequest>(
+  const response = await httpClient.post<unknown>(
     "/api/operator/routes",
-    {
-      method: "POST",
-      auth: true,
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }
 
-export function addRouteStop(
+export async function addRouteStop(
   routeId: number,
   payload: RouteStopCreateRequest,
 ): Promise<unknown> {
   // Current OpenAPI path uses {routes_id}, while `route_id`
   // is separately declared as a required query parameter.
   // Send the same ID in both positions until backend fixes the contract.
-  return apiRequest<unknown, RouteStopCreateRequest>(
+  const response = await httpClient.post<unknown>(
     `/api/operator/routes/${routeId}/stops`,
+    payload,
     {
-      method: "POST",
-      auth: true,
-      query: { route_id: routeId },
-      body: payload,
+      params: { route_id: routeId },
     },
   );
+
+  return response.data;
 }
 
-export function assignDriverToRoute(
+export async function assignDriverToRoute(
   driverId: number,
   payload: AssignRouteRequest,
 ): Promise<unknown> {
-  return apiRequest<unknown, AssignRouteRequest>(
+  const response = await httpClient.post<unknown>(
     `/api/operator/drivers/${driverId}/assign`,
-    {
-      method: "POST",
-      auth: true,
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }

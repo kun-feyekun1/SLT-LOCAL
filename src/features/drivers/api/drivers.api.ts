@@ -1,4 +1,4 @@
-import { apiRequest } from "@/lib/api/httpClient";
+import { httpClient } from "@/services/api";
 import type {
   Driver,
   DriverAvailability,
@@ -8,69 +8,62 @@ import type {
 } from "@/features/drivers/types/driver.types";
 import type { RouteDetail } from "@/features/routes/types/route.types";
 
-export function getDriverMe(): Promise<Driver> {
-  return apiRequest<Driver>("/api/drivers/me", {
-    auth: true,
-  });
+export async function getDriverMe(): Promise<Driver> {
+  const response = await httpClient.get<Driver>("/api/drivers/me");
+
+  return response.data;
 }
 
-export function updateDriverMe(
+export async function updateDriverMe(
   payload: DriverUpdate,
 ): Promise<Driver> {
-  return apiRequest<Driver, DriverUpdate>(
+  const response = await httpClient.put<Driver>(
     "/api/drivers/me",
-    {
-      method: "PUT",
-      auth: true,
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }
 
-export function updateDriverLocation(
+export async function updateDriverLocation(
   payload: LocationUpdate,
 ): Promise<unknown> {
-  return apiRequest<unknown, LocationUpdate>(
+  const response = await httpClient.post<unknown>(
     "/api/drivers/location",
-    {
-      method: "POST",
-      auth: true,
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }
 
-export function updateDriverAvailability(
+export async function updateDriverAvailability(
   payload: DriverAvailability,
 ): Promise<unknown> {
-  return apiRequest<unknown, DriverAvailability>(
+  const response = await httpClient.put<unknown>(
     "/api/drivers/available",
-    {
-      method: "PUT",
-      auth: true,
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }
 
-export function getAssignedRoute(): Promise<RouteDetail> {
+export async function getAssignedRoute(): Promise<RouteDetail> {
   // Current backend path intentionally has no slash between `drivers` and `me`.
-  return apiRequest<RouteDetail>(
+  const response = await httpClient.get<RouteDetail>(
     "/api/driversme/route",
-    { auth: true },
   );
+
+  return response.data;
 }
 
-export function changeDriverPassword(
+export async function changeDriverPassword(
   payload: PasswordChange,
 ): Promise<unknown> {
   // Keep the backend's current misspelling isolated here.
-  return apiRequest<unknown, PasswordChange>(
+  const response = await httpClient.post<unknown>(
     "/api/drivers/change_pasword",
-    {
-      method: "POST",
-      auth: true,
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }
