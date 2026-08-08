@@ -1,17 +1,21 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 import { useTheme } from "@/features/theme/hooks/useTheme";
-import { spacing } from "@/design-system/tokens";
+import { semanticSpacing } from "@/design-system/tokens";
 
 export const LoadingSpinner = () => {
-  const theme = useTheme();
+  const { theme } = useTheme();
   return (
     <View style={styles.wrap}>
-      <ActivityIndicator color={theme.colors.primary} size="large" />
+      <ActivityIndicator color={theme.primary} size="large" />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  wrap: { padding: spacing.lg, alignItems: "center", justifyContent: "center" },
+  wrap: {
+    padding: semanticSpacing.stack.large,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

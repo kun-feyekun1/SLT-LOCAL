@@ -1,15 +1,22 @@
+import type { LucideIcon } from "lucide-react-native";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 import { AppText } from "@/components/AppText/AppText";
 import { radius, spacing } from "@/design-system/tokens";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 
-interface PrimaryButtonProps {
+export interface PrimaryButtonProps {
   label: string;
   onPress: () => void;
   variant?: "primary" | "secondary" | "ghost";
   disabled?: boolean;
   loading?: boolean;
+  /**
+   * Optional leading icon. Pass the Lucide component itself
+   * (e.g. `icon={LogOut}`); the button owns sizing and color so
+   * icons stay consistent with the button's text token.
+   */
+  icon?: LucideIcon;
 }
 
 export function PrimaryButton({
@@ -18,6 +25,7 @@ export function PrimaryButton({
   variant = "primary",
   disabled = false,
   loading = false,
+  icon: Icon,
 }: PrimaryButtonProps) {
   const { theme } = useTheme();
 
@@ -71,6 +79,8 @@ export function PrimaryButton({
     >
       <View style={styles.content}>
         {loading ? <ActivityIndicator size="small" color={textColor} /> : null}
+
+        {!loading && Icon ? <Icon size={18} color={textColor} /> : null}
 
         <AppText
           variant={isPrimary ? "buttonLarge" : "buttonSmall"}

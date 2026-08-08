@@ -29,10 +29,10 @@ export class ErrorBoundary extends Component<PropsWithChildren, State> {
     if (this.state.hasError) {
       return (
         <View style={styles.wrap}>
-          <AppText variant="subtitle" weight="700">
+          <AppText variant="h5" weight={700}>
             Something went wrong
           </AppText>
-          <AppText muted style={styles.center}>
+          <AppText color="secondary" align="center">
             Derash could not load this view. Please retry.
           </AppText>
           <PrimaryButton
@@ -54,5 +54,4 @@ const styles = StyleSheet.create({
     gap: spacing[4],
     padding: spacing[8],
   },
-  center: { textAlign: "center" },
 });
