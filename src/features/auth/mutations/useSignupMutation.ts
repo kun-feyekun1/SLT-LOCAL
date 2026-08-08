@@ -7,14 +7,14 @@ import { showToast } from "@/features/toast/state/toastSlice";
 import { useAppDispatch } from "@/store/hooks";
 
 import { authService } from "../services/authService";
-import type { AuthSession } from "../types/auth.types";
+import type { RegisteredUser } from "../types/auth.types";
 
 type SignupVariables = Parameters<typeof authService.signup>[0];
 
 export function useSignupMutation() {
   const dispatch = useAppDispatch();
 
-  return useMutation<AuthSession, Error, SignupVariables>({
+  return useMutation<RegisteredUser, Error, SignupVariables>({
     mutationKey: ["auth", "signup"],
     mutationFn: authService.signup,
 

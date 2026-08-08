@@ -3,50 +3,24 @@
 
 // src/features/auth/providers/SessionProvider.tsx
 
-import {
-  type PropsWithChildren,
-  useEffect,
-  useRef,
-} from "react";
+import { type PropsWithChildren, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 
+import { useAuthBootstrap } from "@/features/auth/hooks/useAuthBootstrap";
 import {
   sessionRestored,
+  sessionRestoreStarted,
   sessionRestoreFinished,
 } from "@/features/auth/state/authSlice";
-import type { AuthSession } from "@/features/auth/types/auth.types";
-import { useAppSelector } from "@/store/hooks";
+import { sessionStorage } from "@/services/storage/sessionStorage";
+import { tokenStorage } from "@/services/storage/tokenStorage";
 import type { AppDispatch } from "@/store/store";
-
-import { selectIsRestoringSession } from "../state/authSelectors";
-
-/**
- * Replace these functions with your real secure-session service.
- */
-async function restoreStoredSession(): Promise<AuthSession | null> {
-  /*
-   * Eventually:
-   *
-   * const refreshToken = await SecureStore.getItemAsync("refreshToken");
-   *
-   * if (!refreshToken) {
-   *   return null;
-   * }
-   *
-   * return authApi.refreshSession(refreshToken);
-   */
-
-  return null;
-}
 
 export function SessionProvider({
   children,
 }: PropsWithChildren) {
   const dispatch = useDispatch<AppDispatch>();
-
-  const isRestoringSession = useAppSelector(
-    selectIsRestoringSession,
-  );
+  useAuthBootstrap();
 
   const restorationStartedRef = useRef(false);
 
@@ -58,11 +32,28 @@ export function SessionProvider({
     restorationStartedRef.current = true;
 
     const restoreSession = async () => {
-      try {
-        const session = await restoreStoredSession();
+      dispatch(sessionRestoreStarted());
 
-        if (session) {
-          dispatch(sessionRestored(session));
+      try {
+        const [tokens, identity] = await Promise.all([
+          tokenStorage.getTokens(),
+          sessionStorage.getIdentity(),
+        ]);
+
+        if (tokens.accessToken) {
+          dispatch(
+            sessionRestored({
+              accessToken: tokens.accessToken,
+              refreshToken: tokens.refreshToken,
+              /*
+               * Fall back to "passenger" only when no identity was
+               * persisted, which happens for sessions created before
+               * the identity store existed.
+               */
+              role: identity?.role ?? "passenger",
+              user: null,
+            }),
+          );
           return;
         }
 
@@ -79,13 +70,6 @@ export function SessionProvider({
 
     void restoreSession();
   }, [dispatch]);
-
-  /*
-   * app/index.tsx handles the session loading UI.
-   * The provider should continue rendering children so routing
-   * logic can read isRestoringSession.
-   */
-  void isRestoringSession;
 
   return children;
 }

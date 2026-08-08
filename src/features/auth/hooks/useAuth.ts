@@ -23,17 +23,18 @@ export function useAuth() {
 
       if (__DEV__) {
         console.log("[AUTH] Login succeeded", {
-          tokenType: response.token_type,
-          hasAccessToken: Boolean(response.access_token),
+          tokenType: response.tokenType,
+          hasAccessToken: Boolean(response.accessToken),
+          hasRefreshToken: Boolean(response.refreshToken),
         });
       }
 
       dispatch(
         sessionStarted({
-          accessToken: response.access_token,
-          refreshToken: null,
-          role: "passenger",
-          user: null,
+          accessToken: response.accessToken,
+          refreshToken: response.refreshToken,
+          role: response.role,
+          user: response.user,
         }),
       );
 
