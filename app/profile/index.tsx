@@ -7,7 +7,7 @@ import ScreenWrapper from "@/components/ScreenWrapper";
 import { useLogout } from "@/features/auth/hooks/useAuthActions";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 import { useAppSelector } from "@/store/hooks";
-import { radius, shadows, spacing } from "@/design-system";
+import { getComponentShadow, radius, spacing } from "@/design-system";
 
 export default function ProfileScreen() {
   const user = useAppSelector((state) => state.auth.user);
@@ -27,7 +27,7 @@ export default function ProfileScreen() {
         onPress={() => router.push("/profile/details")}
         style={[
           styles.card,
-          shadows.card,
+          getComponentShadow("card"),
           {
             backgroundColor: theme.colors.surface,
           },
@@ -47,10 +47,10 @@ export default function ProfileScreen() {
 
         {/* User Information */}
         <View style={styles.text}>
-          <AppText variant="subtitle" weight="700">
+          <AppText variant="h5" weight={700}>
             {user?.fullName ?? "Derash rider"}
           </AppText>
-          <AppText muted>
+          <AppText color="secondary">
             {user?.phoneNumber ?? "Secure account active"}
           </AppText>
         </View>
