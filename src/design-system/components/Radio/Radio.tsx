@@ -13,7 +13,7 @@ import {
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
 
-interface RadioProps extends TouchableOpacityProps {
+export interface RadioProps extends TouchableOpacityProps {
   /** Selected state */
   selected: boolean;
   /** Called when radio changes */

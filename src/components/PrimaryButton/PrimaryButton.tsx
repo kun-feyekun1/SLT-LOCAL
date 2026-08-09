@@ -1,87 +1,22 @@
-// import type { LucideIcon } from "lucide-react-native";
-// import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
-
-// import { useTheme } from "@/hooks/useTheme";
-// import { radii, spacing, typography } from "@/theme";
-
-// import { AppText } from "../AppText/AppText";
-
-// interface Props {
-//   label: string;
-//   onPress: () => void;
-//   loading?: boolean;
-//   disabled?: boolean;
-//   variant?: "primary" | "secondary" | "ghost";
-//   icon?: LucideIcon;
-// };
-
-// export const PrimaryButton = ({
-//   label,
-//   onPress,
-//   loading,
-//   disabled,
-//   variant = "primary",
-//   icon: Icon,
-// }: Props) => {
-//   const theme = useTheme();
-//   const isPrimary = variant === "primary";
-//   const backgroundColor = isPrimary
-//     ? theme.colors.primary
-//     : variant === "secondary"
-//       ? theme.colors.surfaceMuted
-//       : "transparent";
-//   const foreground = isPrimary ? "#FFFFFF" : theme.colors.text;
-
-//   return (
-//     <Pressable
-//       accessibilityRole="button"
-//       accessibilityState={{ disabled: Boolean(disabled || loading) }}
-//       disabled={disabled || loading}
-//       onPress={onPress}
-//       style={({ pressed }) => [
-//         styles.button,
-//         { backgroundColor, opacity: disabled ? 0.5 : pressed ? 0.82 : 1 },
-//       ]}
-//     >
-//       {loading ? (
-//         <ActivityIndicator color={foreground} />
-//       ) : (
-//         <View style={styles.row}>
-//           {Icon ? <Icon color={foreground} size={20} /> : null}
-//           <AppText
-//             style={{ color: foreground, fontSize: typography.size.md }}
-//             weight="700"
-//           >
-//             {label}
-//           </AppText>
-//         </View>
-//       )}
-//     </Pressable>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   button: {
-//     minHeight: 54,
-//     borderRadius: radii.lg,
-//     alignItems: "center",
-//     justifyContent: "center",
-//     paddingHorizontal: spacing.md,
-//   },
-//   row: { flexDirection: "row", alignItems: "center", gap: spacing.xs },
-// });
-
-import { Pressable, StyleSheet } from "react-native";
+import type { LucideIcon } from "lucide-react-native";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 import { AppText } from "@/components/AppText/AppText";
+import { radius, spacing } from "@/design-system/tokens";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 
-interface PrimaryButtonProps {
+export interface PrimaryButtonProps {
   label: string;
   onPress: () => void;
   variant?: "primary" | "secondary" | "ghost";
   disabled?: boolean;
   loading?: boolean;
+  /**
+   * Optional leading icon. Pass the Lucide component itself
+   * (e.g. `icon={LogOut}`); the button owns sizing and color so
+   * icons stay consistent with the button's text token.
+   */
+  icon?: LucideIcon;
 }
 
 export function PrimaryButton({
@@ -89,33 +24,98 @@ export function PrimaryButton({
   onPress,
   variant = "primary",
   disabled = false,
-  loading = false
+  loading = false,
+  icon: Icon,
 }: PrimaryButtonProps) {
   const { theme } = useTheme();
 
-  const backgroundColor =
-    variant === "primary"
-      ? theme.button.primary
-      : variant === "secondary"
-        ? theme.button.secondary
-        : "transparent";
+  const isDisabled = disabled || loading;
+  const isPrimary = variant === "primary";
+  const isSecondary = variant === "secondary";
+  const isGhost = variant === "ghost";
 
-  const textColor =
-    variant === "primary" ? theme.button.primary.text : theme.text.primary;
+  const textColor = isPrimary ? theme.button.primary.text : theme.text.primary;
 
   return (
-    <Pressable disabled={disabled} onPress={onPress} style={[styles.button]}>
-      <AppText style={{ color: textColor }}>{label}</AppText>
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{
+        disabled: isDisabled,
+        busy: loading,
+      }}
+      disabled={isDisabled}
+      onPress={onPress}
+      android_ripple={
+        isDisabled
+          ? undefined
+          : {
+              color: theme.border.default,
+            }
+      }
+      style={[
+        styles.button,
+
+        isPrimary && {
+          backgroundColor: theme.button.primary.background,
+          borderColor: theme.button.primary.background,
+          borderWidth: 1,
+        },
+
+        isSecondary && {
+          backgroundColor: "transparent",
+          borderColor: theme.border.default,
+          borderWidth: 1,
+        },
+
+        isGhost && {
+          backgroundColor: "transparent",
+          borderColor: "transparent",
+          borderWidth: 0,
+        },
+
+        isDisabled && styles.disabled,
+      ]}
+    >
+      <View style={styles.content}>
+        {loading ? <ActivityIndicator size="small" color={textColor} /> : null}
+
+        {!loading && Icon ? <Icon size={18} color={textColor} /> : null}
+
+        <AppText
+          variant={isPrimary ? "buttonLarge" : "buttonSmall"}
+          style={{
+            color: textColor,
+            textAlign: "center",
+          }}
+        >
+          {loading ? "Please wait..." : label}
+        </AppText>
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    minHeight: 48,
+    width: "100%",
+    minHeight: 52,
+    flexShrink: 0,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 12,
-    paddingHorizontal: 20,
+    borderRadius: radius.md,
+    paddingHorizontal: spacing[20],
+    overflow: "hidden",
+  },
+
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing[8],
+  },
+
+  disabled: {
+    opacity: 0.5,
   },
 });

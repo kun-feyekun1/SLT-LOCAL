@@ -1,2 +1,2 @@
-export { Snackbar } from './Snackbar';
-export type { SnackbarProps, SnackbarVariant, SnackbarAction } from './Snackbar';
+export { Snackbar } from "./Snackbar";
+export type { SnackbarAction, SnackbarProps, SnackbarVariant } from "./Snackbar";

@@ -17,7 +17,7 @@ import { cn } from "../../../lib/cn";
 export type InputState =
   "default" | "focused" | "error" | "success" | "disabled";
 
-interface InputProps extends TextInputProps {
+export interface InputProps extends TextInputProps {
   /** Input label */
   label?: string;
   /** Error message */

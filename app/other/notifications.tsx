@@ -3,9 +3,9 @@ import { StyleSheet, View } from "react-native";
 
 import { AppHeader, AppText, EmptyState, LoadingSpinner } from "@/components";
 import ScreenWrapper from "@/components/ScreenWrapper";
+import { radius, spacing } from "@/design-system/tokens";
 import { useNotifications } from "@/features/profile/hooks/useNotifications";
 import { useTheme } from "@/features/theme/hooks/useTheme";
-import { radii, spacing } from "@/theme";
 
 export default function NotificationsScreen() {
   const notifications = useNotifications();
@@ -40,8 +40,8 @@ export default function NotificationsScreen() {
               },
             ]}
           >
-            <AppText weight="700">{item.title}</AppText>
-            <AppText muted>{item.body}</AppText>
+            <AppText weight={700}>{item.title}</AppText>
+            <AppText>{item.body}</AppText>
           </View>
         ))
       ) : (
@@ -58,8 +58,8 @@ export default function NotificationsScreen() {
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderRadius: radii.lg,
-    padding: spacing.md,
-    gap: spacing.xs,
+    borderRadius: radius.lg,
+    padding: spacing[4],
+    gap: spacing[2],
   },
 });

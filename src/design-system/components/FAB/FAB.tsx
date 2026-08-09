@@ -5,6 +5,7 @@
 
 import React from "react";
 import {
+  ActivityIndicator,
   Animated,
   Text,
   TouchableOpacity,
@@ -13,12 +14,12 @@ import {
 } from "react-native";
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
-import { elevation } from "../../tokens/shadows";
+import { getComponentShadow } from "../../tokens/shadows";
 
 export type FABSize = "regular" | "small";
 export type FABVariant = "default" | "extended";
 
-interface FABProps extends TouchableOpacityProps {
+export interface FABProps extends TouchableOpacityProps {
   /** FAB size */
   size?: FABSize;
   /** FAB variant */
@@ -87,7 +88,7 @@ export const FAB: React.FC<FABProps> = ({
     const currentSize = sizeStyles[size];
     const currentVariant = variantStyles[variant];
 
-    const shadowStyles = elevation[6];
+    const shadowStyles = getComponentShadow("fab");
 
     return {
       container: cn(
@@ -99,13 +100,7 @@ export const FAB: React.FC<FABProps> = ({
       ),
       icon: cn(currentSize.icon),
       label: "text-button-medium text-white font-inter-semi-bold",
-      shadow: {
-        shadowColor: shadowStyles.shadowColor,
-        shadowOffset: shadowStyles.shadowOffset,
-        shadowOpacity: shadowStyles.shadowOpacity,
-        shadowRadius: shadowStyles.shadowRadius,
-        elevation: shadowStyles.elevation,
-      },
+      shadow: shadowStyles,
     };
   };
 

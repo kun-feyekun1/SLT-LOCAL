@@ -7,7 +7,7 @@ import React from 'react';
 import { TouchableOpacity, Text, TouchableOpacityProps } from 'react-native';
 import { cn } from '../../../lib/cn';
 
-interface ChipProps extends TouchableOpacityProps {
+export interface ChipProps extends TouchableOpacityProps {
   /** Chip label */
   label: string;
   /** Selected state */

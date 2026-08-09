@@ -18,7 +18,7 @@ export default function WelcomeRoute() {
   }
 
   if (authStatus === "authenticated") {
-    return <Redirect href="/" />;
+    return <Redirect href="/(tabs)/home" />;
   }
 
   if (!requiresOnboarding) {

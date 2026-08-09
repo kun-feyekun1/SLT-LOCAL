@@ -1,7 +1,7 @@
 import { Modal, Pressable, StyleSheet, type ModalProps } from "react-native";
 
 import { useTheme } from "@/features/theme/hooks/useTheme";
-import { radii, spacing } from "@/theme";
+import { radius, spacing } from "@/design-system/tokens";
 
 type Props = ModalProps & {
   onClose: () => void;
@@ -27,6 +27,6 @@ export const AppModal = ({ children, onClose, ...props }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  backdrop: { flex: 1, justifyContent: "flex-end", padding: spacing.md },
-  sheet: { borderRadius: radii.lg, padding: spacing.md, gap: spacing.md },
+  backdrop: { flex: 1, justifyContent: "flex-end", padding: spacing[4] },
+  sheet: { borderRadius: radius.lg, padding: spacing[4], gap: spacing[4] },
 });

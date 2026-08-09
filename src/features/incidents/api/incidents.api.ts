@@ -1,25 +1,24 @@
-import { apiRequest } from "@/lib/api/httpClient";
+import { httpClient } from "@/services/api";
 import type {
   Incident,
   IncidentCreate,
 } from "@/features/incidents/types/incident.types";
 
-export function reportIncident(
+export async function reportIncident(
   payload: IncidentCreate,
 ): Promise<unknown> {
-  return apiRequest<unknown, IncidentCreate>(
+  const response = await httpClient.post<unknown>(
     "/api/drivers/incident",
-    {
-      method: "POST",
-      auth: true,
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }
 
-export function getOperatorIncidents(): Promise<Incident[]> {
-  return apiRequest<Incident[]>(
+export async function getOperatorIncidents(): Promise<Incident[]> {
+  const response = await httpClient.get<Incident[]>(
     "/api/operator/incidents",
-    { auth: true },
   );
+
+  return response.data;
 }

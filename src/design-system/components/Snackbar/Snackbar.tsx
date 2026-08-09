@@ -7,17 +7,17 @@ import React, { useEffect, useRef } from "react";
 import { Animated, Text, TouchableOpacity, ViewProps } from "react-native";
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
-import { elevation } from "../../tokens/shadows";
+import { getComponentShadow } from "../../tokens/shadows";
 
 export type SnackbarVariant =
   "default" | "success" | "error" | "warning" | "info";
 
-interface SnackbarAction {
+export interface SnackbarAction {
   label: string;
   onPress: () => void;
 }
 
-interface SnackbarProps extends ViewProps {
+export interface SnackbarProps extends ViewProps {
   /** Visibility state */
   visible: boolean;
   /** Snackbar message */
@@ -52,7 +52,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
     new Animated.Value(position === "bottom" ? 100 : -100),
   ).current;
   const opacity = useRef(new Animated.Value(0)).current;
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (visible) {
@@ -143,11 +143,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
         ...(position === "bottom" ? { bottom: 80 } : { top: 60 }),
         transform: [{ translateY }],
         opacity,
-        shadowColor: elevation[3].shadowColor,
-        shadowOffset: elevation[3].shadowOffset,
-        shadowOpacity: elevation[3].shadowOpacity,
-        shadowRadius: elevation[3].shadowRadius,
-        elevation: elevation[3].elevation,
+        ...getComponentShadow("snackbar"),
       }}
       {...props}
     >

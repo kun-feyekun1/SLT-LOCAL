@@ -6,7 +6,7 @@ import { AppText } from "@/components";
 import { transportModes } from "@/constants/transport";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { radii, shadows, spacing } from "@/theme";
+import { getComponentShadow, radius, spacing } from "@/design-system/tokens";
 import { formatCurrency, formatEta } from "@/utils/formatters";
 
 import { toggleFavoriteRoute } from "../state/transportSlice";
@@ -42,7 +42,7 @@ export const TransportCard = memo(({ item, onPress }: Props) => {
       onPress={() => onPress?.(item)}
       style={[
         styles.card,
-        shadows.card,
+        getComponentShadow("card"),
         {
           backgroundColor: theme.colors.surface,
           borderColor: theme.colors.border,
@@ -54,28 +54,24 @@ export const TransportCard = memo(({ item, onPress }: Props) => {
       </View>
       <View style={styles.body}>
         <View style={styles.topRow}>
-          <AppText weight="700" numberOfLines={1}>
+          <AppText weight={700} numberOfLines={1}>
             {item.routeName}
           </AppText>
-          <AppText
-            variant="caption"
-            weight="700"
-            style={{ color: theme.colors.primary }}
-          >
+          <AppText variant="caption" weight={700} color="brand">
             {formatEta(item.etaMinutes)}
           </AppText>
         </View>
-        <AppText muted variant="caption" numberOfLines={1}>
+        <AppText color="secondary" variant="caption" numberOfLines={1}>
           {item.originName} to {item.destinationName}
         </AppText>
         <View style={styles.metaRow}>
           <AppText variant="caption">
             {formatCurrency(item.fareEstimate)}
           </AppText>
-          <AppText muted variant="caption">
+          <AppText color="secondary" variant="caption">
             {item.walkingMinutesToStop} min walk
           </AppText>
-          <AppText muted variant="caption">
+          <AppText color="secondary" variant="caption">
             {crowding}
           </AppText>
         </View>
@@ -100,25 +96,25 @@ TransportCard.displayName = "TransportCard";
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderRadius: radii.lg,
-    padding: spacing.md,
+    borderRadius: radius.lg,
+    padding: spacing[4],
     flexDirection: "row",
-    gap: spacing.md,
+    gap: spacing[4],
   },
   icon: {
     width: 48,
     height: 48,
-    borderRadius: radii.lg,
+    borderRadius: radius.lg,
     alignItems: "center",
     justifyContent: "center",
   },
-  body: { flex: 1, gap: spacing.xs },
+  body: { flex: 1, gap: spacing[2] },
   topRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: spacing.sm,
+    gap: spacing[3],
   },
-  metaRow: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
-  favorite: { padding: spacing.xs },
+  metaRow: { flexDirection: "row", flexWrap: "wrap", gap: spacing[3] },
+  favorite: { padding: spacing[2] },
 });

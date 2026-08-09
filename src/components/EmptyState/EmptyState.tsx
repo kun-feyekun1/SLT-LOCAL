@@ -2,7 +2,7 @@ import type { LucideIcon } from "lucide-react-native";
 import { StyleSheet, View } from "react-native";
 
 import { useTheme } from "@/features/theme/hooks/useTheme";
-import { spacing } from "@/theme";
+import { semanticSpacing } from "@/design-system/tokens";
 
 import { AppText } from "../AppText/AppText";
 import { PrimaryButton } from "../PrimaryButton/PrimaryButton";
@@ -22,15 +22,15 @@ export const EmptyState = ({
   actionLabel,
   onAction,
 }: Props) => {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   return (
     <View style={styles.wrap}>
-      {Icon ? <Icon size={34} color={theme.colors.textMuted} /> : null}
-      <AppText variant="subtitle" weight="700" style={styles.center}>
+      {Icon ? <Icon size={34} color={theme.text.tertiary} /> : null}
+      <AppText variant="h5" weight={700} align="center">
         {title}
       </AppText>
-      <AppText muted style={styles.center}>
+      <AppText color="secondary" align="center">
         {message}
       </AppText>
       {actionLabel && onAction ? (
@@ -48,8 +48,7 @@ const styles = StyleSheet.create({
   wrap: {
     alignItems: "center",
     justifyContent: "center",
-    gap: spacing.sm,
-    padding: spacing.xl,
+    gap: semanticSpacing.stack.small,
+    padding: semanticSpacing.screen.horizontalLarge,
   },
-  center: { textAlign: "center" },
 });

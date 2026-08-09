@@ -2,7 +2,7 @@ import { Component, type ErrorInfo, type PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { logger } from "@/services/logging/logger";
-import { spacing } from "@/theme";
+import { spacing } from "@/design-system/tokens";
 
 import { AppText } from "../AppText/AppText";
 import { PrimaryButton } from "../PrimaryButton/PrimaryButton";
@@ -29,10 +29,10 @@ export class ErrorBoundary extends Component<PropsWithChildren, State> {
     if (this.state.hasError) {
       return (
         <View style={styles.wrap}>
-          <AppText variant="subtitle" weight="700">
+          <AppText variant="h5" weight={700}>
             Something went wrong
           </AppText>
-          <AppText muted style={styles.center}>
+          <AppText color="secondary" align="center">
             Derash could not load this view. Please retry.
           </AppText>
           <PrimaryButton
@@ -51,8 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: spacing.md,
-    padding: spacing.lg,
+    gap: spacing[4],
+    padding: spacing[8],
   },
-  center: { textAlign: "center" },
 });

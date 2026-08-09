@@ -1,11 +1,30 @@
-// src/design-system/components/AppText/AppText.tsx
+// src/components/AppText/AppText.tsx
 
 import { Text, TextProps, TextStyle } from "react-native";
 
 import { typography, TypographyVariant } from "@/design-system/tokens";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 
-type TextColor =
+/**
+ * Weight overrides accept the numeric literal or its string form.
+ * Both normalize to the string value React Native expects.
+ */
+export type FontWeightValue =
+  | 500
+  | 600
+  | 700
+  | 800
+  | 900
+  | "500"
+  | "600"
+  | "700"
+  | "800"
+  | "900";
+
+const normalizeWeight = (weight: FontWeightValue): TextStyle["fontWeight"] =>
+  String(weight) as TextStyle["fontWeight"];
+
+export type TextColor =
   | "primary"
   | "secondary"
   | "tertiary"
@@ -18,9 +37,19 @@ type TextColor =
   | "error"
   | "info";
 
-interface AppTextProps extends TextProps {
-  weight?: 500 | 600 | 700 | 800 | 900;
+export interface AppTextProps extends TextProps {
+  /**
+   * Typography token key. The token set in `@/design-system/tokens`
+   * is the single source of truth for available variants.
+   */
   variant?: TypographyVariant;
+  /**
+   * Overrides the weight supplied by the typography token.
+   * Accepts numeric or string literals so JSX may use either
+   * `weight={700}` or `weight="700"`.
+   */
+  weight?: FontWeightValue;
+  /** Semantic text color. Use this instead of hardcoding style colors. */
   color?: TextColor;
   align?: TextStyle["textAlign"];
 }
@@ -58,6 +87,7 @@ export function AppText({
           color: colorMap[color],
           textAlign: align,
         },
+        weight ? { fontWeight: normalizeWeight(weight) } : null,
         style,
       ]}
     />

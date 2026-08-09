@@ -1,2 +1,10 @@
-export { Typography, H1, H2, H3, BodyLarge, BodyMedium, BodySmall } from './Typography';
-export type { TypographyProps } from './Typography';
+export {
+  BodyLarge,
+  BodyMedium,
+  BodySmall,
+  H1,
+  H2,
+  H3,
+  Typography,
+} from "./Typography";
+export type { TypographyProps } from "./Typography";

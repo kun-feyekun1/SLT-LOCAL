@@ -1,60 +1,89 @@
-import axios, { AxiosError } from 'axios';
+import axios from "axios";
 
-import { appConfig } from '@/config/environment';
-import { DerashApiError } from '@/services/errors/apiError';
-import { logger } from '@/services/logging/logger';
-import type { ApiFailure } from '@/types/api';
-import { setupMockInterceptor } from './mockInterceptor';
+import { apiConfig } from "./config";
+import {
+  ejectAuthInterceptor,
+  installAuthInterceptor,
+} from "./interceptors/authInterceptor";
+import {
+  ejectErrorInterceptor,
+  installErrorInterceptor,
+} from "./interceptors/errorInterceptor";
+import {
+  ejectRefreshInterceptor,
+  installRefreshInterceptor,
+  type SessionExpiredHandler,
+} from "./interceptors/refreshInterceptor";
 
-import { tokenStorage } from './tokenStorage';
+export interface HttpClientConfiguration {
+  onSessionExpired?: SessionExpiredHandler;
+}
 
+/**
+ * Application-specific behavior injected during app bootstrap.
+ *
+ * Keeping this callback outside the interceptor prevents the API
+ * infrastructure from directly importing Redux, Expo Router,
+ * React Query, or UI code.
+ */
+let sessionExpiredHandler: SessionExpiredHandler | undefined;
+
+/**
+ * Main authenticated HTTP client.
+ *
+ * Do not globally set Content-Type because Axios must generate
+ * the correct multipart boundary when uploading FormData.
+ */
 export const httpClient = axios.create({
-  baseURL: appConfig.apiBaseUrl,
-  timeout: appConfig.requestTimeoutMs,
+  baseURL: apiConfig.baseURL,
+  timeout: apiConfig.timeoutMs,
+
   headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    'X-Derash-Client': 'mobile-expo'
-  }
+    Accept: apiConfig.headers.accept,
+    "X-Derash-Client": "mobile-expo",
+  },
 });
 
-// Setup mock API interceptor (for development)
-setupMockInterceptor(httpClient);
+/**
+ * Interceptor installation order is important:
+ *
+ * 1. Auth interceptor attaches the access token.
+ * 2. Refresh interceptor handles recoverable 401 responses.
+ * 3. Error interceptor normalizes any final unrecovered error.
+ */
+const authInterceptorId = installAuthInterceptor(httpClient);
 
-httpClient.interceptors.request.use(async (config) => {
-  const token = await tokenStorage.getAccessToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+const refreshInterceptorId = installRefreshInterceptor(httpClient, {
+  onSessionExpired: async () => {
+    await sessionExpiredHandler?.();
+  },
 });
 
-httpClient.interceptors.response.use(
-  (response) => response,
-  (error: AxiosError<{ message?: string; requestId?: string }>) => {
-    const status = error.response?.status;
-    const failure: ApiFailure = {
-      code: !error.response
-        ? error.code === 'ECONNABORTED'
-          ? 'TIMEOUT'
-          : 'NETWORK_UNAVAILABLE'
-        : status === 401
-          ? 'UNAUTHORIZED'
-          : status === 422
-            ? 'VALIDATION_ERROR'
-            : status && status >= 500
-              ? 'SERVER_ERROR'
-              : 'UNKNOWN',
-      message:
-        error.response?.data?.message ??
-        (error.code === 'ECONNABORTED'
-          ? 'The request timed out. Please try again.'
-          : 'Connection failed. Check your internet and try again.'),
-      status,
-      requestId: error.response?.data?.requestId
-    };
+const errorInterceptorId = installErrorInterceptor(httpClient);
 
-    logger.warn('API request failed', failure);
-    return Promise.reject(new DerashApiError(failure));
-  }
-);
+/**
+ * Inject application-level session-expiration behavior.
+ *
+ * Call this once during app startup.
+ */
+export function configureHttpClient(
+  configuration: HttpClientConfiguration
+): void {
+  sessionExpiredHandler = configuration.onSessionExpired;
+}
+
+/**
+ * Removes all installed interceptors.
+ *
+ * Mainly useful for automated tests, hot-reload-safe test setups,
+ * or controlled infrastructure teardown.
+ */
+export function ejectHttpClientInterceptors(): void {
+  ejectAuthInterceptor(httpClient, authInterceptorId);
+
+  ejectRefreshInterceptor(httpClient, refreshInterceptorId);
+
+  ejectErrorInterceptor(httpClient, errorInterceptorId);
+
+  sessionExpiredHandler = undefined;
+}

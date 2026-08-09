@@ -13,7 +13,7 @@ import {
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
 
-interface CheckboxProps extends TouchableOpacityProps {
+export interface CheckboxProps extends TouchableOpacityProps {
   /** Checked state */
   checked: boolean;
   /** Called when checkbox changes */

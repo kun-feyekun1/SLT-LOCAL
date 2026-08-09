@@ -1,4 +1,4 @@
-import { apiRequest } from "@/lib/api/httpClient";
+import { httpClient } from "@/services/api";
 import type {
   CreateSavedPlaceRequest,
   SavedPlace,
@@ -18,32 +18,32 @@ function normalizeSavedPlaces(raw: unknown): SavedPlace[] {
 export async function getSavedPlaces(
   userId: number,
 ): Promise<SavedPlace[]> {
-  const raw = await apiRequest<unknown>(
+  const response = await httpClient.get<unknown>(
     `/api/users/${userId}/saved-places`,
   );
 
-  return normalizeSavedPlaces(raw);
+  return normalizeSavedPlaces(response.data);
 }
 
-export function createSavedPlace(
+export async function createSavedPlace(
   userId: number,
   payload: CreateSavedPlaceRequest,
 ): Promise<unknown> {
-  return apiRequest<unknown, CreateSavedPlaceRequest>(
+  const response = await httpClient.post<unknown>(
     `/api/users/${userId}/saved-places`,
-    {
-      method: "POST",
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }
 
-export function deleteSavedPlace(
+export async function deleteSavedPlace(
   userId: number,
   placeId: number,
 ): Promise<unknown> {
-  return apiRequest<unknown>(
+  const response = await httpClient.delete<unknown>(
     `/api/users/${userId}/saved-places/${placeId}`,
-    { method: "DELETE" },
   );
+
+  return response.data;
 }

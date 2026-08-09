@@ -8,7 +8,7 @@ import { Text, TextProps } from 'react-native';
 import { cn } from '../../../lib/cn';
 import { typography, TypographyVariant } from '../../tokens/typography';
 
-interface TypographyProps extends TextProps {
+export interface TypographyProps extends TextProps {
   /** Typography variant */
   variant?: TypographyVariant;
   /** Text color */
@@ -25,7 +25,12 @@ export const Typography: React.FC<TypographyProps> = ({
   ...props
 }) => {
   const getVariantStyles = () => {
-    const variantMap: Record<TypographyVariant, string> = {
+    /**
+     * Partial by design: the typography token set is the source of truth
+     * and may grow ahead of the NativeWind class map. Unmapped variants
+     * fall back to bodyMedium rather than breaking the build.
+     */
+    const variantMap: Partial<Record<TypographyVariant, string>> = {
       displayLarge: 'text-display-large font-inter-bold tracking-tight',
       displayMedium: 'text-display-medium font-inter-semi-bold tracking-tight',
       h1: 'text-h1 font-inter-bold tracking-[-0.25]',
@@ -48,7 +53,7 @@ export const Typography: React.FC<TypographyProps> = ({
       link: 'text-body-medium font-inter-medium',
     };
 
-    return variantMap[variant] || variantMap.bodyMedium;
+    return variantMap[variant] ?? variantMap.bodyMedium ?? "";
   };
 
   const textColor = color ? `text-[${color}]` : 'text-neutral-900 dark:text-white';

@@ -3,7 +3,7 @@
 import { StyleSheet, Text, View } from "react-native";
 
 import { PUBLIC_CONFIG } from "../../legal/constants/public.constants";
-import PublicScreen from "../../onboarding/components/PublicScreen";
+import PublicScreen from "../../support/components/PublicScreen";
 import PublicHeader from "../components/PublicHeader";
 
 const VALUES = [

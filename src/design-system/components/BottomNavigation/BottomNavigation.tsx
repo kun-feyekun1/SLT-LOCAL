@@ -15,7 +15,7 @@ export interface NavItem {
   activeIcon?: React.ReactNode;
 }
 
-interface BottomNavigationProps extends ViewProps {
+export interface BottomNavigationProps extends ViewProps {
   /** Navigation items */
   items: NavItem[];
   /** Currently active item key */

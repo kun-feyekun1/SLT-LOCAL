@@ -11,7 +11,8 @@ export const loginSchema = z.object({
 });
 
 export const signupSchema = loginSchema.extend({
-  fullName: z.string().min(2, "Enter your full name"),
+  firstName: z.string().min(2, "Enter your first name"),
+  lastName: z.string().min(2, "Enter your last name"),
   email: z.string().email("Enter a valid email").optional().or(z.literal("")),
 });
 

@@ -1,17 +1,16 @@
-import { apiRequest } from "@/lib/api/httpClient";
+import { httpClient } from "@/services/api";
 import type {
   RoutePlanRequest,
   RoutePlanResult,
 } from "@/features/route-planner/types/routePlanner.types";
 
-export function planRoute(
+export async function planRoute(
   payload: RoutePlanRequest,
 ): Promise<RoutePlanResult> {
-  return apiRequest<RoutePlanResult, RoutePlanRequest>(
+  const response = await httpClient.post<RoutePlanResult>(
     "/api/route/",
-    {
-      method: "POST",
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }

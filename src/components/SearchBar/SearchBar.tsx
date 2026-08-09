@@ -2,7 +2,7 @@ import { Search } from "lucide-react-native";
 import { Pressable, StyleSheet, TextInput } from "react-native";
 
 import { useTheme } from "@/features/theme/hooks/useTheme";
-import { radii, spacing, typography } from "@/theme";
+import { radius, spacing, typography } from "@/design-system/tokens";
 
 type Props = {
   value: string;
@@ -47,12 +47,12 @@ export const SearchBar = ({
 const styles = StyleSheet.create({
   shell: {
     minHeight: 54,
-    borderRadius: radii.lg,
+    borderRadius: radius.lg,
     borderWidth: 1,
     flexDirection: "row",
     alignItems: "center",
-    gap: spacing.sm,
-    paddingHorizontal: spacing.md,
+    gap: spacing[3],
+    paddingHorizontal: spacing[4],
   },
-  input: { flex: 1, fontSize: typography.size.md },
+  input: { flex: 1, fontSize: typography.h4.fontSize },
 });

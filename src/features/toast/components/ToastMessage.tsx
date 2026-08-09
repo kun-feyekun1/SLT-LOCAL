@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { useTheme } from "@/features/theme/hooks/useTheme";
 import { dismissToast } from "@/features/toast/state/toastSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { radii, shadows, spacing } from "@/theme";
+import { getComponentShadow, radius, spacing } from "@/design-system/tokens";
 
 import { AppText } from "@/components/AppText/AppText";
 
@@ -37,7 +37,7 @@ export const ToastMessage = () => {
       <View
         style={[
           styles.toast,
-          shadows.floating,
+          getComponentShadow("snackbar"),
           { backgroundColor: theme.colors.surface, borderColor: color },
         ]}
       >
@@ -50,14 +50,14 @@ export const ToastMessage = () => {
 const styles = StyleSheet.create({
   overlay: {
     position: "absolute",
-    top: spacing.xl,
-    left: spacing.md,
-    right: spacing.md,
+    top: spacing[5],
+    left: spacing[4],
+    right: spacing[4],
     zIndex: 30,
   },
   toast: {
     borderLeftWidth: 4,
-    borderRadius: radii.md,
-    padding: spacing.md,
+    borderRadius: radius.md,
+    padding: spacing[4],
   },
 });

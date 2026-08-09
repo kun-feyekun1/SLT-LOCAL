@@ -1,4 +1,4 @@
-import { apiRequest } from "@/lib/api/httpClient";
+import { httpClient } from "@/services/api";
 import type {
   NearbyTerminalParams,
   Terminal,
@@ -6,28 +6,32 @@ import type {
   TerminalListParams,
 } from "@/features/terminals/types/terminal.types";
 
-export function getTerminals(
+export async function getTerminals(
   params: TerminalListParams = {},
 ): Promise<Terminal[]> {
-  return apiRequest<Terminal[]>("/api/terminals/", {
-    query: {
+  const response = await httpClient.get<Terminal[]>("/api/terminals/", {
+    params: {
       skip: params.skip ?? 0,
       limit: params.limit ?? 500,
       category: params.category,
     },
   });
+
+  return response.data;
 }
 
-export function searchTerminals(
+export async function searchTerminals(
   q: string,
   limit = 20,
 ): Promise<Terminal[]> {
-  return apiRequest<Terminal[]>("/api/terminals/search", {
-    query: { q, limit },
+  const response = await httpClient.get<Terminal[]>("/api/terminals/search", {
+    params: { q, limit },
   });
+
+  return response.data;
 }
 
-export function getNearbyTerminals({
+export async function getNearbyTerminals({
   latitude,
   longitude,
   radius = 1000,
@@ -35,8 +39,8 @@ export function getNearbyTerminals({
 }: NearbyTerminalParams): Promise<Terminal[]> {
   // Current OpenAPI oddly exposes both `radius` and `int`.
   // Sending both isolates that backend contract issue here.
-  return apiRequest<Terminal[]>("/api/terminals/nearby", {
-    query: {
+  const response = await httpClient.get<Terminal[]>("/api/terminals/nearby", {
+    params: {
       latitude,
       longitude,
       radius,
@@ -44,52 +48,59 @@ export function getNearbyTerminals({
       limit,
     },
   });
+
+  return response.data;
 }
 
-export function getUnverifiedTerminals(
+export async function getUnverifiedTerminals(
   skip = 0,
   limit = 50,
 ): Promise<Terminal[]> {
-  return apiRequest<Terminal[]>(
+  const response = await httpClient.get<Terminal[]>(
     "/api/terminals/unverified",
-    { query: { skip, limit } },
+    { params: { skip, limit } },
   );
+
+  return response.data;
 }
 
-export function getTerminal(
+export async function getTerminal(
   terminalId: number,
 ): Promise<Terminal> {
-  return apiRequest<Terminal>(
+  const response = await httpClient.get<Terminal>(
     `/api/terminals/${terminalId}`,
   );
+
+  return response.data;
 }
 
-export function createTerminal(
+export async function createTerminal(
   payload: TerminalCreate,
 ): Promise<Terminal> {
-  return apiRequest<Terminal, TerminalCreate>(
+  const response = await httpClient.post<Terminal>(
     "/api/terminals/",
-    {
-      method: "POST",
-      body: payload,
-    },
+    payload,
   );
+
+  return response.data;
 }
 
-export function verifyTerminal(
+export async function verifyTerminal(
   terminalId: number,
 ): Promise<unknown> {
-  return apiRequest<unknown>(
+  const response = await httpClient.put<unknown>(
     `/api/terminals/${terminalId}/verify`,
-    { method: "PUT" },
   );
+
+  return response.data;
 }
 
-export function deactivateTerminal(
+export async function deactivateTerminal(
   terminalId: number,
 ): Promise<unknown> {
-  return apiRequest<unknown>(
+  const response = await httpClient.put<unknown>(
     `/api/terminals/${terminalId}/deactivate`,
-    { method: "PUT" },
   );
+
+  return response.data;
 }

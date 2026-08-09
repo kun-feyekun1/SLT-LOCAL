@@ -13,17 +13,17 @@ import {
 } from "react-native";
 import { useTheme } from "../../../features/theme/hooks/useTheme";
 import { cn } from "../../../lib/cn";
-import { elevation } from "../../tokens/shadows";
+import { getComponentShadow } from "../../tokens/shadows";
 import { Button } from "../Button";
 import { Typography } from "../Typography";
 
-interface DialogAction extends TouchableOpacityProps {
+export interface DialogAction extends TouchableOpacityProps {
   label: string;
   variant?: "primary" | "secondary" | "text";
   onPress?: () => void;
 }
 
-interface DialogProps extends ViewProps {
+export interface DialogProps extends ViewProps {
   /** Visibility state */
   visible: boolean;
   /** Called when dialog is closed */
@@ -70,11 +70,7 @@ export const Dialog: React.FC<DialogProps> = ({
             className,
           )}
           style={{
-            shadowColor: elevation[4].shadowColor,
-            shadowOffset: elevation[4].shadowOffset,
-            shadowOpacity: elevation[4].shadowOpacity,
-            shadowRadius: elevation[4].shadowRadius,
-            elevation: elevation[4].elevation,
+            ...getComponentShadow("dialog"),
           }}
           {...props}
         >
